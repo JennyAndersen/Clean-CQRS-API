@@ -8,6 +8,7 @@ namespace Application.Dtos
 {
     public class DogDto
     {
+        //hejhej olch hej 
         public string Name { get; set; } = string.Empty;
     }
 }
