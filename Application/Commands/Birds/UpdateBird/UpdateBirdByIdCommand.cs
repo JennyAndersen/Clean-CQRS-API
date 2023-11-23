@@ -6,9 +6,9 @@ namespace Application.Commands.Birds.UpdateBird
 {
     public class UpdateBirdByIdCommand : IRequest<Bird>
     {
-        public UpdateBirdByIdCommand(BirdDto updatedbird, Guid id)
+        public UpdateBirdByIdCommand(BirdDto updatedBird, Guid id)
         {
-            UpdatedBird = updatedbird;
+            UpdatedBird = updatedBird;
             Id = id;
         }
 
