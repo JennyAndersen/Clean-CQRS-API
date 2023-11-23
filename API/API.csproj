@@ -16,9 +16,4 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\CatsController\" />
-    <Folder Include="Controllers\BirdsController\" />
-  </ItemGroup>
-
 </Project>

@@ -7,8 +7,6 @@ using Application.Queries.Dogs.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace API.Controllers.DogsController
 {
     [Route("api/[controller]")]
@@ -21,7 +19,6 @@ namespace API.Controllers.DogsController
             _mediator = mediator;
         }
 
-        // Get all dogs from database
         [HttpGet]
         [Route("getAllDogs")]
         public async Task<IActionResult> GetAllDogs()
@@ -30,7 +27,6 @@ namespace API.Controllers.DogsController
             //return Ok("GET ALL DOGS");
         }
 
-        // Get a dog by Id
         [HttpGet]
         [Route("getDogById/{dogId}")]
         public async Task<IActionResult> GetDogById(Guid dogId)
@@ -38,7 +34,6 @@ namespace API.Controllers.DogsController
             return Ok(await _mediator.Send(new GetDogByIdQuery(dogId)));
         }
 
-        // Create a new dog 
         [HttpPost]
         [Route("addNewDog")]
         public async Task<IActionResult> AddDog([FromBody] DogDto newDog)
@@ -46,7 +41,6 @@ namespace API.Controllers.DogsController
             return Ok(await _mediator.Send(new AddDogCommand(newDog)));
         }
 
-        // Update a specific dog
         [HttpPut]
         [Route("updateDog/{updatedDogId}")]
         public async Task<IActionResult> UpdateDog([FromBody] DogDto updatedDog, Guid updatedDogId)
@@ -54,13 +48,11 @@ namespace API.Controllers.DogsController
             return Ok(await _mediator.Send(new UpdateDogByIdCommand(updatedDog, updatedDogId)));
         }
 
-        // Delete a specific dog 
         [HttpDelete]
         [Route("deleteDog/{deletedDogId}")]
         public async Task<IActionResult> DeleteDog([FromBody] DogDto deletedDog, Guid deletedDogId)
         {
             return Ok(await _mediator.Send(new DeleteDogByIdCommand(deletedDog, deletedDogId)));
         }
-
     }
 }
