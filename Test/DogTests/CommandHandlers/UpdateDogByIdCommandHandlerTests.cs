@@ -1,12 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using NUnit.Framework;
-using Application.Commands.Dogs.UpdateDog;
+﻿using Application.Commands.Dogs.UpdateDog;
+using Application.Dtos;
 using Domain.Models;
 using Infrastructure.Database;
-using Application.Dtos;
 
 namespace Application.Tests.Commands.Dogs
 {
