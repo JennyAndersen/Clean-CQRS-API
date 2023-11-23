@@ -1,6 +1,5 @@
 ﻿using Application.Queries.Dogs;
 using Application.Queries.Dogs.GetAll;
-using Application.Queries.Dogs.GetById;
 using Domain.Models;
 using Infrastructure.Database;
 

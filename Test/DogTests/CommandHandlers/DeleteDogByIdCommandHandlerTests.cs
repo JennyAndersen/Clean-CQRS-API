@@ -41,7 +41,5 @@ namespace Application.Tests.Commands.Dogs
             var deletedDogInDatabase = _mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == command.DeletedDogId);
             Assert.IsNull(deletedDogInDatabase);
         }
-
-
     }
 }

@@ -1,21 +1,17 @@
 ﻿using Domain.Models;
 using Infrastructure.Database;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Commands.Dogs.DeleteDog
 {
     public class DeleteDogByIdCommandHandler : IRequestHandler<DeleteDogByIdCommand, bool>
     {
-        private readonly MockDatabase _mockDatabase; 
-        public DeleteDogByIdCommandHandler(MockDatabase mockDatabase) 
+        private readonly MockDatabase _mockDatabase;
+        public DeleteDogByIdCommandHandler(MockDatabase mockDatabase)
         {
             _mockDatabase = mockDatabase;
         }
+
         public Task<bool> Handle(DeleteDogByIdCommand request, CancellationToken cancellationToken)
         {
             Dog dogToDelete = _mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == request.DeletedDogId)!;
