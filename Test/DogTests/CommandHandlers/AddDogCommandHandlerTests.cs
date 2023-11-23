@@ -32,10 +32,10 @@ namespace Application.Tests.Commands.Dogs
             Assert.IsInstanceOf<Dog>(result);
 
             // Kontrollera att hunden har fått ett giltigt ID
-            Assert.AreNotEqual(Guid.Empty, result.Id);
+            Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
 
             // Kontrollera att hunden har rätt namn enligt det som skickades med kommandot
-            Assert.AreEqual("NewDogName", result.Name);
+            Assert.That(result.Name, Is.EqualTo("NewDogName"));
         }
     }
 }

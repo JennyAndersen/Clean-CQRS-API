@@ -44,12 +44,12 @@ namespace Application.Tests.Commands.Dogs
             Assert.IsInstanceOf<Dog>(result);
 
             // Check that the dog has the correct updated name
-            Assert.AreEqual("UpdatedDogName", result.Name);
+            Assert.That(result.Name, Is.EqualTo("UpdatedDogName"));
 
             // Check that the dog has been updated in MockDatabase
             var updatedDogInDatabase = _mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == command.Id);
-            Assert.NotNull(updatedDogInDatabase);
-            Assert.AreEqual("UpdatedDogName", updatedDogInDatabase.Name);
+            Assert.That(updatedDogInDatabase, Is.Not.Null);
+            Assert.That(updatedDogInDatabase.Name, Is.EqualTo("UpdatedDogName"));
         }
     }
 }
