@@ -1,7 +1,12 @@
 ﻿using API.Controllers.UsersController;
+using Application.Authentication.Commands.Users.Register;
 using Application.Dtos;
 using Domain.Models;
+using Infrastructure.Database;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Moq;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
@@ -15,12 +20,17 @@ namespace Test.APITests.Controllers
     {
         private WebApplicationFactory<UserController> _factory;
         private HttpClient _client;
+        private Mock<IMediator> _mediatorMock; 
+        private UserController _controller;
+
 
         [SetUp]
         public void Setup()
         {
             _factory = new WebApplicationFactory<UserController>();
             _client = _factory.CreateClient();
+            _mediatorMock = new Mock<IMediator>();
+            _controller = new UserController(_mediatorMock.Object);
         }
 
         [TearDown]
@@ -33,21 +43,29 @@ namespace Test.APITests.Controllers
         [Test]
         public async Task RegisterUser_Success()
         {
-            // Arrange: Förbered testdata, t.ex. användarens registreringsuppgifter.
-            var registrationData = new
+            // Arrange
+            var newUser = new UserRegistrationDto
             {
                 Username = "testuser1",
                 Password = "testpassword1"
             };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new User
+                {
+                    Id = Guid.NewGuid(),
+                    UserName = newUser.Username,
+                    UserPassword = newUser.Password,
+                });
 
-            // Act: Skicka en POST-begäran till registreringsendpunkt.
-            var response = await _client.PostAsJsonAsync("http://localhost/api/User/register", registrationData);
+            // Act
+            var result = await _controller.Register(newUser);
 
-            // Assert: Kontrollera att servern svarar med en framgångsstatuskod.
-            Assert.That(await response.Content.ReadAsStringAsync(), Is.EqualTo("User registered successfully"));
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            // Du kan även utföra ytterligare kontroller baserat på dina krav och implementering.
-            // Till exempel, kontrollera att svaret innehåller förväntade data eller meddelanden.
+            // Assert
+            Assert.IsInstanceOf<OkObjectResult>(result);
+            var okResult = (OkObjectResult)result;
+            Assert.IsNotNull(okResult.Value);
+            var registeredUser = (User)okResult.Value;
+            Assert.AreEqual(newUser.Username, registeredUser.UserName);
         }
 
         [Test]
@@ -56,18 +74,24 @@ namespace Test.APITests.Controllers
             // Arrange
             var client = _factory.CreateClient();
 
-            // Register a user
             var registrationDto = new UserRegistrationDto
             {
                 Username = "testuser",
                 Password = "testpassword"
             };
 
+            _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new User
+                {
+                    Id = Guid.NewGuid(),
+                    UserName = registrationDto.Username,
+                    UserPassword = registrationDto.Password,
+                });
+
             var registrationContent = new StringContent(JsonConvert.SerializeObject(registrationDto), Encoding.UTF8, "application/json");
             var registrationResponse = await client.PostAsync("/api/User/register", registrationContent);
             registrationResponse.EnsureSuccessStatusCode();
 
-            // Login with the registered user
             var loginDto = new LoginRequest
             {
                 Username = "testuser",
@@ -78,16 +102,12 @@ namespace Test.APITests.Controllers
             var loginResponse = await client.PostAsync("/api/User/login", loginContent);
             loginResponse.EnsureSuccessStatusCode();
 
-            // Use the JWT token for subsequent requests
             var token = await loginResponse.Content.ReadAsStringAsync();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            // Perform a request to a protected resource (if applicable)
-            // ...
 
-            // Assert
+            //Assert
             Assert.That(loginResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            // Add more assertions based on your specific requirements
         }
     }
 }
