@@ -1,4 +1,5 @@
-﻿using Application.Dtos;
+﻿using API.Controllers.UsersController;
+using Application.Dtos;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
@@ -12,13 +13,13 @@ namespace Test.APITests.Controllers
     [TestFixture]
     public class UserControllerTests
     {
-        private WebApplicationFactory<API.Controllers.UserController> _factory;
+        private WebApplicationFactory<UserController> _factory;
         private HttpClient _client;
 
         [SetUp]
         public void Setup()
         {
-            _factory = new WebApplicationFactory<API.Controllers.UserController>();
+            _factory = new WebApplicationFactory<UserController>();
             _client = _factory.CreateClient();
         }
 

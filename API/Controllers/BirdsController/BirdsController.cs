@@ -1,4 +1,9 @@
-﻿using Application.Dtos;
+﻿using Application.Animals.Commands.Birds.AddBird;
+using Application.Animals.Commands.Birds.DeleteBird;
+using Application.Animals.Commands.Birds.UpdateBird;
+using Application.Animals.Queries.Birds.GetAll;
+using Application.Animals.Queries.Birds.GetById;
+using Application.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

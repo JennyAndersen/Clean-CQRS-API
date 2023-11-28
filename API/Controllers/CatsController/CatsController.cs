@@ -1,4 +1,9 @@
-﻿using Application.Dtos;
+﻿using Application.Animals.Commands.Cats.AddCat;
+using Application.Animals.Commands.Cats.DeleteCat;
+using Application.Animals.Commands.Cats.UpdateCat;
+using Application.Animals.Queries.Cats.GetAll;
+using Application.Animals.Queries.Cats.GetById;
+using Application.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

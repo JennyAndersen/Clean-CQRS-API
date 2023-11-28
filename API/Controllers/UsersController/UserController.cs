@@ -1,4 +1,5 @@
-﻿using Application.Dtos;
+﻿using Application.Authentication.Commands.Users.Register;
+using Application.Dtos;
 using Domain.Models;
 using Infrastructure.Database;
 using MediatR;
@@ -8,7 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace API.Controllers
+namespace API.Controllers.UsersController
 {
     [ApiController]
     [Route("api/[controller]")]

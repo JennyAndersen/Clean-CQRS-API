@@ -1,4 +1,9 @@
-﻿using Application.Dtos;
+﻿using Application.Animals.Commands.Dogs.AddDog;
+using Application.Animals.Commands.Dogs.DeleteDog;
+using Application.Animals.Commands.Dogs.UpdateDog;
+using Application.Animals.Queries.Dogs.GetAll;
+using Application.Animals.Queries.Dogs.GetById;
+using Application.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
