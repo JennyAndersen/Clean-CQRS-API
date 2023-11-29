@@ -25,7 +25,6 @@ namespace Test.ApplicationTests.BirdTests.CommandHandlers
             var initialBird = new Bird { Id = Guid.NewGuid(), Name = "InitialBirdName", CanFly = true };
             _mockDatabase.Birds.Add(initialBird);
 
-            // Create an instance of UpdateDogByIdCommand
             var command = new UpdateBirdByIdCommand(
                 updatedBird: new BirdDto { Name = "UpdatedBirdName", CanFly = false },
                 id: initialBird.Id
@@ -35,17 +34,18 @@ namespace Test.ApplicationTests.BirdTests.CommandHandlers
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsInstanceOf<Bird>(result);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.InstanceOf<Bird>());
 
-            // Check that the dog has the correct updated name
             Assert.That(result.Name, Is.EqualTo("UpdatedBirdName"));
 
-            // Check that the dog has been updated in MockDatabase
             var updatedBirdInDatabase = _mockDatabase.Birds.FirstOrDefault(bird => bird.Id == command.Id);
             Assert.That(updatedBirdInDatabase, Is.Not.Null);
-            Assert.That(updatedBirdInDatabase.Name, Is.EqualTo("UpdatedBirdName"));
-            Assert.That(updatedBirdInDatabase.CanFly, Is.EqualTo(false));
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedBirdInDatabase.Name, Is.EqualTo("UpdatedBirdName"));
+                Assert.That(updatedBirdInDatabase.CanFly, Is.EqualTo(false));
+            });
         }
     }
 }

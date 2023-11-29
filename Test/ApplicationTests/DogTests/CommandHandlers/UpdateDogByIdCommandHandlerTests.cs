@@ -25,7 +25,6 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
             var initialDog = new Dog { Id = Guid.NewGuid(), Name = "InitialDogName" };
             _mockDatabase.Dogs.Add(initialDog);
 
-            // Create an instance of UpdateDogByIdCommand
             var command = new UpdateDogByIdCommand(
                 updatedDog: new DogDto { Name = "UpdatedDogName" },
                 id: initialDog.Id
@@ -35,13 +34,11 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsInstanceOf<Dog>(result);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.InstanceOf<Dog>());
 
-            // Check that the dog has the correct updated name
             Assert.That(result.Name, Is.EqualTo("UpdatedDogName"));
 
-            // Check that the dog has been updated in MockDatabase
             var updatedDogInDatabase = _mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == command.Id);
             Assert.That(updatedDogInDatabase, Is.Not.Null);
             Assert.That(updatedDogInDatabase.Name, Is.EqualTo("UpdatedDogName"));

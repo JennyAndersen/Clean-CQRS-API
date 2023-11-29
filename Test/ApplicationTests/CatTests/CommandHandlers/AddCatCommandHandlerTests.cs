@@ -27,14 +27,13 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsInstanceOf<Cat>(result);
-
-            // Kontrollera att katten har fått ett giltigt ID
-            Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
-
-            // Kontrollera att katten har rätt namn enligt det som skickades med kommandot
-            Assert.That(result.Name, Is.EqualTo("NewCatName"));
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.InstanceOf<Cat>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
+                Assert.That(result.Name, Is.EqualTo("NewCatName"));
+            });
         }
     }
 }
