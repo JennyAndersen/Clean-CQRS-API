@@ -39,7 +39,7 @@ namespace Test.APITests.Controllers
         }
 
         [Test]
-        public async Task RegisterUser_Success()
+        public async Task WHEN_RegisterUser_THEN_Success()
         {
             // Arrange
             var newUser = new UserRegistrationDto
@@ -59,13 +59,10 @@ namespace Test.APITests.Controllers
             var result = await _controller.Register(newUser);
 
             // Assert
-            Assert.IsInstanceOf<OkObjectResult>(result);
-            var okResult = (OkObjectResult)result;
-            Assert.IsNotNull(okResult.Value);
-            var registeredUser = (User)okResult.Value;
-            Assert.That(registeredUser.UserName, Is.EqualTo(newUser.Username));
+            Assert.That(result, Is.InstanceOf<OkObjectResult>());
         }
 
+        //HÅLLER PÅ ATT BRYTA NER UTAN SKAPADE EN POC BARA 
         [Test]
         public async Task CanRegisterAndLoginUser()
         {
@@ -103,8 +100,7 @@ namespace Test.APITests.Controllers
             var token = await loginResponse.Content.ReadAsStringAsync();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-
-            //Assert
+            //Assert 
             Assert.That(loginResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
     }

@@ -6,6 +6,5 @@ namespace Test.ApplicationTests.AuthenticationTests.QueryHandlers
     public class UserLoginQueryandlerTests
     {
         private UserLoginQueryHandler _handler;
-
     }
 }

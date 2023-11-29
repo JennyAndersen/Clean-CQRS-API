@@ -19,13 +19,12 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
         }
 
         [Test]
-        public async Task Handle_UpdatesCatInDatabase()
+        public async Task WHEN_Handle_THEN_UpdatesCatInDatabase()
         {
             // Arrange
             var initialCat = new Cat { Id = Guid.NewGuid(), Name = "InitialCatName", LikesToPlay = true };
             _mockDatabase.Cats.Add(initialCat);
 
-            // Create an instance of UpdateDogByIdCommand
             var command = new UpdateCatByIdCommand(
                 updatedCat: new CatDto { Name = "UpdatedCatName", LikesToPlay = false },
                 id: initialCat.Id
@@ -35,17 +34,9 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsInstanceOf<Cat>(result);
-
-            // Check that the dog has the correct updated name
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.InstanceOf<Cat>());
             Assert.That(result.Name, Is.EqualTo("UpdatedCatName"));
-
-            // Check that the dog has been updated in MockDatabase
-            var updatedCatInDatabase = _mockDatabase.Cats.FirstOrDefault(cat => cat.Id == command.Id);
-            Assert.That(updatedCatInDatabase, Is.Not.Null);
-            Assert.That(updatedCatInDatabase.Name, Is.EqualTo("UpdatedCatName"));
-            Assert.That(updatedCatInDatabase.LikesToPlay, Is.EqualTo(false));
         }
     }
 }

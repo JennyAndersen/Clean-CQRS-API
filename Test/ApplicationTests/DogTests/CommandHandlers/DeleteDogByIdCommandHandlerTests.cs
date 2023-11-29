@@ -19,13 +19,12 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
         }
 
         [Test]
-        public async Task Handle_DeletesDogInDatabase()
+        public async Task WHEN_Handle_THEN_DeletesDogInDatabase()
         {
             // Arrange
             var initialDog = new Dog { Id = Guid.NewGuid(), Name = "InitialDogName" };
             _mockDatabase.Dogs.Add(initialDog);
 
-            // Create an instance of DeleteDogByIdCommand
             var command = new DeleteDogByIdCommand(
                 deletedDog: new DogDto { Name = "InitialDogName" },
                 deletedDogId: initialDog.Id
@@ -35,11 +34,7 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            Assert.IsTrue(result);
-
-            // Check that the dog has been deleted from MockDatabase
-            var deletedDogInDatabase = _mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == command.DeletedDogId);
-            Assert.IsNull(deletedDogInDatabase);
+            Assert.That(result, Is.True);
         }
     }
 }

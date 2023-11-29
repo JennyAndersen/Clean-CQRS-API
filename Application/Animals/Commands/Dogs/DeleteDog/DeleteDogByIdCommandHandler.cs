@@ -16,13 +16,13 @@ namespace Application.Animals.Commands.Dogs.DeleteDog
         {
             Dog dogToDelete = _mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == request.DeletedDogId)!;
 
-            if (dogToDelete != null)
+            if (dogToDelete == null)
             {
-                _mockDatabase.Dogs.Remove(dogToDelete);
-                return Task.FromResult(true);
+                return Task.FromResult(false);
             }
 
-            return Task.FromResult(false);
+            _mockDatabase.Dogs.Remove(dogToDelete);
+            return Task.FromResult(true);
         }
     }
 }

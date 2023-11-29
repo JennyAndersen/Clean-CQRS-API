@@ -13,13 +13,12 @@ namespace Test.ApplicationTests.BirdTests.QueryHandlers
         [SetUp]
         public void SetUp()
         {
-            // Initialize the handler and mock database before each test
             _mockDatabase = new MockDatabase();
             _handler = new GetAllBirdsQueryHandler(_mockDatabase);
         }
 
         [Test]
-        public async Task Handle_GetAlLBirds_ReturnsCorrect()
+        public async Task WHEN_Handle_THEN_GetAlLBirds_ReturnsCorrect()
         {
             // Arrange
             var query = new GetAllBirdsQuery();
@@ -28,9 +27,9 @@ namespace Test.ApplicationTests.BirdTests.QueryHandlers
             var result = await _handler.Handle(query, CancellationToken.None);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsInstanceOf<List<Bird>>(result);
-            Assert.Greater(result.Count, 0);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.InstanceOf<List<Bird>>());
+            Assert.That(result.Count, Is.GreaterThan(0));
         }
 
     }

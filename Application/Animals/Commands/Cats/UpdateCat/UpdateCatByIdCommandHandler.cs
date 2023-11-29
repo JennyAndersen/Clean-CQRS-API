@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using Infrastructure.Database;
 using MediatR;
+using SendGrid.Helpers.Errors.Model;
 
 namespace Application.Animals.Commands.Cats.UpdateCat
 {
@@ -14,7 +15,7 @@ namespace Application.Animals.Commands.Cats.UpdateCat
         }
         public Task<Cat> Handle(UpdateCatByIdCommand request, CancellationToken cancellationToken)
         {
-            Cat catToUpdate = _mockDatabase.Cats.FirstOrDefault(cat => cat.Id == request.Id)!;
+            Cat catToUpdate = _mockDatabase.Cats.FirstOrDefault(cat => cat.Id == request.Id)! ?? throw new NotFoundException($"Bird with ID {request.Id} not found.");
 
             catToUpdate.Name = request.UpdatedCat.Name;
             catToUpdate.LikesToPlay = request.UpdatedCat.LikesToPlay;

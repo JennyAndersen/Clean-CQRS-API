@@ -13,12 +13,11 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
         [SetUp]
         public void Setup()
         {
-            // Skapa en instans av AddDogCommandHandler med en mock av MockDatabase
             _handler = new AddDogCommandHandler(new MockDatabase());
         }
 
         [Test]
-        public async Task Handle_AddsDogToDatabase()
+        public async Task WHEN_Handle_THEN_AddsDogToDatabase()
         {
             // Arrange
             var newDog = new DogDto { Name = "NewDogName" };
@@ -28,14 +27,13 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsInstanceOf<Dog>(result);
-
-            // Kontrollera att hunden har fått ett giltigt ID
-            Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
-
-            // Kontrollera att hunden har rätt namn enligt det som skickades med kommandot
-            Assert.That(result.Name, Is.EqualTo("NewDogName"));
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.InstanceOf<Dog>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
+                Assert.That(result.Name, Is.EqualTo("NewDogName"));
+            });
         }
     }
 }
