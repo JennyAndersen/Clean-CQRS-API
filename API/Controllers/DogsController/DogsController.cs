@@ -1,4 +1,9 @@
-﻿using Application.Dtos;
+﻿using Application.Animals.Commands.Dogs.AddDog;
+using Application.Animals.Commands.Dogs.DeleteDog;
+using Application.Animals.Commands.Dogs.UpdateDog;
+using Application.Animals.Queries.Dogs.GetAll;
+using Application.Animals.Queries.Dogs.GetById;
+using Application.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,16 +21,13 @@ namespace API.Controllers.DogsController
             _mediator = mediator;
         }
 
-        // Get all dogs from database
         [HttpGet]
         [Route("getAllDogs")]
         public async Task<IActionResult> GetAllDogs()
         {
             return Ok(await _mediator.Send(new GetAllDogsQuery()));
-            //return Ok("GET ALL DOGS");
         }
 
-        // Get a dog by Id
         [HttpGet]
         [Route("getDogById/{dogId}")]
         public async Task<IActionResult> GetDogById(Guid dogId)
@@ -33,7 +35,6 @@ namespace API.Controllers.DogsController
             return Ok(await _mediator.Send(new GetDogByIdQuery(dogId)));
         }
 
-        // Create a new dog 
         [HttpPost]
         [Route("addNewDog")]
         public async Task<IActionResult> AddDog([FromBody] DogDto newDog)
@@ -41,7 +42,6 @@ namespace API.Controllers.DogsController
             return Ok(await _mediator.Send(new AddDogCommand(newDog)));
         }
 
-        // Update a specific dog
         [HttpPut]
         [Route("updateDog/{updatedDogId}")]
         public async Task<IActionResult> UpdateDog([FromBody] DogDto updatedDog, Guid updatedDogId)
@@ -49,7 +49,6 @@ namespace API.Controllers.DogsController
             return Ok(await _mediator.Send(new UpdateDogByIdCommand(updatedDog, updatedDogId)));
         }
 
-        // Delete a specific dog 
         [HttpDelete]
         [Route("deleteDog/{deletedDogId}")]
         public async Task<IActionResult> DeleteDog([FromBody] DogDto deletedDog, Guid deletedDogId)
