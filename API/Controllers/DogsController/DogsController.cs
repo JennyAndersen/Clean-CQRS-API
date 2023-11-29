@@ -25,7 +25,6 @@ namespace API.Controllers.DogsController
         public async Task<IActionResult> GetAllDogs()
         {
             return Ok(await _mediator.Send(new GetAllDogsQuery()));
-            //return Ok("GET ALL DOGS");
         }
 
         [HttpGet]

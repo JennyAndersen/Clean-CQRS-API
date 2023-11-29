@@ -21,8 +21,8 @@ namespace Test.ApplicationTests.AuthenticationTests.CommandHandlers
             _handler = new RegisterUserCommandHandler(mockDatabase.Object);
         }
 
-        [CustomAutoData]
         [Theory]
+        [CustomAutoData]
         public async Task Handle_ValidRegistration_ReturnsUser([Frozen] UserRegistrationDto newUserDto)
         {
             // Arrange

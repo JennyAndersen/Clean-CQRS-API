@@ -2,7 +2,6 @@
 using Application.Authentication.Commands.Users.Register;
 using Application.Dtos;
 using Domain.Models;
-using Infrastructure.Database;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -10,7 +9,6 @@ using Moq;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text;
 
 namespace Test.APITests.Controllers
@@ -20,7 +18,7 @@ namespace Test.APITests.Controllers
     {
         private WebApplicationFactory<UserController> _factory;
         private HttpClient _client;
-        private Mock<IMediator> _mediatorMock; 
+        private Mock<IMediator> _mediatorMock;
         private UserController _controller;
 
 

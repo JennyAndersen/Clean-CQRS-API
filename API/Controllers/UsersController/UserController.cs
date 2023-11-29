@@ -1,5 +1,6 @@
 ﻿using Application.Authentication.Commands.Users.Register;
-using Application.Authentication.Queries;
+using Application.Authentication.Queries.Users;
+using Application.Common;
 using Application.Dtos;
 using Domain.Models;
 using MediatR;
@@ -40,7 +41,21 @@ namespace API.Controllers.UsersController
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationDto newUser)
         {
-            return Ok(await _mediator.Send(new RegisterUserCommand(newUser)));
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                return Ok(await _mediator.Send(new RegisterUserCommand(newUser)));
+            }
+            catch (BadRequestException ex)
+            {
+                var errorMessage = ex.Errors.FirstOrDefault();
+
+                return BadRequest(new { Error = errorMessage });
+            }
         }
     }
 }

@@ -1,8 +1,13 @@
-﻿namespace Domain.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Domain.Models
 {
     public class LoginRequest
     {
-        public required string Username { get; set; }
-        public required string Password { get; set; }
+        [Required(ErrorMessage = "Username is required")]
+        public string Username { get; set; }
+
+        [Required(ErrorMessage = "Username is required")]
+        public string Password { get; set; }
     }
 }

@@ -36,13 +36,14 @@ builder.Services.AddAuthorization(options =>
 });
 
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Clean-API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Jenny Andersen", Version = "v1" });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "JWT Authorization header using the Bearer scheme",
+        Description = "Authorize with your bearer token that generates when you login",
         Type = SecuritySchemeType.Http,
         Scheme = "bearer"
     });

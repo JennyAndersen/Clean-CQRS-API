@@ -15,6 +15,8 @@ namespace Application.Authentication.Commands.Users.Register
 
         public Task<User> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
+            request.Validate();
+
             var isUsernameUnique = !_mockDatabase.Users.Any(u => u.UserName == request.NewUser.Username);
             if (!isUsernameUnique)
             {

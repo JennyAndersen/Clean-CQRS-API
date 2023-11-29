@@ -1,18 +1,9 @@
-﻿using Domain.Models;
-using Infrastructure.Authentication;
+﻿using Infrastructure.Authentication;
 using Infrastructure.Database;
 using MediatR;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.Authentication.Queries
+namespace Application.Authentication.Queries.Users
 {
     public class UserLoginQueryHandler : IRequestHandler<UserLoginQuery, string>
     {

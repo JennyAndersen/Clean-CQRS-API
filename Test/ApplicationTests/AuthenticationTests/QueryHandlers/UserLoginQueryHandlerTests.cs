@@ -1,15 +1,4 @@
-﻿using Application.Authentication.Commands.Users.Register;
-using Application.Authentication.Queries;
-using Application.Dtos;
-using AutoFixture.NUnit3;
-using Infrastructure.Database;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Test.TestHelpers;
+﻿using Application.Authentication.Queries.Users;
 
 namespace Test.ApplicationTests.AuthenticationTests.QueryHandlers
 {
