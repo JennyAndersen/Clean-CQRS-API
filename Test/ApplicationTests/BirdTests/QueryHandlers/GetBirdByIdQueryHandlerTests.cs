@@ -17,7 +17,7 @@ namespace Test.ApplicationTests.BirdTests.QueryHandlers
         }
 
         [Test]
-        public async Task Handle_ValidId_ReturnsCorrectBird()
+        public async Task WHEN_Handle_THEN_ValidId_ReturnsCorrectBird()
         {
             // Arrange
             var birdId = new Guid("59d8fc74-3c94-4ed8-9a38-36b0b6b1074a");

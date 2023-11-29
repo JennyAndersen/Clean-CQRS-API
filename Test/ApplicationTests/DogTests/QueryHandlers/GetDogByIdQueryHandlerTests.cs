@@ -17,7 +17,7 @@ namespace Test.ApplicationTests.DogTests.QueryHandlers
         }
 
         [Test]
-        public async Task Handle_ValidId_ReturnsCorrectDog()
+        public async Task WHEN_Handle_ValidId_THEN_ReturnsCorrectDog()
         {
             // Arrange
             var dogId = new Guid("12345678-1234-5678-1234-567812345678");
@@ -33,7 +33,7 @@ namespace Test.ApplicationTests.DogTests.QueryHandlers
         }
 
         [Test]
-        public async Task Handle_InvalidId_ReturnsNull()
+        public async Task WHEN_Handle_InvalidId_THEN_ReturnsNull()
         {
             // Arrange
             var invalidDogId = Guid.NewGuid();

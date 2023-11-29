@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using Infrastructure.Database;
 using MediatR;
+using SendGrid.Helpers.Errors.Model;
 
 namespace Application.Animals.Queries.Dogs.GetById
 {
@@ -15,7 +16,7 @@ namespace Application.Animals.Queries.Dogs.GetById
 
         public Task<Dog> Handle(GetDogByIdQuery request, CancellationToken cancellationToken)
         {
-            Dog wantedDog = _mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == request.Id)!;
+            Dog wantedDog = _mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == request.Id)! ?? throw new NotFoundException($"Bird with ID {request.Id} not found.");
             return Task.FromResult(wantedDog);
         }
     }

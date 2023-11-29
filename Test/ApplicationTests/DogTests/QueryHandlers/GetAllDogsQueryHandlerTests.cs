@@ -18,7 +18,7 @@ namespace Test.ApplicationTests.DogTests.QueryHandlers
         }
 
         [Test]
-        public async Task Handle_GetAlLDogs_ReturnsCorrect()
+        public async Task WHEN_Handle_GetAlLDogs_THEN_ReturnsCorrect()
         {
             // Arrange
             var query = new GetAllDogsQuery();

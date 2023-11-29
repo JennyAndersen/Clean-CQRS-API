@@ -17,7 +17,7 @@ namespace Test.ApplicationTests.CatTests.QueryHandlers
         }
 
         [Test]
-        public async Task Handle_ValidId_ReturnsCorrectCat()
+        public async Task WHEN_Handle_ValidId_THEN_ReturnsCorrectCat()
         {
             // Arrange
             var catId = new Guid("7e910a6d-8621-4f4b-8a0c-5e199f42eaa5");

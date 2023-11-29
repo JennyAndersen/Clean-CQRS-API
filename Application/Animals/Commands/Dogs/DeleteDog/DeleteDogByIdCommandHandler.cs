@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using Infrastructure.Database;
 using MediatR;
+using SendGrid.Helpers.Errors.Model;
 
 namespace Application.Animals.Commands.Dogs.DeleteDog
 {
@@ -15,14 +16,14 @@ namespace Application.Animals.Commands.Dogs.DeleteDog
         public Task<bool> Handle(DeleteDogByIdCommand request, CancellationToken cancellationToken)
         {
             Dog dogToDelete = _mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == request.DeletedDogId)!;
-
-            if (dogToDelete != null)
+            
+            if (dogToDelete == null)
             {
-                _mockDatabase.Dogs.Remove(dogToDelete);
-                return Task.FromResult(true);
+                return Task.FromResult(false);
             }
 
-            return Task.FromResult(false);
+            _mockDatabase.Dogs.Remove(dogToDelete);
+            return Task.FromResult(true);
         }
     }
 }

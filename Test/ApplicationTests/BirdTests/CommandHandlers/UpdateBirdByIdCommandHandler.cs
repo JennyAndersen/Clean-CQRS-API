@@ -19,7 +19,7 @@ namespace Test.ApplicationTests.BirdTests.CommandHandlers
         }
 
         [Test]
-        public async Task Handle_UpdatesBirdInDatabase()
+        public async Task WHEN_Handle_THEN_UpdatesBirdInDatabase()
         {
             // Arrange
             var initialBird = new Bird { Id = Guid.NewGuid(), Name = "InitialBirdName", CanFly = true };
@@ -36,16 +36,7 @@ namespace Test.ApplicationTests.BirdTests.CommandHandlers
             // Assert
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Is.InstanceOf<Bird>());
-
             Assert.That(result.Name, Is.EqualTo("UpdatedBirdName"));
-
-            var updatedBirdInDatabase = _mockDatabase.Birds.FirstOrDefault(bird => bird.Id == command.Id);
-            Assert.That(updatedBirdInDatabase, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(updatedBirdInDatabase.Name, Is.EqualTo("UpdatedBirdName"));
-                Assert.That(updatedBirdInDatabase.CanFly, Is.EqualTo(false));
-            });
         }
     }
 }

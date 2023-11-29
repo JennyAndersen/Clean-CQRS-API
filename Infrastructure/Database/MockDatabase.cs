@@ -57,9 +57,9 @@ namespace Infrastructure.Database
 
         private static List<User> allUsers = new()
         {
-            new User { Id = Guid.NewGuid(), UserName = "JohnDoe" },
-            new User { Id = Guid.NewGuid(), UserName = "JaneDoe" },
-
+            new User { Id = Guid.NewGuid(), UserName = "JohnDoe", UserPassword = "Hejhej" },
+            new User { Id = Guid.NewGuid(), UserName = "JaneDoe", UserPassword = "Hejhej2" },
+            new User { Id = new Guid("550e8400-e29b-41d4-a716-446655440000"), UserName = "TestUser", UserPassword = "TestPassword"}
         };
     }
 }

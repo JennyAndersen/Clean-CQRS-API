@@ -16,13 +16,13 @@ namespace Application.Animals.Commands.Cats.DeleteCat
         {
             Cat catToDelete = _mockDatabase.Cats.FirstOrDefault(cat => cat.Id == request.DeletedCatId)!;
 
-            if (catToDelete != null)
+            if (catToDelete == null)
             {
-                _mockDatabase.Cats.Remove(catToDelete);
-                return Task.FromResult(true);
+                return Task.FromResult(false);
             }
 
-            return Task.FromResult(false);
+            _mockDatabase.Cats.Remove(catToDelete);
+            return Task.FromResult(true);
         }
     }
 }
