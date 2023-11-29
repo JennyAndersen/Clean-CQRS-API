@@ -17,7 +17,7 @@ namespace Test.ApplicationTests.BirdTests.CommandHandlers
         }
 
         [Test]
-        public async Task Handle_AddsBirdToDatabase()
+        public async Task WHEN_Handle_THEN_AddsBirdToDatabase()
         {
             // Arrange
             var newBird = new BirdDto { Name = "NewBirdName" };

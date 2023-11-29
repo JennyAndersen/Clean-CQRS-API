@@ -1,5 +1,6 @@
 ﻿using Application.Animals.Queries.Birds.GetById;
 using Infrastructure.Database;
+using SendGrid.Helpers.Errors.Model;
 
 namespace Test.ApplicationTests.BirdTests.QueryHandlers
 {
@@ -17,7 +18,7 @@ namespace Test.ApplicationTests.BirdTests.QueryHandlers
         }
 
         [Test]
-        public async Task Handle_ValidId_ReturnsCorrectBird()
+        public async Task WHEN_Handle_THEN_ValidId_ReturnsCorrectBird()
         {
             // Arrange
             var birdId = new Guid("59d8fc74-3c94-4ed8-9a38-36b0b6b1074a");
@@ -33,18 +34,15 @@ namespace Test.ApplicationTests.BirdTests.QueryHandlers
         }
 
         [Test]
-        public async Task Handle_InvalidId_ReturnsNull()
+        public void Handle_InvalidId_Throws_Exception()
         {
             // Arrange
             var invalidBirdId = Guid.NewGuid();
-
             var query = new GetBirdByIdQuery(invalidBirdId);
 
-            // Act
-            var result = await _handler.Handle(query, CancellationToken.None);
-
-            // Assert
-            Assert.That(result, Is.Null);
+            // Act & Assert
+            var exception = Assert.ThrowsAsync<NotFoundException>(async () => await _handler.Handle(query, CancellationToken.None));
+            Assert.That(exception.Message, Is.EqualTo("Bird not found."));
         }
     }
 }

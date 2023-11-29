@@ -17,7 +17,7 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
         }
 
         [Test]
-        public async Task Handle_AddsDogToDatabase()
+        public async Task WHEN_Handle_THEN_AddsDogToDatabase()
         {
             // Arrange
             var newDog = new DogDto { Name = "NewDogName" };

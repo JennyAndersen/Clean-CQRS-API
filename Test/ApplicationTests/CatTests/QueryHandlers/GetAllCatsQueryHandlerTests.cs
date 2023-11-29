@@ -18,7 +18,7 @@ namespace Test.ApplicationTests.CatTests.QueryHandlers
         }
 
         [Test]
-        public async Task Handle_GetAlLCats_ReturnsCorrect()
+        public async Task WHEN_Handle_GetAlLCats_THEN_ReturnsCorrect()
         {
             // Arrange
             var query = new GetAllCatsQuery();

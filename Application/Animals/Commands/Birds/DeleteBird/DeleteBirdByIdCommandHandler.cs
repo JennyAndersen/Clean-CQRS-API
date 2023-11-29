@@ -16,13 +16,13 @@ namespace Application.Animals.Commands.Birds.DeleteBird
         {
             Bird birdToDelete = _mockDatabase.Birds.FirstOrDefault(bird => bird.Id == request.DeletedBirdId)!;
 
-            if (birdToDelete != null)
+            if (birdToDelete == null)
             {
-                _mockDatabase.Birds.Remove(birdToDelete);
-                return Task.FromResult(true);
+                return Task.FromResult(false);
             }
 
-            return Task.FromResult(false);
+            _mockDatabase.Birds.Remove(birdToDelete);
+            return Task.FromResult(true);
         }
     }
 }

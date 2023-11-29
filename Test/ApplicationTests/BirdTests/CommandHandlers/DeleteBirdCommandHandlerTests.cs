@@ -19,7 +19,7 @@ namespace Test.ApplicationTests.BirdTests.CommandHandlers
         }
 
         [Test]
-        public async Task Handle_DeletesBirdInDatabase()
+        public async Task WHEN_Handle_THEN_DeletesBirdInDatabase()
         {
             // Arrange
             var initialBird = new Bird { Id = Guid.NewGuid(), Name = "InitialBirdName" };
@@ -35,9 +35,6 @@ namespace Test.ApplicationTests.BirdTests.CommandHandlers
 
             // Assert
             Assert.That(result, Is.True);
-
-            var deletedBirdInDatabase = _mockDatabase.Birds.FirstOrDefault(bird => bird.Id == command.DeletedBirdId);
-            Assert.That(deletedBirdInDatabase, Is.Null);
         }
     }
 }

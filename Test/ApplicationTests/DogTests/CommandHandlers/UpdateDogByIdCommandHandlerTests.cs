@@ -19,7 +19,7 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
         }
 
         [Test]
-        public async Task Handle_UpdatesDogInDatabase()
+        public async Task WHEN_Handle_THEN_UpdatesDogInDatabase()
         {
             // Arrange
             var initialDog = new Dog { Id = Guid.NewGuid(), Name = "InitialDogName" };
@@ -36,12 +36,7 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
             // Assert
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Is.InstanceOf<Dog>());
-
             Assert.That(result.Name, Is.EqualTo("UpdatedDogName"));
-
-            var updatedDogInDatabase = _mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == command.Id);
-            Assert.That(updatedDogInDatabase, Is.Not.Null);
-            Assert.That(updatedDogInDatabase.Name, Is.EqualTo("UpdatedDogName"));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
         }
 
         [Test]
-        public async Task Handle_AddsCatToDatabase()
+        public async Task WHEN_Handle_THEN_AddsCatToDatabase()
         {
             // Arrange
             var newCat = new CatDto { Name = "NewCatName" };

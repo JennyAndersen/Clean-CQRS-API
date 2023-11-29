@@ -18,7 +18,7 @@ namespace Test.ApplicationTests.BirdTests.QueryHandlers
         }
 
         [Test]
-        public async Task Handle_GetAlLBirds_ReturnsCorrect()
+        public async Task WHEN_Handle_THEN_GetAlLBirds_ReturnsCorrect()
         {
             // Arrange
             var query = new GetAllBirdsQuery();
