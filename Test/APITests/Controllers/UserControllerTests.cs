@@ -63,7 +63,7 @@ namespace Test.APITests.Controllers
             var okResult = (OkObjectResult)result;
             Assert.IsNotNull(okResult.Value);
             var registeredUser = (User)okResult.Value;
-            Assert.AreEqual(newUser.Username, registeredUser.UserName);
+            Assert.That(registeredUser.UserName, Is.EqualTo(newUser.Username));
         }
 
         [Test]
