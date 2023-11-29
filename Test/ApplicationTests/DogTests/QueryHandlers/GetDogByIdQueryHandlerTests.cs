@@ -1,5 +1,6 @@
 ﻿using Application.Animals.Queries.Dogs.GetById;
 using Infrastructure.Database;
+using SendGrid.Helpers.Errors.Model;
 
 namespace Test.ApplicationTests.DogTests.QueryHandlers
 {
@@ -33,18 +34,16 @@ namespace Test.ApplicationTests.DogTests.QueryHandlers
         }
 
         [Test]
-        public async Task WHEN_Handle_InvalidId_THEN_ReturnsNull()
+        public void WHEN_Handle_InvalidId_THEN_THrowsException()
         {
             // Arrange
             var invalidDogId = Guid.NewGuid();
 
             var query = new GetDogByIdQuery(invalidDogId);
 
-            // Act
-            var result = await _handler.Handle(query, CancellationToken.None);
-
-            // Assert
-            Assert.That(result, Is.Null);
+            //Act & Arrange
+            var exception = Assert.ThrowsAsync<NotFoundException>(async () => await _handler.Handle(query, CancellationToken.None));
+            Assert.That(exception.Message, Is.EqualTo("Dog not found."));
         }
     }
 }

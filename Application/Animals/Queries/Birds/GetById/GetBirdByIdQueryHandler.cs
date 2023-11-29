@@ -16,7 +16,7 @@ namespace Application.Animals.Queries.Birds.GetById
 
         public Task<Bird> Handle(GetBirdByIdQuery request, CancellationToken cancellationToken)
         {
-            Bird wantedBird = _mockDatabase.Birds.FirstOrDefault(bird => bird.Id == request.Id)! ?? throw new NotFoundException($"Bird with ID {request.Id} not found.");
+            Bird wantedBird = _mockDatabase.Birds.FirstOrDefault(bird => bird.Id == request.Id)! ?? throw new NotFoundException("Bird not found.");
             return Task.FromResult(wantedBird);
         }
     }

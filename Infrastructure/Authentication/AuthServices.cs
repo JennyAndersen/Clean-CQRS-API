@@ -21,21 +21,26 @@ namespace Infrastructure.Authentication
 
         public User AuthenticateUser(string username, string password)
         {
-            // Replace with your actual authentication logic
             var user = _mockDatabase.Users.FirstOrDefault(u => u.UserName == username && u.UserPassword == password);
+
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
             return user;
         }
 
         public string GenerateJwtToken(User user)
         {
-            var key = Encoding.ASCII.GetBytes(_configuration["JwtSettings:SecretKey"]);
+            var key = Encoding.ASCII.GetBytes(s: _configuration["JwtSettings:SecretKey"]); //Implement null handling
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, "Admin")
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

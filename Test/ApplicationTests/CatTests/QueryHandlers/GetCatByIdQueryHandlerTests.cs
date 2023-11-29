@@ -1,5 +1,6 @@
 ﻿using Application.Animals.Queries.Cats.GetById;
 using Infrastructure.Database;
+using SendGrid.Helpers.Errors.Model;
 
 namespace Test.ApplicationTests.CatTests.QueryHandlers
 {
@@ -33,18 +34,16 @@ namespace Test.ApplicationTests.CatTests.QueryHandlers
         }
 
         [Test]
-        public async Task Handle_InvalidId_ReturnsNull()
+        public void WHEN_Handle_InvalidId_THEN_ThrowsException()
         {
             // Arrange
             var invalidCatId = Guid.NewGuid();
 
             var query = new GetCatByIdQuery(invalidCatId);
 
-            // Act
-            var result = await _handler.Handle(query, CancellationToken.None);
-
-            // Assert
-            Assert.That(result, Is.Null);
+            // Act & Assert
+            var exception = Assert.ThrowsAsync<NotFoundException>(async () => await _handler.Handle(query, CancellationToken.None));
+            Assert.That(exception.Message, Is.EqualTo("Cat not found."));
         }
     }
 }
