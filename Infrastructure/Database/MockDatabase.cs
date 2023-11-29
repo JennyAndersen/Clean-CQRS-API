@@ -21,6 +21,11 @@ namespace Infrastructure.Database
             get { return allBirds; }
             set { allBirds = value; }
         }
+        public List<User> Users
+        {
+            get { return allUsers; }
+            set { allUsers = value; }
+        }
 
         private static List<Dog> allDogs = new()
         {
@@ -48,6 +53,13 @@ namespace Infrastructure.Database
             new Bird { Id = Guid.NewGuid(), Name = "Herdy", CanFly = false },
             new Bird { Id = Guid.NewGuid(), Name = "Gerdy", CanFly = true },
             new Bird { Id = new Guid("59d8fc74-3c94-4ed8-9a38-36b0b6b1074a"), Name = "TestBirdForUnitTests"}
+        };
+
+        private static List<User> allUsers = new()
+        {
+            new User { Id = Guid.NewGuid(), UserName = "JohnDoe" },
+            new User { Id = Guid.NewGuid(), UserName = "JaneDoe" },
+
         };
     }
 }

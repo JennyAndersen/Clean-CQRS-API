@@ -1,10 +1,11 @@
-﻿using Application.Commands.Birds;
-using Application.Commands.Birds.DeleteDog;
-using Application.Commands.Birds.UpdateBird;
+﻿using Application.Animals.Commands.Birds.AddBird;
+using Application.Animals.Commands.Birds.DeleteBird;
+using Application.Animals.Commands.Birds.UpdateBird;
+using Application.Animals.Queries.Birds.GetAll;
+using Application.Animals.Queries.Birds.GetById;
 using Application.Dtos;
-using Application.Queries.Birds.GetAll;
-using Application.Queries.Birds.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.CatsController
@@ -35,14 +36,15 @@ namespace API.Controllers.CatsController
 
         [HttpPost]
         [Route("addNewBird")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> AddBird([FromBody] BirdDto newBird)
         {
             return Ok(await _mediator.Send(new AddBirdCommand(newBird)));
         }
 
-        // FIX here 
         [HttpPut]
         [Route("updateBird/{updatedBirdId}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateBird([FromBody] BirdDto updatedBird, Guid updatedBirdId)
         {
             return Ok(await _mediator.Send(new UpdateBirdByIdCommand(updatedBird, updatedBirdId)));
@@ -50,6 +52,7 @@ namespace API.Controllers.CatsController
 
         [HttpDelete]
         [Route("deleteBird/{deletedBirdId}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteBird([FromBody] BirdDto deletedBird, Guid deletedBirdId)
         {
             return Ok(await _mediator.Send(new DeleteBirdByIdCommand(deletedBird, deletedBirdId)));
