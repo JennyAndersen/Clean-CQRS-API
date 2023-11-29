@@ -18,7 +18,6 @@ namespace Application.Authentication.Queries.Users
 
             if (user == null)
             {
-                // You might want to throw a custom exception here instead of returning null
                 throw new UnauthorizedAccessException("Invalid username or password");
             }
 
