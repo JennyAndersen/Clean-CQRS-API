@@ -16,7 +16,6 @@ namespace Test.ApplicationTests.AuthenticationTests.CommandHandlers
         [SetUp]
         public void Setup()
         {
-            // Create necessary dependencies and inject them into RegisterUserCommandHandler
             var mockDatabase = new Mock<MockDatabase>();
             _handler = new RegisterUserCommandHandler(mockDatabase.Object);
         }

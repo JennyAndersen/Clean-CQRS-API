@@ -27,14 +27,13 @@ namespace Test.ApplicationTests.BirdTests.CommandHandlers
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsInstanceOf<Bird>(result);
-
-            // Kontrollera att hunden har fått ett giltigt ID
-            Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
-
-            // Kontrollera att hunden har rätt namn enligt det som skickades med kommandot
-            Assert.That(result.Name, Is.EqualTo("NewBirdName"));
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.InstanceOf<Bird>());
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
+                Assert.That(result.Name, Is.EqualTo("NewBirdName"));
+            });
         }
     }
 }

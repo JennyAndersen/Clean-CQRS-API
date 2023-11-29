@@ -12,7 +12,6 @@ namespace Test.ApplicationTests.DogTests.QueryHandlers
         [SetUp]
         public void SetUp()
         {
-            // Initialize the handler and mock database before each test
             _mockDatabase = new MockDatabase();
             _handler = new GetDogByIdQueryHandler(_mockDatabase);
         }
@@ -29,7 +28,7 @@ namespace Test.ApplicationTests.DogTests.QueryHandlers
             var result = await _handler.Handle(query, CancellationToken.None);
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Id, Is.EqualTo(dogId));
         }
 
@@ -45,7 +44,7 @@ namespace Test.ApplicationTests.DogTests.QueryHandlers
             var result = await _handler.Handle(query, CancellationToken.None);
 
             // Assert
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
     }
 }

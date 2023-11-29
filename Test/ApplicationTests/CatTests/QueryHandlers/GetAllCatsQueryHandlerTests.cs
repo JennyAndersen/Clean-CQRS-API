@@ -27,9 +27,9 @@ namespace Test.ApplicationTests.CatTests.QueryHandlers
             var result = await _handler.Handle(query, CancellationToken.None);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsInstanceOf<List<Cat>>(result);
-            Assert.Greater(result.Count, 0);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.InstanceOf<List<Cat>>());
+            Assert.That(result.Count, Is.GreaterThan(0));
         }
 
     }

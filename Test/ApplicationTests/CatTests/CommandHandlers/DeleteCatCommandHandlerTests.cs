@@ -25,7 +25,6 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
             var initialCat = new Cat { Id = Guid.NewGuid(), Name = "InitialCatName" };
             _mockDatabase.Cats.Add(initialCat);
 
-            // Create an instance of DeleteDogByIdCommand
             var command = new DeleteCatByIdCommand(
                 deletedCat: new CatDto { Name = "InitialCatName" },
                 deletedCatId: initialCat.Id
@@ -35,11 +34,10 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
 
-            // Check that the dog has been deleted from MockDatabase
             var deletedCatInDatabase = _mockDatabase.Cats.FirstOrDefault(cat => cat.Id == command.DeletedCatId);
-            Assert.IsNull(deletedCatInDatabase);
+            Assert.That(deletedCatInDatabase, Is.Null);
         }
     }
 }
