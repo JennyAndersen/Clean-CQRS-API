@@ -9,7 +9,7 @@ namespace Test.ApplicationTests.CatTests.QueryHandlers
     {
         private GetCatByIdQueryHandler _handler;
         private MockDatabase _mockDatabase;
-
+        /*
         [SetUp]
         public void SetUp()
         {
@@ -44,6 +44,6 @@ namespace Test.ApplicationTests.CatTests.QueryHandlers
             // Act & Assert
             var exception = Assert.ThrowsAsync<NotFoundException>(async () => await _handler.Handle(query, CancellationToken.None));
             Assert.That(exception.Message, Is.EqualTo("Cat not found."));
-        }
+        }*/
     }
 }

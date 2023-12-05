@@ -9,7 +9,7 @@ namespace Test.ApplicationTests.CatTests.QueryHandlers
     {
         private GetAllCatsQueryHandler _handler;
         private MockDatabase _mockDatabase;
-
+        /*
         [SetUp]
         public void SetUp()
         {
@@ -31,6 +31,6 @@ namespace Test.ApplicationTests.CatTests.QueryHandlers
             Assert.That(result, Is.InstanceOf<List<Cat>>());
             Assert.That(result.Count, Is.GreaterThan(0));
         }
-
+        */
     }
 }

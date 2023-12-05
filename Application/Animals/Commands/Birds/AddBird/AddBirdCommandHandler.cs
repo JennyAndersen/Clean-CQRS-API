@@ -13,7 +13,7 @@ namespace Application.Animals.Commands.Birds.AddBird
             _dataDbContext = dataDbContext;
         }
 
-        public Task<Bird> Handle(AddBirdCommand request, CancellationToken cancellationToken)
+        public async Task<Bird> Handle(AddBirdCommand request, CancellationToken cancellationToken)
         {
             Bird birdToCreate = new()
             {
@@ -23,8 +23,9 @@ namespace Application.Animals.Commands.Birds.AddBird
             };
 
             _dataDbContext.Birds.Add(birdToCreate);
+            await _dataDbContext.SaveChangesAsync(cancellationToken);
 
-            return Task.FromResult(birdToCreate);
+            return birdToCreate;
         }
     }
 }

@@ -2,10 +2,7 @@
 using Application.Dtos;
 using Domain.Models;
 using Infrastructure.Data;
-using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
-using Moq;
-using System.Data.Entity;
 
 namespace Test.ApplicationTests.BirdTests.CommandHandlers
 {

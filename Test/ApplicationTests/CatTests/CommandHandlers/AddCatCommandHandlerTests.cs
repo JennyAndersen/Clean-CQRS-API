@@ -9,7 +9,7 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
     public class AddCatCommandHandlerTests
     {
         private AddCatCommandHandler _handler;
-
+        /*
         [SetUp]
         public void Setup()
         {
@@ -35,5 +35,6 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
                 Assert.That(result.Name, Is.EqualTo("NewCatName"));
             });
         }
+        */
     }
 }

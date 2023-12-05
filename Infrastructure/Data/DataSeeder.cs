@@ -1,5 +1,5 @@
-﻿using Domain.Models.Animal;
-using Domain.Models;
+﻿using Domain.Models;
+using Domain.Models.Animal;
 
 namespace Infrastructure.Data
 {

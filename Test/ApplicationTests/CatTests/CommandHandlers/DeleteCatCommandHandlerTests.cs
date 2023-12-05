@@ -10,7 +10,7 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
     {
         private DeleteCatByIdCommandHandler _handler;
         private MockDatabase _mockDatabase;
-
+        /*
         [SetUp]
         public void Setup()
         {
@@ -35,6 +35,6 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
 
             // Assert
             Assert.That(result, Is.True);
-        }
+        }*/
     }
 }

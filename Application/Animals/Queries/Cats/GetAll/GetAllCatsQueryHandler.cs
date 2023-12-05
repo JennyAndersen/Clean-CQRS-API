@@ -1,22 +1,23 @@
 ﻿using Domain.Models;
-using Infrastructure.Database;
+using Infrastructure.Data;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Animals.Queries.Cats.GetAll
 {
-    public class GetAllCatsQueryHandler : IRequestHandler<GetAllCatsQuery, List<Cat>>
+    public class GetAllCatsQueryHandler : IRequestHandler<GetAllCatsQuery, DbSet<Cat>>
     {
-        private readonly MockDatabase _mockDatabase;
+        private readonly DataDbContext _dataDbContext;
 
-        public GetAllCatsQueryHandler(MockDatabase mockDatabase)
+        public GetAllCatsQueryHandler(DataDbContext dataDbContext)
         {
-            _mockDatabase = mockDatabase;
+            _dataDbContext = dataDbContext;
         }
 
-        public Task<List<Cat>> Handle(GetAllCatsQuery request, CancellationToken cancellationToken)
+        public Task<DbSet<Cat>> Handle(GetAllCatsQuery request, CancellationToken cancellationToken)
         {
-            List<Cat> allCatsFromMockDatabase = _mockDatabase.Cats;
-            return Task.FromResult(allCatsFromMockDatabase);
+            DbSet<Cat> allCatsFromDatabase =  _dataDbContext.Cats;
+            return Task.FromResult(allCatsFromDatabase);
         }
     }
 }

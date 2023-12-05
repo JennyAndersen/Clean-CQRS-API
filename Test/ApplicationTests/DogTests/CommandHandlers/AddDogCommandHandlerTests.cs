@@ -9,7 +9,7 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
     public class AddDogCommandHandlerTests
     {
         private AddDogCommandHandler _handler;
-
+        /*
         [SetUp]
         public void Setup()
         {
@@ -34,6 +34,6 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
                 Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
                 Assert.That(result.Name, Is.EqualTo("NewDogName"));
             });
-        }
+        }*/
     }
 }

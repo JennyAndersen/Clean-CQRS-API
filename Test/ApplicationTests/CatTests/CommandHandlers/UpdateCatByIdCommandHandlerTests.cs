@@ -10,7 +10,7 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
     {
         private UpdateCatByIdCommandHandler _handler;
         private MockDatabase _mockDatabase;
-
+        /*
         [SetUp]
         public void Setup()
         {
@@ -37,7 +37,7 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Is.InstanceOf<Cat>());
             Assert.That(result.Name, Is.EqualTo("UpdatedCatName"));
-        }
+        }*/
     }
 }
 

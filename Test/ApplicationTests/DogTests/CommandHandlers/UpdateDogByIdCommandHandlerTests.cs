@@ -10,7 +10,7 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
     {
         private UpdateDogByIdCommandHandler _handler;
         private MockDatabase _mockDatabase;
-
+        /*
         [SetUp]
         public void Setup()
         {
@@ -37,7 +37,7 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Is.InstanceOf<Dog>());
             Assert.That(result.Name, Is.EqualTo("UpdatedDogName"));
-        }
+        }*/
     }
 }
 

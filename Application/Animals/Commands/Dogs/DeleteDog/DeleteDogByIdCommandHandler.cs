@@ -1,28 +1,29 @@
 ﻿using Domain.Models;
-using Infrastructure.Database;
+using Infrastructure.Data;
 using MediatR;
 
 namespace Application.Animals.Commands.Dogs.DeleteDog
 {
     public class DeleteDogByIdCommandHandler : IRequestHandler<DeleteDogByIdCommand, bool>
     {
-        private readonly MockDatabase _mockDatabase;
-        public DeleteDogByIdCommandHandler(MockDatabase mockDatabase)
+        private readonly DataDbContext _dataDbContext;
+        public DeleteDogByIdCommandHandler(DataDbContext dataDbContext)
         {
-            _mockDatabase = mockDatabase;
+            _dataDbContext = dataDbContext;
         }
 
-        public Task<bool> Handle(DeleteDogByIdCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteDogByIdCommand request, CancellationToken cancellationToken)
         {
-            Dog dogToDelete = _mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == request.DeletedDogId)!;
+            Dog dogToDelete = _dataDbContext.Dogs.FirstOrDefault(dog => dog.Id == request.DeletedDogId)!;
 
             if (dogToDelete == null)
             {
-                return Task.FromResult(false);
+                return false;
             }
 
-            _mockDatabase.Dogs.Remove(dogToDelete);
-            return Task.FromResult(true);
+            _dataDbContext.Dogs.Remove(dogToDelete);
+            await _dataDbContext.SaveChangesAsync(cancellationToken);
+            return true;
         }
     }
 }

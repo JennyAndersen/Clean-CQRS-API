@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Infrastructure.Data;
 using Infrastructure.Database;
 using MediatR;
 
@@ -6,23 +7,24 @@ namespace Application.Animals.Commands.Cats.DeleteCat
 {
     public class DeleteCatByIdCommandHandler : IRequestHandler<DeleteCatByIdCommand, bool>
     {
-        private readonly MockDatabase _mockDatabase;
-        public DeleteCatByIdCommandHandler(MockDatabase mockDatabase)
+        private readonly DataDbContext _dataDbContext;
+        public DeleteCatByIdCommandHandler(DataDbContext dataDbContext)
         {
-            _mockDatabase = mockDatabase;
+            _dataDbContext = dataDbContext;
         }
 
-        public Task<bool> Handle(DeleteCatByIdCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteCatByIdCommand request, CancellationToken cancellationToken)
         {
-            Cat catToDelete = _mockDatabase.Cats.FirstOrDefault(cat => cat.Id == request.DeletedCatId)!;
+            Cat catToDelete = _dataDbContext.Cats.FirstOrDefault(cat => cat.Id == request.DeletedCatId)!;
 
             if (catToDelete == null)
             {
-                return Task.FromResult(false);
+                return false; 
             }
 
-            _mockDatabase.Cats.Remove(catToDelete);
-            return Task.FromResult(true);
+            _dataDbContext.Cats.Remove(catToDelete);
+            await _dataDbContext.SaveChangesAsync(cancellationToken);
+            return true;
         }
     }
 }

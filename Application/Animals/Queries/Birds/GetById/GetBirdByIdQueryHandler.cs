@@ -1,5 +1,5 @@
 ﻿using Domain.Models;
-using Infrastructure.Database;
+using Infrastructure.Data;
 using MediatR;
 using SendGrid.Helpers.Errors.Model;
 
@@ -7,16 +7,16 @@ namespace Application.Animals.Queries.Birds.GetById
 {
     public class GetBirdByIdQueryHandler : IRequestHandler<GetBirdByIdQuery, Bird>
     {
-        private readonly MockDatabase _mockDatabase;
+        private readonly DataDbContext _dataDbContext;
 
-        public GetBirdByIdQueryHandler(MockDatabase mockDatabase)
+        public GetBirdByIdQueryHandler(DataDbContext dataDbContext)
         {
-            _mockDatabase = mockDatabase;
+            _dataDbContext = dataDbContext;
         }
 
         public Task<Bird> Handle(GetBirdByIdQuery request, CancellationToken cancellationToken)
         {
-            Bird wantedBird = _mockDatabase.Birds.FirstOrDefault(bird => bird.Id == request.Id)! ?? throw new NotFoundException("Bird not found.");
+            Bird wantedBird = _dataDbContext.Birds.FirstOrDefault(bird => bird.Id == request.Id)! ?? throw new NotFoundException("Bird not found.");
             return Task.FromResult(wantedBird);
         }
     }

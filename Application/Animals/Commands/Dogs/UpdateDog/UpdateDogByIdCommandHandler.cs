@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Infrastructure.Data;
 using Infrastructure.Database;
 using MediatR;
 
@@ -6,19 +7,20 @@ namespace Application.Animals.Commands.Dogs.UpdateDog
 {
     public class UpdateDogByIdCommandHandler : IRequestHandler<UpdateDogByIdCommand, Dog>
     {
-        private readonly MockDatabase _mockDatabase;
+        private readonly DataDbContext _dataDbContext;
 
-        public UpdateDogByIdCommandHandler(MockDatabase mockDatabase)
+        public UpdateDogByIdCommandHandler(DataDbContext dataDbContext)
         {
-            _mockDatabase = mockDatabase;
+            _dataDbContext = dataDbContext;
         }
-        public Task<Dog> Handle(UpdateDogByIdCommand request, CancellationToken cancellationToken)
+        public async Task<Dog> Handle(UpdateDogByIdCommand request, CancellationToken cancellationToken)
         {
-            Dog dogToUpdate = _mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == request.Id)!;
+            Dog dogToUpdate = _dataDbContext.Dogs.FirstOrDefault(dog => dog.Id == request.Id)!;
 
             dogToUpdate.Name = request.UpdatedDog.Name;
+            await _dataDbContext.SaveChangesAsync(cancellationToken);
 
-            return Task.FromResult(dogToUpdate);
+            return dogToUpdate;
         }
     }
 }

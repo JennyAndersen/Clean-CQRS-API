@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Infrastructure.Data;
 using Infrastructure.Database;
 using MediatR;
 
@@ -6,14 +7,14 @@ namespace Application.Animals.Commands.Dogs.AddDog
 {
     public class AddDogCommandHandler : IRequestHandler<AddDogCommand, Dog>
     {
-        private readonly MockDatabase _mockDatabase;
+        private readonly DataDbContext _dataDbContext;
 
-        public AddDogCommandHandler(MockDatabase mockDatabase)
+        public AddDogCommandHandler(DataDbContext dataDbContext)
         {
-            _mockDatabase = mockDatabase;
+            _dataDbContext = dataDbContext;
         }
 
-        public Task<Dog> Handle(AddDogCommand request, CancellationToken cancellationToken)
+        public async Task<Dog> Handle(AddDogCommand request, CancellationToken cancellationToken)
         {
             Dog dogToCreate = new()
             {
@@ -21,9 +22,10 @@ namespace Application.Animals.Commands.Dogs.AddDog
                 Name = request.NewDog.Name
             };
 
-            _mockDatabase.Dogs.Add(dogToCreate);
+            _dataDbContext.Dogs.Add(dogToCreate);
+            await _dataDbContext.SaveChangesAsync(cancellationToken);
 
-            return Task.FromResult(dogToCreate);
+            return dogToCreate;
         }
     }
 }

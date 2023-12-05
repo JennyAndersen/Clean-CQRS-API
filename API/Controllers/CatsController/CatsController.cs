@@ -36,7 +36,7 @@ namespace API.Controllers.CatsController
 
         [HttpPost]
         [Route("addNewCat")]
-        [Authorize(Policy = "Admin")]
+        // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> AddCat([FromBody] CatDto newCat)
         {
             return Ok(await _mediator.Send(new AddCatCommand(newCat)));
@@ -45,7 +45,7 @@ namespace API.Controllers.CatsController
 
         [HttpPut]
         [Route("updateCat/{updatedCatId}")]
-        [Authorize(Policy = "Admin")]
+        // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateCat([FromBody] CatDto updatedCat, Guid updatedCatId)
         {
             return Ok(await _mediator.Send(new UpdateCatByIdCommand(updatedCat, updatedCatId)));
@@ -53,10 +53,10 @@ namespace API.Controllers.CatsController
 
         [HttpDelete]
         [Route("deleteCat/{deletedCatId}")]
-        [Authorize(Policy = "Admin")]
-        public async Task<IActionResult> DeleteCat([FromBody] CatDto deletedCat, Guid deletedCatId)
+        // [Authorize(Policy = "Admin")]
+        public async Task<IActionResult> DeleteCat(Guid deletedCatId)
         {
-            return Ok(await _mediator.Send(new DeleteCatByIdCommand(deletedCat, deletedCatId)));
+            return Ok(await _mediator.Send(new DeleteCatByIdCommand(deletedCatId)));
         }
     }
 }
