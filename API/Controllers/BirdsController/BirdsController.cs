@@ -4,6 +4,8 @@ using Application.Animals.Commands.Birds.UpdateBird;
 using Application.Animals.Queries.Birds.GetAll;
 using Application.Animals.Queries.Birds.GetById;
 using Application.Dtos;
+using Domain.Models;
+using Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,9 +17,11 @@ namespace API.Controllers.CatsController
     public class BirdsController : ControllerBase
     {
         internal readonly IMediator _mediator;
-        public BirdsController(IMediator mediator)
+        private readonly DataDbContext _dbContext;
+        public BirdsController(IMediator mediator, DataDbContext dbContext)
         {
             _mediator = mediator;
+            _dbContext = dbContext;
         }
 
         [HttpGet]
@@ -28,7 +32,7 @@ namespace API.Controllers.CatsController
         }
 
         [HttpGet]
-        [Route("getBirdById/{catId}")]
+        [Route("getBirdById/{birdId}")]
         public async Task<IActionResult> GetBirdById(Guid catId)
         {
             return Ok(await _mediator.Send(new GetBirdByIdQuery(catId)));
@@ -36,10 +40,18 @@ namespace API.Controllers.CatsController
 
         [HttpPost]
         [Route("addNewBird")]
-        [Authorize(Policy = "Admin")]
+        //Authorize(Policy = "Admin")]
         public async Task<IActionResult> AddBird([FromBody] BirdDto newBird)
         {
-            return Ok(await _mediator.Send(new AddBirdCommand(newBird)));
+            try
+            {
+                var result = await _mediator.Send(new AddBirdCommand(newBird));
+                return result == null ? BadRequest("Could not add the bird.") : (IActionResult)Ok(newBird);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred while adding the bird.");
+            }
         }
 
         [HttpPut]

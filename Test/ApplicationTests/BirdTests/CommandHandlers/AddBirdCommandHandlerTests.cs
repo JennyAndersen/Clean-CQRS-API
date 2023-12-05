@@ -1,7 +1,11 @@
 ﻿using Application.Animals.Commands.Birds.AddBird;
 using Application.Dtos;
 using Domain.Models;
+using Infrastructure.Data;
 using Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
+using Moq;
+using System.Data.Entity;
 
 namespace Test.ApplicationTests.BirdTests.CommandHandlers
 {
@@ -9,11 +13,17 @@ namespace Test.ApplicationTests.BirdTests.CommandHandlers
     public class AddBirdCommandHandlerTests
     {
         private AddBirdCommandHandler _handler;
+        private DataDbContext _dbContext;
 
         [SetUp]
         public void Setup()
         {
-            _handler = new AddBirdCommandHandler(new MockDatabase());
+            var options = new DbContextOptionsBuilder<DataDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestDatabase")
+            .Options;
+
+            _dbContext = new DataDbContext(options);
+            _handler = new AddBirdCommandHandler(_dbContext);
         }
 
         [Test]
