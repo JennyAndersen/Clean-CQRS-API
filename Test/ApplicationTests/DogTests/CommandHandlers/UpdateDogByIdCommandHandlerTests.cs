@@ -1,6 +1,4 @@
 ﻿using Application.Animals.Commands.Dogs.UpdateDog;
-using Application.Dtos;
-using Domain.Models;
 using Infrastructure.Database;
 
 namespace Test.ApplicationTests.DogTests.CommandHandlers

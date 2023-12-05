@@ -5,7 +5,6 @@ using Application.Animals.Queries.Cats.GetAll;
 using Application.Animals.Queries.Cats.GetById;
 using Application.Dtos;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.CatsController

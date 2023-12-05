@@ -1,7 +1,4 @@
 ﻿using Application.Animals.Commands.Cats.AddCat;
-using Application.Dtos;
-using Domain.Models;
-using Infrastructure.Database;
 
 namespace Test.ApplicationTests.CatTests.CommandHandlers
 {

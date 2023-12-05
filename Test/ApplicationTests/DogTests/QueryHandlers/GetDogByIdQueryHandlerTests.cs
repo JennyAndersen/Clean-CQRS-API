@@ -1,6 +1,5 @@
 ﻿using Application.Animals.Queries.Dogs.GetById;
 using Infrastructure.Database;
-using SendGrid.Helpers.Errors.Model;
 
 namespace Test.ApplicationTests.DogTests.QueryHandlers
 {

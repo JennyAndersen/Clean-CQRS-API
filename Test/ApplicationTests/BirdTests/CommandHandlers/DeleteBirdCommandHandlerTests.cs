@@ -1,11 +1,6 @@
 ﻿using Application.Animals.Commands.Birds.DeleteBird;
-using Domain.Models;
 using Infrastructure.Data;
 using Moq;
-using NUnit.Framework;
-using System;
-using System.Threading;
-using Xunit;
 
 namespace Test.ApplicationTests.BirdTests.CommandHandlers
 {

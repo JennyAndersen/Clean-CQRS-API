@@ -1,6 +1,4 @@
 ﻿using Application.Animals.Commands.Cats.DeleteCat;
-using Application.Dtos;
-using Domain.Models;
 using Infrastructure.Database;
 
 namespace Test.ApplicationTests.CatTests.CommandHandlers

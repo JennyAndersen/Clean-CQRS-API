@@ -1,6 +1,5 @@
 ﻿using Domain.Models;
 using Infrastructure.Data;
-using Infrastructure.Database;
 using MediatR;
 using SendGrid.Helpers.Errors.Model;
 

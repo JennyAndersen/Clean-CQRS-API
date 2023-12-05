@@ -1,6 +1,5 @@
 ﻿using Domain.Models;
 using Infrastructure.Data;
-using Infrastructure.Database;
 using MediatR;
 
 namespace Application.Animals.Commands.Cats.DeleteCat
@@ -19,7 +18,7 @@ namespace Application.Animals.Commands.Cats.DeleteCat
 
             if (catToDelete == null)
             {
-                return false; 
+                return false;
             }
 
             _dataDbContext.Cats.Remove(catToDelete);

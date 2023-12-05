@@ -1,6 +1,5 @@
 ﻿using Domain.Models;
 using Infrastructure.Data;
-using Infrastructure.Database;
 using MediatR;
 
 namespace Application.Animals.Commands.Cats.AddCat
@@ -26,7 +25,7 @@ namespace Application.Animals.Commands.Cats.AddCat
             _dataDbContext.Cats.Add(catToCreate);
             await _dataDbContext.SaveChangesAsync(cancellationToken);
 
-            return catToCreate; 
+            return catToCreate;
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using Application.Animals.Commands.Cats.UpdateCat;
-using Application.Dtos;
-using Domain.Models;
 using Infrastructure.Database;
 
 namespace Test.ApplicationTests.CatTests.CommandHandlers

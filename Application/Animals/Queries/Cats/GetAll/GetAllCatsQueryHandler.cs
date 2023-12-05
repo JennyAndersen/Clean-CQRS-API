@@ -16,7 +16,7 @@ namespace Application.Animals.Queries.Cats.GetAll
 
         public Task<DbSet<Cat>> Handle(GetAllCatsQuery request, CancellationToken cancellationToken)
         {
-            DbSet<Cat> allCatsFromDatabase =  _dataDbContext.Cats;
+            DbSet<Cat> allCatsFromDatabase = _dataDbContext.Cats;
             return Task.FromResult(allCatsFromDatabase);
         }
     }

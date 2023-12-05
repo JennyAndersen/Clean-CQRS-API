@@ -1,5 +1,4 @@
 ﻿using Application.Animals.Queries.Birds.GetAll;
-using Domain.Models;
 using Infrastructure.Database;
 
 namespace Test.ApplicationTests.BirdTests.QueryHandlers

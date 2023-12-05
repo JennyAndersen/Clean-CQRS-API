@@ -1,5 +1,4 @@
 ﻿using Application.Animals.Queries.Dogs.GetAll;
-using Domain.Models;
 using Infrastructure.Database;
 
 namespace Test.ApplicationTests.DogTests.QueryHandlers
