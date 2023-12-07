@@ -7,9 +7,9 @@ namespace Application.Animals.Queries.Cats.GetById
 {
     public class GetCatByIdQueryHandler : IRequestHandler<GetCatByIdQuery, Cat>
     {
-        private readonly DataDbContext _dataDbContext;
+        private readonly AnimalDbContext _dataDbContext;
 
-        public GetCatByIdQueryHandler(DataDbContext dataDbContext)
+        public GetCatByIdQueryHandler(AnimalDbContext dataDbContext)
         {
             _dataDbContext = dataDbContext;
         }

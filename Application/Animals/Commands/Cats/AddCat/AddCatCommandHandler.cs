@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Interfaces;
+using Domain.Models;
 using Infrastructure.Data;
 using MediatR;
 
@@ -6,11 +7,11 @@ namespace Application.Animals.Commands.Cats.AddCat
 {
     public class AddCatCommandHandler : IRequestHandler<AddCatCommand, Cat>
     {
-        private readonly DataDbContext _dataDbContext;
+        private readonly IAnimalRepository _animalRepository;
 
-        public AddCatCommandHandler(DataDbContext dataDbContext)
+        public AddCatCommandHandler(IAnimalRepository animalRepository)
         {
-            _dataDbContext = dataDbContext;
+            _animalRepository = animalRepository;
         }
 
         public async Task<Cat> Handle(AddCatCommand request, CancellationToken cancellationToken)
@@ -22,9 +23,7 @@ namespace Application.Animals.Commands.Cats.AddCat
                 LikesToPlay = request.NewCat.LikesToPlay
             };
 
-            _dataDbContext.Cats.Add(catToCreate);
-            await _dataDbContext.SaveChangesAsync(cancellationToken);
-
+            await _animalRepository.AddAsync(catToCreate);
             return catToCreate;
         }
     }

@@ -8,12 +8,12 @@ namespace Test.ApplicationTests.BirdTests.CommandHandlers
     public class DeleteBirdByIdCommandHandlerTests
     {
         private DeleteBirdByIdCommandHandler _handler;
-        private Mock<DataDbContext> _dataDbContextMock;
+        private Mock<AnimalDbContext> _dataDbContextMock;
         /*
         [SetUp]
         public void Setup()
         {
-            _dataDbContextMock = new Mock<DataDbContext>();
+            _dataDbContextMock = new Mock<AnimalDbContext>();
             _handler = new DeleteBirdByIdCommandHandler(_dataDbContextMock.Object);
         }
 

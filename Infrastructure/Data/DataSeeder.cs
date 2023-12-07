@@ -9,7 +9,7 @@ namespace Infrastructure.Data
         private static readonly List<string> DogNames = new() { "Buddy", "Max", "Charlie", "Bailey", "Lucy", "Cooper", "Rocky", "Lola", "Daisy", "Teddy" };
         private static readonly List<string> BirdNames = new() { "Tweety", "Polly", "Sunny", "Kiwi", "Blue", "Rio", "Sky", "Pippin", "Oscar", "Coco" };
 
-        public static void SeedData(DataDbContext dbContext)
+        public static void SeedData(AnimalDbContext dbContext)
         {
             if (!dbContext.Animals.Any())
             {
@@ -17,7 +17,7 @@ namespace Infrastructure.Data
 
                 for (int i = 0; i < 10; i++)
                 {
-                    AnimalModel animal;
+                    Animal animal;
 
                     if (i % 3 == 0)
                     {

@@ -3,23 +3,26 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace API.Migrations
+namespace Infrastructure.Migrations
 {
-    [DbContext(typeof(DataDbContext))]
-    partial class DataDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(AnimalDbContext))]
+    [Migration("20231206152251_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Domain.Models.Animal.AnimalModel", b =>
+            modelBuilder.Entity("Domain.Models.Animal.Animal", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,14 +40,14 @@ namespace API.Migrations
 
                     b.ToTable("Animals");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("AnimalModel");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Animal");
 
                     b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Domain.Models.Bird", b =>
                 {
-                    b.HasBaseType("Domain.Models.Animal.AnimalModel");
+                    b.HasBaseType("Domain.Models.Animal.Animal");
 
                     b.Property<bool>("CanFly")
                         .HasColumnType("tinyint(1)");
@@ -54,7 +57,7 @@ namespace API.Migrations
 
             modelBuilder.Entity("Domain.Models.Cat", b =>
                 {
-                    b.HasBaseType("Domain.Models.Animal.AnimalModel");
+                    b.HasBaseType("Domain.Models.Animal.Animal");
 
                     b.Property<bool>("LikesToPlay")
                         .HasColumnType("tinyint(1)");
@@ -64,7 +67,7 @@ namespace API.Migrations
 
             modelBuilder.Entity("Domain.Models.Dog", b =>
                 {
-                    b.HasBaseType("Domain.Models.Animal.AnimalModel");
+                    b.HasBaseType("Domain.Models.Animal.Animal");
 
                     b.HasDiscriminator().HasValue("Dog");
                 });

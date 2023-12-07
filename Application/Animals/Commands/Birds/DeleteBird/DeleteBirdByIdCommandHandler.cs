@@ -1,4 +1,6 @@
-﻿using Domain.Models;
+﻿using Domain.Interfaces;
+using Domain.Models;
+using Domain.Models.Animal;
 using Infrastructure.Data;
 using MediatR;
 
@@ -6,23 +8,22 @@ namespace Application.Animals.Commands.Birds.DeleteBird
 {
     public class DeleteBirdByIdCommandHandler : IRequestHandler<DeleteBirdByIdCommand, bool>
     {
-        private readonly DataDbContext _dataDbContext;
-        public DeleteBirdByIdCommandHandler(DataDbContext dataDbContext)
+        private readonly IAnimalRepository _animalRepository;
+        public DeleteBirdByIdCommandHandler(IAnimalRepository animalRepository)
         {
-            _dataDbContext = dataDbContext;
+            _animalRepository = animalRepository;
         }
 
         public async Task<bool> Handle(DeleteBirdByIdCommand request, CancellationToken cancellationToken)
         {
-            Bird birdToDelete = _dataDbContext.Birds.FirstOrDefault(bird => bird.Id == request.DeletedBirdId)!;
+            Animal birdToDelete = await _animalRepository.GetByIdAsync(request.DeletedBirdId);
 
             if (birdToDelete == null)
             {
                 return false;
             }
 
-            _dataDbContext.Birds.Remove(birdToDelete);
-            await _dataDbContext.SaveChangesAsync();
+            await _animalRepository.DeleteAsync(request.DeletedBirdId);
             return true;
         }
     }

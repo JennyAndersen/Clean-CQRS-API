@@ -7,9 +7,9 @@ namespace Application.Animals.Queries.Birds.GetById
 {
     public class GetBirdByIdQueryHandler : IRequestHandler<GetBirdByIdQuery, Bird>
     {
-        private readonly DataDbContext _dataDbContext;
+        private readonly AnimalDbContext _dataDbContext;
 
-        public GetBirdByIdQueryHandler(DataDbContext dataDbContext)
+        public GetBirdByIdQueryHandler(AnimalDbContext dataDbContext)
         {
             _dataDbContext = dataDbContext;
         }

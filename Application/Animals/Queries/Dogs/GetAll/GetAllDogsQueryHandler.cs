@@ -7,9 +7,9 @@ namespace Application.Animals.Queries.Dogs.GetAll
 {
     public class GetAllDogsQueryHandler : IRequestHandler<GetAllDogsQuery, DbSet<Dog>>
     {
-        private readonly DataDbContext _dataDbContext;
+        private readonly AnimalDbContext _dataDbContext;
 
-        public GetAllDogsQueryHandler(DataDbContext dataDbContext)
+        public GetAllDogsQueryHandler(AnimalDbContext dataDbContext)
         {
             _dataDbContext = dataDbContext;
         }

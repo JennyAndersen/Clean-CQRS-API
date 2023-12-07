@@ -1,4 +1,6 @@
-﻿using Domain.Models;
+﻿using Domain.Interfaces;
+using Domain.Models;
+using Domain.Models.Animal;
 using Infrastructure.Data;
 using MediatR;
 using SendGrid.Helpers.Errors.Model;
@@ -7,19 +9,21 @@ namespace Application.Animals.Commands.Birds.UpdateBird
 {
     public class UpdateBirdByIdCommandHandler : IRequestHandler<UpdateBirdByIdCommand, Bird>
     {
-        private readonly DataDbContext _dataDbContext;
+        private readonly IAnimalRepository _animalRepository;
 
-        public UpdateBirdByIdCommandHandler(DataDbContext dataDbContext)
+        public UpdateBirdByIdCommandHandler(IAnimalRepository animalRepository)
         {
-            _dataDbContext = dataDbContext;
+            _animalRepository = animalRepository;
         }
         public async Task<Bird> Handle(UpdateBirdByIdCommand request, CancellationToken cancellationToken)
         {
-            Bird birdToUpdate = _dataDbContext.Birds.FirstOrDefault(bird => bird.Id == request.Id)! ?? throw new NotFoundException($"Bird with ID {request.Id} not found.");
+            var birdToUpdate = await _animalRepository.GetByIdAsync(request.Id) as Bird
+                   ?? throw new NotFoundException($"Bird with ID {request.Id} not found.");
 
             birdToUpdate.Name = request.UpdatedBird.Name;
             birdToUpdate.CanFly = request.UpdatedBird.CanFly;
-            await _dataDbContext.SaveChangesAsync();
+
+            await _animalRepository.UpdateAsync(birdToUpdate);
 
             return birdToUpdate;
         }

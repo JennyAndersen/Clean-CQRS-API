@@ -67,12 +67,11 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var connectionString = builder.Configuration.GetConnectionString("AddDbConnectionString");
-builder.Services.AddDbContext<DataDbContext>(options =>
+builder.Services.AddDbContext<AnimalDbContext>(options =>
 {
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
         b => b.MigrationsAssembly("API"));
 });
-
 
 builder.Services.AddControllers();
 
