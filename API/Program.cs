@@ -1,7 +1,9 @@
 using Application;
 using Infrastructure;
 using Infrastructure.Authentication;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -62,6 +64,13 @@ builder.Services.AddSwaggerGen(c =>
             Array.Empty<string>()
         }
     });
+});
+
+var connectionString = builder.Configuration.GetConnectionString("AddDbConnectionString");
+builder.Services.AddDbContext<AnimalDbContext>(options =>
+{
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
+        b => b.MigrationsAssembly("API"));
 });
 
 builder.Services.AddControllers();

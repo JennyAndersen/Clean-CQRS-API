@@ -1,5 +1,7 @@
-﻿using Domain.Models;
-using Infrastructure.Database;
+﻿
+using Domain.Interfaces;
+using Domain.Models;
+using Infrastructure.Data;
 using MediatR;
 using SendGrid.Helpers.Errors.Model;
 
@@ -7,20 +9,23 @@ namespace Application.Animals.Commands.Cats.UpdateCat
 {
     public class UpdateCatByIdCommandHandler : IRequestHandler<UpdateCatByIdCommand, Cat>
     {
-        private readonly MockDatabase _mockDatabase;
+        private readonly IAnimalRepository _animalRepository;
 
-        public UpdateCatByIdCommandHandler(MockDatabase mockDatabase)
+        public UpdateCatByIdCommandHandler(IAnimalRepository animalRepository)
         {
-            _mockDatabase = mockDatabase;
+            _animalRepository = animalRepository;
         }
-        public Task<Cat> Handle(UpdateCatByIdCommand request, CancellationToken cancellationToken)
+        public async Task<Cat> Handle(UpdateCatByIdCommand request, CancellationToken cancellationToken)
         {
-            Cat catToUpdate = _mockDatabase.Cats.FirstOrDefault(cat => cat.Id == request.Id)! ?? throw new NotFoundException($"Bird with ID {request.Id} not found.");
+            var catToUpdate = await _animalRepository.GetByIdAsync(request.Id) as Cat
+                   ?? throw new NotFoundException($"Cat with ID {request.Id} not found.");
 
             catToUpdate.Name = request.UpdatedCat.Name;
             catToUpdate.LikesToPlay = request.UpdatedCat.LikesToPlay;
 
-            return Task.FromResult(catToUpdate);
+            await _animalRepository.UpdateAsync(catToUpdate);
+
+            return catToUpdate;
         }
     }
 }

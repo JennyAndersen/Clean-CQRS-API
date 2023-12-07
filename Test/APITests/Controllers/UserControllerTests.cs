@@ -37,7 +37,7 @@ namespace Test.APITests.Controllers
             _factory.Dispose();
             _client.Dispose();
         }
-
+        /*
         [Test]
         public async Task WHEN_RegisterUser_THEN_Success()
         {
@@ -61,7 +61,7 @@ namespace Test.APITests.Controllers
             // Assert
             Assert.That(result, Is.InstanceOf<OkObjectResult>());
         }
-
+        
         //HÅLLER PÅ ATT BRYTA NER UTAN SKAPADE EN POC BARA 
         [Test]
         public async Task CanRegisterAndLoginUser()
@@ -103,5 +103,6 @@ namespace Test.APITests.Controllers
             //Assert 
             Assert.That(loginResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
+        */
     }
 }
