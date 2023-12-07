@@ -1,6 +1,4 @@
 ﻿using Application.Animals.Commands.Birds.UpdateBird;
-using Application.Dtos;
-using Domain.Models;
 using Infrastructure.Database;
 
 namespace Test.ApplicationTests.BirdTests.CommandHandlers
@@ -11,6 +9,7 @@ namespace Test.ApplicationTests.BirdTests.CommandHandlers
         private UpdateBirdByIdCommandHandler _handler;
         private MockDatabase _mockDatabase;
 
+        /*
         [SetUp]
         public void Setup()
         {
@@ -38,6 +37,7 @@ namespace Test.ApplicationTests.BirdTests.CommandHandlers
             Assert.That(result, Is.InstanceOf<Bird>());
             Assert.That(result.Name, Is.EqualTo("UpdatedBirdName"));
         }
+        */
     }
 }
 

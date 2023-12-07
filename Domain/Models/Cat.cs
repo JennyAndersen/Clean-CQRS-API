@@ -2,7 +2,7 @@
 
 namespace Domain.Models
 {
-    public class Cat : AnimalModel
+    public class Cat : Animal.Animal
     {
         public bool LikesToPlay { get; set; }
     }

@@ -1,19 +1,20 @@
-﻿using Domain.Models;
-using Infrastructure.Database;
+﻿using Domain.Interfaces;
+using Domain.Models;
+using Infrastructure.Data;
 using MediatR;
 
 namespace Application.Animals.Commands.Birds.AddBird
 {
     public class AddBirdCommandHandler : IRequestHandler<AddBirdCommand, Bird>
     {
-        private readonly MockDatabase _mockDatabase;
+        private readonly IAnimalRepository _animalRepository;
 
-        public AddBirdCommandHandler(MockDatabase mockDatabase)
+        public AddBirdCommandHandler(IAnimalRepository animalRepository)
         {
-            _mockDatabase = mockDatabase;
+            _animalRepository = animalRepository;
         }
 
-        public Task<Bird> Handle(AddBirdCommand request, CancellationToken cancellationToken)
+        public async Task<Bird> Handle(AddBirdCommand request, CancellationToken cancellationToken)
         {
             Bird birdToCreate = new()
             {
@@ -22,9 +23,9 @@ namespace Application.Animals.Commands.Birds.AddBird
                 CanFly = request.NewBird.CanFly
             };
 
-            _mockDatabase.Birds.Add(birdToCreate);
+            await _animalRepository.AddAsync(birdToCreate);
 
-            return Task.FromResult(birdToCreate);
+            return birdToCreate;
         }
     }
 }

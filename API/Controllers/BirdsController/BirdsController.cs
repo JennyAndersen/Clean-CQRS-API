@@ -5,7 +5,6 @@ using Application.Animals.Queries.Birds.GetAll;
 using Application.Animals.Queries.Birds.GetById;
 using Application.Dtos;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.CatsController
@@ -28,23 +27,31 @@ namespace API.Controllers.CatsController
         }
 
         [HttpGet]
-        [Route("getBirdById/{catId}")]
-        public async Task<IActionResult> GetBirdById(Guid catId)
+        [Route("getBirdById/{birdId}")]
+        public async Task<IActionResult> GetBirdById(Guid birdId)
         {
-            return Ok(await _mediator.Send(new GetBirdByIdQuery(catId)));
+            return Ok(await _mediator.Send(new GetBirdByIdQuery(birdId)));
         }
 
         [HttpPost]
         [Route("addNewBird")]
-        [Authorize(Policy = "Admin")]
+        //Authorize(Policy = "Admin")]
         public async Task<IActionResult> AddBird([FromBody] BirdDto newBird)
         {
-            return Ok(await _mediator.Send(new AddBirdCommand(newBird)));
+            try
+            {
+                var result = await _mediator.Send(new AddBirdCommand(newBird));
+                return result == null ? BadRequest("Could not add the bird.") : (IActionResult)Ok(newBird);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred while adding the bird.");
+            }
         }
 
         [HttpPut]
         [Route("updateBird/{updatedBirdId}")]
-        [Authorize(Policy = "Admin")]
+        // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateBird([FromBody] BirdDto updatedBird, Guid updatedBirdId)
         {
             return Ok(await _mediator.Send(new UpdateBirdByIdCommand(updatedBird, updatedBirdId)));
@@ -52,10 +59,10 @@ namespace API.Controllers.CatsController
 
         [HttpDelete]
         [Route("deleteBird/{deletedBirdId}")]
-        [Authorize(Policy = "Admin")]
-        public async Task<IActionResult> DeleteBird([FromBody] BirdDto deletedBird, Guid deletedBirdId)
+        // [Authorize(Policy = "Admin")]
+        public async Task<IActionResult> DeleteBird(Guid deletedBirdId)
         {
-            return Ok(await _mediator.Send(new DeleteBirdByIdCommand(deletedBird, deletedBirdId)));
+            return Ok(await _mediator.Send(new DeleteBirdByIdCommand(deletedBirdId)));
         }
     }
 }
