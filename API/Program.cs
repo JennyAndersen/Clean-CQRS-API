@@ -70,7 +70,7 @@ var connectionString = builder.Configuration.GetConnectionString("AddDbConnectio
 builder.Services.AddDbContext<AnimalDbContext>(options =>
 {
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
-        b => b.MigrationsAssembly("API"));
+        b => b.MigrationsAssembly("Infrastructure"));
 });
 
 builder.Services.AddControllers();

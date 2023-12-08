@@ -1,6 +1,5 @@
 ﻿using Domain.Interfaces;
-using Domain.Models;
-using Infrastructure.Data;
+using Domain.Models.Animal;
 using MediatR;
 
 namespace Application.Animals.Commands.Cats.AddCat
@@ -18,9 +17,11 @@ namespace Application.Animals.Commands.Cats.AddCat
         {
             Cat catToCreate = new()
             {
-                Id = Guid.NewGuid(),
+                AnimalId = Guid.NewGuid(),
                 Name = request.NewCat.Name,
-                LikesToPlay = request.NewCat.LikesToPlay
+                LikesToPlay = request.NewCat.LikesToPlay,
+                CatBreed = request.NewCat.Breed,
+                CatWeight = request.NewCat.Weight
             };
 
             await _animalRepository.AddAsync(catToCreate);

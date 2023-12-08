@@ -1,7 +1,5 @@
 ﻿using Domain.Interfaces;
-using Domain.Models;
 using Domain.Models.Animal;
-using Infrastructure.Data;
 using MediatR;
 using SendGrid.Helpers.Errors.Model;
 
@@ -22,6 +20,7 @@ namespace Application.Animals.Commands.Birds.UpdateBird
 
             birdToUpdate.Name = request.UpdatedBird.Name;
             birdToUpdate.CanFly = request.UpdatedBird.CanFly;
+            birdToUpdate.Color = request.UpdatedBird.Color;
 
             await _animalRepository.UpdateAsync(birdToUpdate);
 

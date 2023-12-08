@@ -1,14 +1,12 @@
-﻿using Application.Animals.Queries.Dogs.GetById;
-using Infrastructure.Database;
-
-namespace Test.ApplicationTests.DogTests.QueryHandlers
+﻿namespace Test.ApplicationTests.DogTests.QueryHandlers
 {
     [TestFixture]
     public class GetDogByIdQueryHandlerTests
     {
+        /*
         private GetDogByIdQueryHandler _handler;
         private MockDatabase _mockDatabase;
-        /*
+
         [SetUp]
         public void SetUp()
         {
@@ -29,7 +27,7 @@ namespace Test.ApplicationTests.DogTests.QueryHandlers
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Id, Is.EqualTo(dogId));
+            Assert.That(result.AnimalId, Is.EqualTo(dogId));
         }
 
         [Test]

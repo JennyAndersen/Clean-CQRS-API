@@ -1,5 +1,4 @@
 ﻿using Application.Animals.Queries.Birds.GetAll;
-using Infrastructure.Database;
 
 namespace Test.ApplicationTests.BirdTests.QueryHandlers
 {
@@ -7,8 +6,6 @@ namespace Test.ApplicationTests.BirdTests.QueryHandlers
     public class GetAllBirdsTests
     {
         private GetAllBirdsQueryHandler _handler;
-        private MockDatabase _mockDatabase;
-
         /*
         [SetUp]
         public void SetUp()
@@ -16,7 +13,7 @@ namespace Test.ApplicationTests.BirdTests.QueryHandlers
             _mockDatabase = new MockDatabase();
             _handler = new GetAllBirdsQueryHandler(_mockDatabase);
         }
-        
+
         [Test]
         public async Task WHEN_Handle_THEN_GetAlLBirds_ReturnsCorrect()
         {
@@ -32,6 +29,5 @@ namespace Test.ApplicationTests.BirdTests.QueryHandlers
             Assert.That(result.Count, Is.GreaterThan(0));
         }
         */
-
     }
 }

@@ -1,7 +1,6 @@
 ﻿
 using Domain.Interfaces;
-using Domain.Models;
-using Infrastructure.Data;
+using Domain.Models.Animal;
 using MediatR;
 using SendGrid.Helpers.Errors.Model;
 
@@ -21,6 +20,8 @@ namespace Application.Animals.Commands.Dogs.UpdateDog
                    ?? throw new NotFoundException($"Dog with ID {request.Id} not found.");
 
             dogToUpdate.Name = request.UpdatedDog.Name;
+            dogToUpdate.DogBreed = request.UpdatedDog.Breed;
+            dogToUpdate.DogWeight = request.UpdatedDog.Weight;
 
             await _animalRepository.UpdateAsync(dogToUpdate);
 

@@ -1,7 +1,5 @@
 ﻿using Domain.Interfaces;
-using Domain.Models;
 using Domain.Models.Animal;
-using Infrastructure.Data;
 using MediatR;
 
 namespace Application.Animals.Commands.Birds.DeleteBird

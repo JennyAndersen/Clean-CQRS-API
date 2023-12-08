@@ -1,6 +1,5 @@
 ﻿using Domain.Interfaces;
-using Domain.Models;
-using Infrastructure.Data;
+using Domain.Models.Animal;
 using MediatR;
 
 namespace Application.Animals.Commands.Dogs.AddDog
@@ -18,8 +17,10 @@ namespace Application.Animals.Commands.Dogs.AddDog
         {
             Dog dogToCreate = new()
             {
-                Id = Guid.NewGuid(),
-                Name = request.NewDog.Name
+                AnimalId = Guid.NewGuid(),
+                Name = request.NewDog.Name,
+                DogBreed = request.NewDog.Breed,
+                DogWeight = request.NewDog.Weight,
             };
 
             await _animalRepository.AddAsync(dogToCreate);

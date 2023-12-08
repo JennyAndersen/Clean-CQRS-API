@@ -1,6 +1,4 @@
 ﻿using Application.Exceptions;
-using Domain.Exceptions;
-using SendGrid.Helpers.Errors.Model;
 using System.Text.Json;
 using ApplicationException = Domain.Exceptions.ApplicationException;
 using BadRequestException = Domain.Exceptions.BadRequestException;

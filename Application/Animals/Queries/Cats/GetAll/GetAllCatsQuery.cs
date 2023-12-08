@@ -1,10 +1,9 @@
-﻿using Domain.Models;
+﻿using Domain.Models.Animal;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Animals.Queries.Cats.GetAll
 {
-    public class GetAllCatsQuery : IRequest<DbSet<Cat>>
+    public class GetAllCatsQuery : IRequest<List<Cat>>
     {
     }
 }

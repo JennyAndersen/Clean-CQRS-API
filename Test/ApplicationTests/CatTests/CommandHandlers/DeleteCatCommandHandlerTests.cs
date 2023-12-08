@@ -1,5 +1,4 @@
 ﻿using Application.Animals.Commands.Cats.DeleteCat;
-using Infrastructure.Database;
 
 namespace Test.ApplicationTests.CatTests.CommandHandlers
 {
@@ -7,7 +6,6 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
     public class DeleteCatByIdCommandHandlerTests
     {
         private DeleteCatByIdCommandHandler _handler;
-        private MockDatabase _mockDatabase;
         /*
         [SetUp]
         public void Setup()
@@ -21,7 +19,7 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
         {
             // Arrange
             var initialCat = new Cat { Id = Guid.NewGuid(), Name = "InitialCatName" };
-            _mockDatabase.Cats.Add(initialCat);
+            MockDatabase.Cats.Add(initialCat);
 
             var command = new DeleteCatByIdCommand(
                 deletedCat: new CatDto { Name = "InitialCatName" },

@@ -1,5 +1,4 @@
-﻿using Domain.Exceptions;
-using ApplicationException = Domain.Exceptions.ApplicationException;
+﻿using ApplicationException = Domain.Exceptions.ApplicationException;
 
 namespace Application.Exceptions
 {

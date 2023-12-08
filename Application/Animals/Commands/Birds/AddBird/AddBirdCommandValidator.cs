@@ -7,6 +7,7 @@ namespace Application.Animals.Commands.Birds.AddBird
         public AddBirdCommandValidator()
         {
             RuleFor(command => command.NewBird.Name).NotEmpty().WithMessage("Name is required.");
+            RuleFor(command => command.NewBird.Color).NotEmpty().WithMessage("Color is required.");
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Application.Animals.Queries.Birds.GetById;
-using Infrastructure.Database;
 
 namespace Test.ApplicationTests.BirdTests.QueryHandlers
 {
@@ -7,7 +6,6 @@ namespace Test.ApplicationTests.BirdTests.QueryHandlers
     public class GetBirdByIdQueryHandlerTests
     {
         private GetBirdByIdQueryHandler _handler;
-        private MockDatabase _mockDatabase;
         /*
         [SetUp]
         public void SetUp()
@@ -29,7 +27,7 @@ namespace Test.ApplicationTests.BirdTests.QueryHandlers
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Id, Is.EqualTo(birdId));
+            Assert.That(result.AnimalId, Is.EqualTo(birdId));
         }
 
         [Test]
@@ -42,7 +40,6 @@ namespace Test.ApplicationTests.BirdTests.QueryHandlers
             // Act & Assert
             var exception = Assert.ThrowsAsync<NotFoundException>(async () => await _handler.Handle(query, CancellationToken.None));
             Assert.That(exception.Message, Is.EqualTo("Bird not found."));
-        }
-        */
+        }*/
     }
 }

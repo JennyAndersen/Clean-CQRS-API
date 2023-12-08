@@ -1,5 +1,4 @@
 ﻿using Application.Animals.Commands.Cats.UpdateCat;
-using Infrastructure.Database;
 
 namespace Test.ApplicationTests.CatTests.CommandHandlers
 {
@@ -7,7 +6,6 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
     public class UpdateCatByIdCommandHandlerTests
     {
         private UpdateCatByIdCommandHandler _handler;
-        private MockDatabase _mockDatabase;
         /*
         [SetUp]
         public void Setup()
@@ -20,12 +18,12 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
         public async Task WHEN_Handle_THEN_UpdatesCatInDatabase()
         {
             // Arrange
-            var initialCat = new Cat { Id = Guid.NewGuid(), Name = "InitialCatName", LikesToPlay = true };
-            _mockDatabase.Cats.Add(initialCat);
+            var initialCat = new Cat { AnimalId = Guid.NewGuid(), Name = "InitialCatName", LikesToPlay = true };
+            MockDatabase.Cats.Add(initialCat);
 
             var command = new UpdateCatByIdCommand(
                 updatedCat: new CatDto { Name = "UpdatedCatName", LikesToPlay = false },
-                id: initialCat.Id
+                id: initialCat.AnimalId
             );
 
             // Act

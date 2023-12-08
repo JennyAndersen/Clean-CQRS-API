@@ -1,5 +1,5 @@
-﻿using Domain.Models;
-using Infrastructure.Data;
+﻿using Domain.Interfaces;
+using Domain.Models.Animal;
 using MediatR;
 using SendGrid.Helpers.Errors.Model;
 
@@ -7,17 +7,19 @@ namespace Application.Animals.Queries.Dogs.GetById
 {
     public class GetDogByIdQueryHandler : IRequestHandler<GetDogByIdQuery, Dog>
     {
-        private readonly AnimalDbContext _dataDbContext;
+        private readonly IAnimalRepository _animalRepository;
 
-        public GetDogByIdQueryHandler(AnimalDbContext dataDbContext)
+        public GetDogByIdQueryHandler(IAnimalRepository animalRepository)
         {
-            _dataDbContext = dataDbContext;
+            _animalRepository = animalRepository;
         }
 
-        public Task<Dog> Handle(GetDogByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Dog> Handle(GetDogByIdQuery request, CancellationToken cancellationToken)
         {
-            Dog wantedDog = _dataDbContext.Dogs.FirstOrDefault(dog => dog.Id == request.Id)! ?? throw new NotFoundException("Dog not found.");
-            return Task.FromResult(wantedDog);
+            Dog wantedDog = await _animalRepository.GetByIdAsync(request.AnimalId) as Dog
+                         ?? throw new NotFoundException("Dog not found.");
+
+            return wantedDog;
         }
     }
 }
