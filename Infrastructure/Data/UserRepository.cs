@@ -18,6 +18,11 @@ namespace Infrastructure.Data
             await _context.SaveChangesAsync();
         }
 
+        public User GetUserByUsername(string username)
+        {
+            return _context.Users.FirstOrDefault(u => u.UserName == username);
+        }
+
         public User GetUserByUsernameAndPassword(string username, string hashedPassword)
         {
             return _context.Users

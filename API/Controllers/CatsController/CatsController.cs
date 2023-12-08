@@ -5,6 +5,7 @@ using Application.Animals.Queries.Cats.GetAll;
 using Application.Animals.Queries.Cats.GetById;
 using Application.Dtos;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.CatsController
@@ -21,6 +22,7 @@ namespace API.Controllers.CatsController
 
         [HttpGet]
         [Route("getAllCats")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> GetAllCats()
         {
             return Ok(await _mediator.Send(new GetAllCatsQuery()));

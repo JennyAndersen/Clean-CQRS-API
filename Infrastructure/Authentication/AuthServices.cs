@@ -19,19 +19,36 @@ namespace Infrastructure.Authentication
             _userRepository = userRepository;
         }
 
-        public User AuthenticateUser(string username, string password)
+        public User AuthenticateUser(string username, string plainTextPassword)
         {
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-
-            var user = _userRepository.GetUserByUsernameAndPassword(username, hashedPassword);
+            var user = _userRepository.GetUserByUsername(username);
 
             if (user == null)
             {
-                throw new Exception("User not found");
+                throw new Exception($"User with username '{username}' not found");
+            }
+
+            // Verify the provided plaintext password against the stored hashed password
+            if (!VerifyPassword(plainTextPassword, user.UserPasswordHash))
+            {
+                throw new Exception("Invalid password");
             }
 
             return user;
         }
+
+        private bool VerifyPassword(string plainTextPassword, string hashedPassword)
+        {
+            var isPasswordValid = BCrypt.Net.BCrypt.Verify(plainTextPassword, hashedPassword);
+
+            if (!isPasswordValid)
+            {
+                throw new Exception("Password verification failed");
+            }
+
+            return true;
+        }
+
 
         public string GenerateJwtToken(User user)
         {
