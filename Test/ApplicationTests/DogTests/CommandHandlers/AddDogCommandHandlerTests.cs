@@ -28,7 +28,7 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
             Assert.That(result, Is.InstanceOf<Dog>());
             Assert.Multiple(() =>
             {
-                Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
+                Assert.That(result.AnimalId, Is.Not.EqualTo(Guid.Empty));
                 Assert.That(result.Name, Is.EqualTo("NewDogName"));
             });
         }*/

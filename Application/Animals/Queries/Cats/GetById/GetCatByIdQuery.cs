@@ -1,4 +1,4 @@
-﻿using Domain.Models;
+﻿using Domain.Models.Animal;
 using MediatR;
 
 namespace Application.Animals.Queries.Cats.GetById
@@ -7,9 +7,9 @@ namespace Application.Animals.Queries.Cats.GetById
     {
         public GetCatByIdQuery(Guid catId)
         {
-            Id = catId;
+            AnimalId = catId;
         }
 
-        public Guid Id { get; }
+        public Guid AnimalId { get; }
     }
 }

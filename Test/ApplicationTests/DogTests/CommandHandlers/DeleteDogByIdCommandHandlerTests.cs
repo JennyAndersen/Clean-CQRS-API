@@ -1,5 +1,4 @@
 ﻿using Application.Animals.Commands.Dogs.DeleteDog;
-using Infrastructure.Database;
 
 namespace Test.ApplicationTests.DogTests.CommandHandlers
 {
@@ -7,7 +6,6 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
     public class DeleteDogByIdCommandHandlerTests
     {
         private DeleteDogByIdCommandHandler _handler;
-        private MockDatabase _mockDatabase;
         /*
         [SetUp]
         public void Setup()
@@ -21,7 +19,7 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
         {
             // Arrange
             var initialDog = new Dog { Id = Guid.NewGuid(), Name = "InitialDogName" };
-            _mockDatabase.Dogs.Add(initialDog);
+            MockDatabase.Dogs.Add(initialDog);
 
             var command = new DeleteDogByIdCommand(
                 deletedDog: new DogDto { Name = "InitialDogName" },

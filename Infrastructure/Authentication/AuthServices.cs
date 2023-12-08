@@ -1,5 +1,5 @@
 ﻿using Domain.Models;
-using Infrastructure.Database;
+using Infrastructure.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,22 +11,25 @@ namespace Infrastructure.Authentication
     public class AuthServices
     {
         private readonly IConfiguration _configuration;
-        private readonly MockDatabase _mockDatabase;
+        private readonly IUserRepository _userRepository;
 
-        public AuthServices(IConfiguration configuration, MockDatabase mockDatabase)
+        public AuthServices(IConfiguration configuration, IUserRepository userRepository)
         {
             _configuration = configuration;
-            _mockDatabase = mockDatabase;
+            _userRepository = userRepository;
         }
 
         public User AuthenticateUser(string username, string password)
         {
-            var user = _mockDatabase.Users.FirstOrDefault(u => u.UserName == username && u.UserPassword == password);
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+
+            var user = _userRepository.GetUserByUsernameAndPassword(username, hashedPassword);
 
             if (user == null)
             {
                 throw new Exception("User not found");
             }
+
             return user;
         }
 
@@ -39,7 +42,7 @@ namespace Infrastructure.Authentication
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                     new Claim(ClaimTypes.Role, "Admin")
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),

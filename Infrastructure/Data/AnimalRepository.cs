@@ -1,12 +1,6 @@
 ﻿using Domain.Interfaces;
-using Domain.Models;
 using Domain.Models.Animal;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
@@ -19,14 +13,9 @@ namespace Infrastructure.Data
             _context = context;
         }
 
-        public async Task<IEnumerable<Animal>> GetAllAsync()
+        public async Task<Animal> GetByIdAsync(Guid Animalid)
         {
-            return await _context.Animals.ToListAsync();
-        }
-
-        public async Task<Animal> GetByIdAsync(Guid id)
-        {
-            return await _context.Animals.FindAsync(id);
+            return await _context.Animals.FindAsync(Animalid);
         }
 
         public async Task AddAsync<T>(T entity) where T : class
@@ -41,14 +30,29 @@ namespace Infrastructure.Data
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid animalId)
         {
-            var animalToDelete = await _context.Animals.FindAsync(id);
+            var animalToDelete = await _context.Animals.FindAsync(animalId);
             if (animalToDelete != null)
             {
                 _context.Animals.Remove(animalToDelete);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<Bird>> GetAllBirdsAsync()
+        {
+            return await _context.Animals.OfType<Bird>().ToListAsync();
+        }
+
+        public async Task<List<Cat>> GetAllCatsAsync()
+        {
+            return await _context.Animals.OfType<Cat>().ToListAsync();
+        }
+
+        public async Task<List<Dog>> GetAllDogsAsync()
+        {
+            return await _context.Animals.OfType<Dog>().ToListAsync();
         }
     }
 }

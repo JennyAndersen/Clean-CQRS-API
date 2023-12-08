@@ -1,5 +1,4 @@
 ﻿using Application.Animals.Queries.Cats.GetById;
-using Infrastructure.Database;
 
 namespace Test.ApplicationTests.CatTests.QueryHandlers
 {
@@ -7,7 +6,6 @@ namespace Test.ApplicationTests.CatTests.QueryHandlers
     public class GetCatByIdQueryHandlerTests
     {
         private GetCatByIdQueryHandler _handler;
-        private MockDatabase _mockDatabase;
         /*
         [SetUp]
         public void SetUp()
@@ -29,7 +27,7 @@ namespace Test.ApplicationTests.CatTests.QueryHandlers
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Id, Is.EqualTo(catId));
+            Assert.That(result.AnimalId, Is.EqualTo(catId));
         }
 
         [Test]
