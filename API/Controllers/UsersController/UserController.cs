@@ -2,7 +2,7 @@
 using Application.Authentication.Queries.Users;
 using Application.Common;
 using Application.Dtos;
-using Domain.Models;
+using Domain.Models.UserModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

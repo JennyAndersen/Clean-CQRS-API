@@ -2,7 +2,7 @@
 using Application.Dtos;
 using AutoFixture.NUnit3;
 using FluentAssertions;
-using Infrastructure.Database;
+using Infrastructure.Interfaces;
 using Moq;
 using Test.TestHelpers;
 
@@ -16,11 +16,11 @@ namespace Test.ApplicationTests.AuthenticationTests.CommandHandlers
         [SetUp]
         public void Setup()
         {
-            var mockDatabase = new Mock<MockDatabase>();
-            _handler = new RegisterUserCommandHandler(mockDatabase.Object);
+            var mockUserRepository = new Mock<IUserRepository>();
+            _handler = new RegisterUserCommandHandler(mockUserRepository.Object);
         }
 
-        [Theory]
+        [Test]
         [CustomAutoData]
         public async Task Handle_ValidRegistration_ReturnsUser([Frozen] UserRegistrationDto newUserDto)
         {

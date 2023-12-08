@@ -4,10 +4,11 @@ namespace Domain.Models
 {
     public class User
     {
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "The username can not be empty")]
-        public string UserName { get; set; }
+        public required string UserName { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Password is required")]
-        public string UserPassword { get; set; }
+        public required string UserPasswordHash { get; set; }
+        public ICollection<AnimalUser> AnimalUsers { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Domain.Interfaces;
 using Infrastructure.Data;
-using Infrastructure.Database;
+using Infrastructure.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure
@@ -9,9 +9,8 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.AddDbContext<AnimalDbContext>();
             services.AddTransient<IAnimalRepository, AnimalRepository>();
-            services.AddSingleton<MockDatabase>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
             using (var scope = services.BuildServiceProvider().CreateScope())
             {

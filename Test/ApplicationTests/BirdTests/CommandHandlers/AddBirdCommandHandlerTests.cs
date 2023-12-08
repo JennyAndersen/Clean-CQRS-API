@@ -1,29 +1,18 @@
 ﻿using Application.Animals.Commands.Birds.AddBird;
-using Application.Dtos;
-using Domain.Models;
-using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace Test.ApplicationTests.BirdTests.CommandHandlers
 {
     [TestFixture]
     public class AddBirdCommandHandlerTests
     {
-        /*
         private AddBirdCommandHandler _handler;
-        private AnimalDbContext _dbContext;
-
+        /*
         [SetUp]
         public void Setup()
         {
-            var options = new DbContextOptionsBuilder<AnimalDbContext>()
-            .UseInMemoryDatabase(databaseName: "TestDatabase")
-            .Options;
-
-            _dbContext = new AnimalDbContext(options);
-            _handler = new AddBirdCommandHandler(_dbContext);
+            _handler = new AddBirdCommandHandler(new MockDatabase());
         }
-
+        
         [Test]
         public async Task WHEN_Handle_THEN_AddsBirdToDatabase()
         {
@@ -39,7 +28,7 @@ namespace Test.ApplicationTests.BirdTests.CommandHandlers
             Assert.That(result, Is.InstanceOf<Bird>());
             Assert.Multiple(() =>
             {
-                Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
+                Assert.That(result.AnimalId, Is.Not.EqualTo(Guid.Empty));
                 Assert.That(result.Name, Is.EqualTo("NewBirdName"));
             });
         }*/

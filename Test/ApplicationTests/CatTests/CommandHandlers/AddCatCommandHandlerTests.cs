@@ -28,10 +28,9 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
             Assert.That(result, Is.InstanceOf<Cat>());
             Assert.Multiple(() =>
             {
-                Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
+                Assert.That(result.AnimalId, Is.Not.EqualTo(Guid.Empty));
                 Assert.That(result.Name, Is.EqualTo("NewCatName"));
             });
-        }
-        */
+        }*/
     }
 }

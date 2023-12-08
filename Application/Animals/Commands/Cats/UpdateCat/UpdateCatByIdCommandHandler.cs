@@ -1,7 +1,6 @@
 ﻿
 using Domain.Interfaces;
-using Domain.Models;
-using Infrastructure.Data;
+using Domain.Models.Animal;
 using MediatR;
 using SendGrid.Helpers.Errors.Model;
 
@@ -22,6 +21,8 @@ namespace Application.Animals.Commands.Cats.UpdateCat
 
             catToUpdate.Name = request.UpdatedCat.Name;
             catToUpdate.LikesToPlay = request.UpdatedCat.LikesToPlay;
+            catToUpdate.CatBreed = request.UpdatedCat.Breed;
+            catToUpdate.CatWeight = request.UpdatedCat.Weight;
 
             await _animalRepository.UpdateAsync(catToUpdate);
 

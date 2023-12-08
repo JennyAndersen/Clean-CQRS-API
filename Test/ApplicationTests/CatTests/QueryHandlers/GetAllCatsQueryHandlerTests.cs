@@ -1,5 +1,4 @@
 ﻿using Application.Animals.Queries.Cats.GetAll;
-using Infrastructure.Database;
 
 namespace Test.ApplicationTests.CatTests.QueryHandlers
 {
@@ -7,7 +6,6 @@ namespace Test.ApplicationTests.CatTests.QueryHandlers
     public class GetAllDogsTests
     {
         private GetAllCatsQueryHandler _handler;
-        private MockDatabase _mockDatabase;
         /*
         [SetUp]
         public void SetUp()

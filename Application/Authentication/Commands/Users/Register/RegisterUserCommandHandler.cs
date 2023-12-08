@@ -1,38 +1,34 @@
 ﻿using Domain.Models;
-using Infrastructure.Database;
+using Infrastructure.Interfaces;
 using MediatR;
 
 namespace Application.Authentication.Commands.Users.Register
 {
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, User>
     {
-        private readonly MockDatabase _mockDatabase;
+        private readonly IUserRepository _userRepository;
 
-        public RegisterUserCommandHandler(MockDatabase mockDatabase)
+        public RegisterUserCommandHandler(IUserRepository userRepository)
         {
-            _mockDatabase = mockDatabase;
+            _userRepository = userRepository;
         }
 
-        public Task<User> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+        public async Task<User> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             request.Validate();
 
-            var isUsernameUnique = !_mockDatabase.Users.Any(u => u.UserName == request.NewUser.Username);
-            if (!isUsernameUnique)
-            {
-                throw new InvalidOperationException("Username is already taken");
-            }
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.NewUser.Password);
 
             var newUser = new User
             {
-                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
                 UserName = request.NewUser.Username,
-                UserPassword = request.NewUser.Password,
+                UserPasswordHash = hashedPassword,
             };
 
-            _mockDatabase.Users.Add(newUser);
+            await _userRepository.AddUserAsync(newUser);
 
-            return Task.FromResult(newUser);
+            return newUser;
         }
     }
 }

@@ -2,7 +2,8 @@
 {
     public class Animal
     {
-        public Guid Id { get; set; }
+        public Guid AnimalId { get; set; }
         public string Name { get; set; } = string.Empty;
+        public ICollection<AnimalUser> AnimalUsers { get; set; }
     }
 }

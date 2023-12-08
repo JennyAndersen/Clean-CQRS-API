@@ -1,23 +1,22 @@
-﻿using Domain.Models;
-using Infrastructure.Data;
+﻿using Domain.Interfaces;
+using Domain.Models.Animal;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Animals.Queries.Birds.GetAll
 {
-    public class GetAllBirdsQueryHandler : IRequestHandler<GetAllBirdsQuery, DbSet<Bird>>
+    public class GetAllBirdsQueryHandler : IRequestHandler<GetAllBirdsQuery, List<Bird>>
     {
-        private readonly AnimalDbContext _dataDbContext;
+        private readonly IAnimalRepository _animalRepository;
 
-        public GetAllBirdsQueryHandler(AnimalDbContext dataDbContext)
+        public GetAllBirdsQueryHandler(IAnimalRepository animalRepository)
         {
-            _dataDbContext = dataDbContext;
+            _animalRepository = animalRepository;
         }
 
-        public Task<DbSet<Bird>> Handle(GetAllBirdsQuery request, CancellationToken cancellationToken)
+        public async Task<List<Bird>> Handle(GetAllBirdsQuery request, CancellationToken cancellationToken)
         {
-            DbSet<Bird> allBirdsFromDatabase = _dataDbContext.Birds;
-            return Task.FromResult(allBirdsFromDatabase);
+            List<Bird> allBirds = await _animalRepository.GetAllBirdsAsync();
+            return allBirds;
         }
     }
 }

@@ -1,15 +1,7 @@
 ﻿using API.Controllers.UsersController;
-using Application.Authentication.Commands.Users.Register;
-using Application.Dtos;
-using Domain.Models;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Moq;
-using Newtonsoft.Json;
-using System.Net;
-using System.Net.Http.Headers;
-using System.Text;
 
 namespace Test.APITests.Controllers
 {
@@ -52,7 +44,7 @@ namespace Test.APITests.Controllers
                 {
                     Id = Guid.NewGuid(),
                     UserName = newUser.Username,
-                    UserPassword = newUser.Password,
+                    UserPasswordHash = newUser.Password,
                 });
 
             // Act
@@ -80,7 +72,7 @@ namespace Test.APITests.Controllers
                 {
                     Id = Guid.NewGuid(),
                     UserName = registrationDto.Username,
-                    UserPassword = registrationDto.Password,
+                    UserPasswordHash = registrationDto.Password,
                 });
 
             var registrationContent = new StringContent(JsonConvert.SerializeObject(registrationDto), Encoding.UTF8, "application/json");

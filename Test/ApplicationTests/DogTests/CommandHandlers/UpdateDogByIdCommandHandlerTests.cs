@@ -1,5 +1,4 @@
 ﻿using Application.Animals.Commands.Dogs.UpdateDog;
-using Infrastructure.Database;
 
 namespace Test.ApplicationTests.DogTests.CommandHandlers
 {
@@ -7,7 +6,6 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
     public class UpdateDogByIdCommandHandlerTests
     {
         private UpdateDogByIdCommandHandler _handler;
-        private MockDatabase _mockDatabase;
         /*
         [SetUp]
         public void Setup()
@@ -20,12 +18,12 @@ namespace Test.ApplicationTests.DogTests.CommandHandlers
         public async Task WHEN_Handle_THEN_UpdatesDogInDatabase()
         {
             // Arrange
-            var initialDog = new Dog { Id = Guid.NewGuid(), Name = "InitialDogName" };
-            _mockDatabase.Dogs.Add(initialDog);
+            var initialDog = new Dog { AnimalId = Guid.NewGuid(), Name = "InitialDogName" };
+            MockDatabase.Dogs.Add(initialDog);
 
             var command = new UpdateDogByIdCommand(
                 updatedDog: new DogDto { Name = "UpdatedDogName" },
-                id: initialDog.Id
+                id: initialDog.AnimalId
             );
 
             // Act
