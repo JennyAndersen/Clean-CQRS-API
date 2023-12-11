@@ -11,6 +11,6 @@ namespace Domain.Interfaces
         Task<List<Bird>> GetAllBirdsAsync();
         Task<List<Cat>> GetAllCatsAsync();
         Task<List<Dog>> GetAllDogsAsync();
-
+        Task<List<Bird>> GetBirdsByColorAsync(string color);
     }
 }

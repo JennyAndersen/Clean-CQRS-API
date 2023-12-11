@@ -25,7 +25,14 @@ namespace API.Controllers.DogsController
         {
             return Ok(await _mediator.Send(new GetAllDogsQuery()));
         }
-
+        /*
+        [HttpGet]
+        [Route("getDogsByWeightBreed/{Weight, Breed}")]
+        public async Task<IActionResult> GetBirdsByWeightBreed(int weight)
+        {
+            return Ok(await _mediator.Send(new GetDogsByWeightBreedQuery { Weight = weight, Breed = breed}));
+        }
+        */
         [HttpGet]
         [Route("getDogById/{dogId}")]
         public async Task<IActionResult> GetDogById(Guid dogId)

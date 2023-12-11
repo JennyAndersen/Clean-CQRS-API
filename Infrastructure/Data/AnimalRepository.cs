@@ -54,5 +54,14 @@ namespace Infrastructure.Data
         {
             return await _context.Animals.OfType<Dog>().ToListAsync();
         }
+
+        public async Task<List<Bird>> GetBirdsByColorAsync(string color)
+        {
+            return await _context.Birds
+        .Where(b => b.Color.ToUpper() == color.ToUpper())
+        .OrderByDescending(b => b.Name)
+        .ThenByDescending(b => b.AnimalId)
+        .ToListAsync();
+        }
     }
 }

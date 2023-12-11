@@ -2,6 +2,7 @@
 using Application.Animals.Commands.Birds.DeleteBird;
 using Application.Animals.Commands.Birds.UpdateBird;
 using Application.Animals.Queries.Birds.GetAll;
+using Application.Animals.Queries.Birds.GetByColor;
 using Application.Animals.Queries.Birds.GetById;
 using Application.Dtos;
 using MediatR;
@@ -33,9 +34,16 @@ namespace API.Controllers.CatsController
             return Ok(await _mediator.Send(new GetBirdByIdQuery(birdId)));
         }
 
+        [HttpGet]
+        [Route("getBirdByColor/{color}")]
+        public async Task<IActionResult> GetBirdsByColor(String color)
+        {
+            return Ok(await _mediator.Send(new GetBirdsByColorQuery { Color = color }));
+        }
+
         [HttpPost]
         [Route("addNewBird")]
-        //Authorize(Policy = "Admin")]
+        //[Authorize(Policy = "Admin")]
         public async Task<IActionResult> AddBird([FromBody] BirdDto newBird)
         {
             try
