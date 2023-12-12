@@ -3,7 +3,7 @@ using Infrastructure.Interfaces;
 using MediatR;
 using SendGrid.Helpers.Errors.Model;
 
-namespace Application.Authentication.Commands.Users.UpdateUser
+namespace Application.Authentication.Commands.UpdateUser
 {
     public class UpdateUserByIdCommandHandler : IRequestHandler<UpdateUserByIdCommand, User>
     {

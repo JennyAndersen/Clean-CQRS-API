@@ -2,7 +2,7 @@
 using Infrastructure.Interfaces;
 using MediatR;
 
-namespace Application.Authentication.Commands.Users.Register
+namespace Application.Authentication.Commands.Register
 {
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, User>
     {

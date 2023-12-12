@@ -2,7 +2,7 @@
 using Infrastructure.Interfaces;
 using MediatR;
 
-namespace Application.Authentication.Commands.Users.DeleteUser
+namespace Application.Authentication.Commands.DeleteUser
 {
     public class DeleteUserByIdCommandHandler : IRequestHandler<DeleteUserByIdCommand, bool>
     {

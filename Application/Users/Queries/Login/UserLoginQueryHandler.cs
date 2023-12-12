@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Authentication;
 using MediatR;
 
-namespace Application.Authentication.Queries.Users
+namespace Application.Authentication.Queries.Login
 {
     public class UserLoginQueryHandler : IRequestHandler<UserLoginQuery, string>
     {

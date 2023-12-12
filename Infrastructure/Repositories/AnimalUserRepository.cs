@@ -16,7 +16,7 @@ namespace Infrastructure.Repositories
         //Read
         public async Task<List<Animal>> GetAnimalsByUserIdAsync(Guid userId)
         {
-            return await _context.AnimalUsers
+            return await _context.AnimalUser
         .Where(ua => ua.UserId == userId)
         .Select(ua => ua.Animal)
         .ToListAsync();
@@ -24,16 +24,17 @@ namespace Infrastructure.Repositories
 
         public async Task<List<User>> GetUsersByAnimalIdAsync(Guid animalId)
         {
-            return await _context.AnimalUsers
+            return await _context.AnimalUser
         .Where(ua => ua.AnimalId == animalId)
         .Select(ua => ua.User)
         .ToListAsync();
         }
         //Create
-        public async Task AddUserAnimalAsync(AnimalUser animalUser)
+        public async Task<bool> AddUserAnimalAsync(AnimalUser animalUser)
         {
-            await _context.AnimalUsers.AddAsync(animalUser);
+            await _context.AnimalUser.AddAsync(animalUser);
             await _context.SaveChangesAsync();
+            return true;
         }
         //Update 
         //Delete

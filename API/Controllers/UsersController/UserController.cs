@@ -1,8 +1,8 @@
-﻿using Application.Authentication.Commands.Users.DeleteUser;
-using Application.Authentication.Commands.Users.Register;
-using Application.Authentication.Commands.Users.UpdateUser;
-using Application.Authentication.Queries.Users;
-using Application.Authentication.Queries.Users.GetAll;
+﻿using Application.Authentication.Commands.DeleteUser;
+using Application.Authentication.Commands.Register;
+using Application.Authentication.Commands.UpdateUser;
+using Application.Authentication.Queries.GetAll;
+using Application.Authentication.Queries.Login;
 using Application.Common;
 using Application.Dtos;
 using Domain.Models.UserModels;

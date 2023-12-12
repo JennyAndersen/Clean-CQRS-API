@@ -3,7 +3,7 @@ using Application.Dtos;
 using Domain.Models;
 using MediatR;
 
-namespace Application.Authentication.Commands.Users.Register
+namespace Application.Authentication.Commands.Register
 {
     public class RegisterUserCommand : IRequest<User>, IValidate
     {

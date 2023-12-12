@@ -1,9 +1,16 @@
-﻿namespace Application.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Application.Dtos
 {
     public class AnimalUserDto
     {
-        public required string Username { get; set; }
-        public string Name { get; set; }
-        public required int HappyTogetherIndex { get; set; }
+        [Required]
+        public Guid UserId { get; set; }
+
+        [Required]
+        public Guid AnimalId { get; set; }
+
+        // [Required]
+        // public int HappyTogetherIndex { get; set; }
     }
 }

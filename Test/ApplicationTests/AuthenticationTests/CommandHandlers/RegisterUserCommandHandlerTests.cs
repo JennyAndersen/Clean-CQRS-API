@@ -1,4 +1,4 @@
-﻿using Application.Authentication.Commands.Users.Register;
+﻿using Application.Authentication.Commands.Register;
 using Application.Dtos;
 using AutoFixture.NUnit3;
 using FluentAssertions;

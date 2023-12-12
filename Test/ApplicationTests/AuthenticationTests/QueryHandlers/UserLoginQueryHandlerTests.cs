@@ -1,4 +1,4 @@
-﻿using Application.Authentication.Queries.Users;
+﻿using Application.Authentication.Queries.Login;
 
 namespace Test.ApplicationTests.AuthenticationTests.QueryHandlers
 {

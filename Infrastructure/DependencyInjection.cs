@@ -13,6 +13,7 @@ namespace Infrastructure
         {
             services.AddTransient<IAnimalRepository, AnimalRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IAnimalUserRepository, AnimalUserRepository>();
 
             using (var scope = services.BuildServiceProvider().CreateScope())
             {

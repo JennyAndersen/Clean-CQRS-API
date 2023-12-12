@@ -5,7 +5,7 @@ namespace Infrastructure.Interfaces
 {
     public interface IAnimalUserRepository
     {
-        Task AddUserAnimalAsync(AnimalUser animalUser);
+        Task<bool> AddUserAnimalAsync(AnimalUser animalUser);
         Task<List<Animal>> GetAnimalsByUserIdAsync(Guid userId);
         Task<List<User>> GetUsersByAnimalIdAsync(Guid animalId);
     }

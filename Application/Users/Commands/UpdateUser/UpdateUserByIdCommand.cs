@@ -2,7 +2,7 @@
 using Domain.Models;
 using MediatR;
 
-namespace Application.Authentication.Commands.Users.UpdateUser
+namespace Application.Authentication.Commands.UpdateUser
 {
     public class UpdateUserByIdCommand : IRequest<User>
     {

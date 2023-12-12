@@ -13,7 +13,7 @@ namespace Infrastructure.Data
         }
 
         public DbSet<Animal> Animals { get; set; }
-        public DbSet<AnimalUser> AnimalUsers { get; set; }
+        public DbSet<AnimalUser> AnimalUser { get; set; }
         public DbSet<Bird> Birds { get; set; }
         public DbSet<Dog> Dogs { get; set; }
         public DbSet<Cat> Cats { get; set; }
