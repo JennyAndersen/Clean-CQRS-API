@@ -1,6 +1,6 @@
 ﻿using Domain.Models.Animal;
 
-namespace Infrastructure.Data
+namespace Infrastructure.Data.DataBaseHelpers
 {
     public static class DataSeeder
     {

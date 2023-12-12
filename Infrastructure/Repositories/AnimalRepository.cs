@@ -1,8 +1,9 @@
 ﻿using Domain.Interfaces;
 using Domain.Models.Animal;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Data
+namespace Infrastructure.Repositories
 {
     public class AnimalRepository : IAnimalRepository
     {

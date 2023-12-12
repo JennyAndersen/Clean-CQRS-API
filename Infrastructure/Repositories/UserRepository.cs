@@ -1,8 +1,9 @@
 ﻿using Domain.Models;
+using Infrastructure.Data;
 using Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Data
+namespace Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
