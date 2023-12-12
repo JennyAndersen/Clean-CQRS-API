@@ -1,12 +1,6 @@
-﻿using Application.Animals.Queries.Dogs.GetByWeightBreed;
-using Domain.Interfaces;
+﻿using Domain.Interfaces;
 using Domain.Models.Animal;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Animals.Queries.Cats.GetByWeightBreed
 {

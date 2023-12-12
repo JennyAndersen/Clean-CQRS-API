@@ -1,15 +1,7 @@
-﻿using Application.Animals.Commands.Birds.UpdateBird;
-using Domain.Interfaces;
-using Domain.Models;
-using Domain.Models.Animal;
+﻿using Domain.Models;
 using Infrastructure.Interfaces;
 using MediatR;
 using SendGrid.Helpers.Errors.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Authentication.Commands.Users.UpdateUser
 {

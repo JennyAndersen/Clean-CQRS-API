@@ -1,5 +1,4 @@
 ﻿using Domain.Models;
-using Domain.Models.Animal;
 using Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

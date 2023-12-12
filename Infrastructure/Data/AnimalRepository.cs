@@ -32,10 +32,10 @@ namespace Infrastructure.Data
 
         public async Task DeleteAsync(Guid animalId)
         {
-            var animalToDelete = await _context.Animals.FindAsync(animalId) ?? throw new Exception("User not found");      
+            var animalToDelete = await _context.Animals.FindAsync(animalId) ?? throw new Exception("User not found");
             _context.Animals.Remove(animalToDelete);
             await _context.SaveChangesAsync();
-            
+
         }
 
         public async Task<List<Bird>> GetAllBirdsAsync()
