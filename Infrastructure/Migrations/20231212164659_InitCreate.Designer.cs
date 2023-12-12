@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AnimalDbContext))]
-    [Migration("20231208115345_Ini")]
-    partial class Ini
+    [Migration("20231212164659_InitCreate")]
+    partial class InitCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,6 +53,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid>("AnimalId")
                         .HasColumnType("char(36)");
+
+                    b.Property<int>("HappyTogetherIndex")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");

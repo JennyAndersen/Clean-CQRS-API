@@ -5,7 +5,7 @@
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Ini : Migration
+    public partial class InitCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -60,6 +60,7 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Key = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    HappyTogetherIndex = table.Column<int>(type: "int", nullable: false),
                     AnimalId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },

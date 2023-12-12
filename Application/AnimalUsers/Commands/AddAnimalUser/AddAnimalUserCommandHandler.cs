@@ -19,7 +19,7 @@ namespace Application.AnimalUsers.Commands.AddAnimalUser
             {
                 UserId = request.UserId,
                 AnimalId = request.AnimalId,
-                // HappyTogetherIndex = request.HappyTogetherIndex,
+                HappyTogetherIndex = request.HappyTogetherIndex,
             };
 
             return await _animalUserRepository.AddUserAnimalAsync(userAnimal);
