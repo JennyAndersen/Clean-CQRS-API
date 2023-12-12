@@ -37,7 +37,7 @@ namespace Infrastructure.Authentication
             return user;
         }
 
-        private bool VerifyPassword(string plainTextPassword, string hashedPassword)
+        private static bool VerifyPassword(string plainTextPassword, string hashedPassword)
         {
             var isPasswordValid = BCrypt.Net.BCrypt.Verify(plainTextPassword, hashedPassword);
 

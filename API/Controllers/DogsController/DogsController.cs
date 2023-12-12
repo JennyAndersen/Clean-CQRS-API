@@ -3,6 +3,7 @@ using Application.Animals.Commands.Dogs.DeleteDog;
 using Application.Animals.Commands.Dogs.UpdateDog;
 using Application.Animals.Queries.Dogs.GetAll;
 using Application.Animals.Queries.Dogs.GetById;
+using Application.Animals.Queries.Dogs.GetByWeightBreed;
 using Application.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -25,14 +26,14 @@ namespace API.Controllers.DogsController
         {
             return Ok(await _mediator.Send(new GetAllDogsQuery()));
         }
-        /*
+        
         [HttpGet]
-        [Route("getDogsByWeightBreed/{Weight, Breed}")]
-        public async Task<IActionResult> GetBirdsByWeightBreed(int weight)
+        [Route("getDogByWeightBreed/{weight?}/{breed?}")]
+        public async Task<IActionResult> GetDogsByWeightBreed(int? weight, String? breed)
         {
-            return Ok(await _mediator.Send(new GetDogsByWeightBreedQuery { Weight = weight, Breed = breed}));
+            return Ok(await _mediator.Send(new GetDogsByWeightBreedQuery { Weight = weight, Breed = breed }));
         }
-        */
+       
         [HttpGet]
         [Route("getDogById/{dogId}")]
         public async Task<IActionResult> GetDogById(Guid dogId)

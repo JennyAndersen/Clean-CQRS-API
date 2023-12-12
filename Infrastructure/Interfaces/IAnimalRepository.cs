@@ -12,5 +12,7 @@ namespace Domain.Interfaces
         Task<List<Cat>> GetAllCatsAsync();
         Task<List<Dog>> GetAllDogsAsync();
         Task<List<Bird>> GetBirdsByColorAsync(string color);
+        Task<List<Dog>> GetDogsByWeightBreedAsync(string? breed, int? weight);
+        Task<List<Cat>> GetCatsByWeightBreedAsync(string? breed, int? weight);
     }
 }

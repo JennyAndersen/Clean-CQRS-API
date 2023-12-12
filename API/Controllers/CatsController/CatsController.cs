@@ -3,6 +3,7 @@ using Application.Animals.Commands.Cats.DeleteCat;
 using Application.Animals.Commands.Cats.UpdateCat;
 using Application.Animals.Queries.Cats.GetAll;
 using Application.Animals.Queries.Cats.GetById;
+using Application.Animals.Queries.Cats.GetByWeightBreed;
 using Application.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -26,6 +27,13 @@ namespace API.Controllers.CatsController
         public async Task<IActionResult> GetAllCats()
         {
             return Ok(await _mediator.Send(new GetAllCatsQuery()));
+        }
+
+        [HttpGet]
+        [Route("getCatsByWeightBreed/{weight?}/{breed?}")]
+        public async Task<IActionResult> GetCatsByWeightBreed(int? weight, String? breed)
+        {
+            return Ok(await _mediator.Send(new GetCatsByWeightBreedQuery { Weight = weight, Breed = breed }));
         }
 
         [HttpGet]

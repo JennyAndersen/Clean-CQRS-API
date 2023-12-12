@@ -32,12 +32,10 @@ namespace Infrastructure.Data
 
         public async Task DeleteAsync(Guid animalId)
         {
-            var animalToDelete = await _context.Animals.FindAsync(animalId);
-            if (animalToDelete != null)
-            {
-                _context.Animals.Remove(animalToDelete);
-                await _context.SaveChangesAsync();
-            }
+            var animalToDelete = await _context.Animals.FindAsync(animalId) ?? throw new Exception("User not found");      
+            _context.Animals.Remove(animalToDelete);
+            await _context.SaveChangesAsync();
+            
         }
 
         public async Task<List<Bird>> GetAllBirdsAsync()
@@ -62,6 +60,42 @@ namespace Infrastructure.Data
         .OrderByDescending(b => b.Name)
         .ThenByDescending(b => b.AnimalId)
         .ToListAsync();
+        }
+        //skulle kunna skapa en generisk metod för både cat/dog
+        public async Task<List<Dog>> GetDogsByWeightBreedAsync(string? breed, int? weight)
+        {
+            var query = _context.Animals.OfType<Dog>();
+
+            if (!string.IsNullOrEmpty(breed))
+            {
+                query = query.Where(dog => dog.DogBreed == breed);
+            }
+
+            if (weight.HasValue)
+            {
+                query = query.Where(dog => dog.DogWeight >= weight.Value);
+            }
+
+            var result = await query.OrderByDescending(dog => dog.DogWeight).ToListAsync();
+            return result;
+        }
+
+        public async Task<List<Cat>> GetCatsByWeightBreedAsync(string? breed, int? weight)
+        {
+            var query = _context.Animals.OfType<Cat>();
+
+            if (!string.IsNullOrEmpty(breed))
+            {
+                query = query.Where(cat => cat.CatBreed == breed);
+            }
+
+            if (weight.HasValue)
+            {
+                query = query.Where(cat => cat.CatWeight >= weight.Value);
+            }
+
+            var result = await query.OrderByDescending(cat => cat.CatWeight).ToListAsync();
+            return result;
         }
     }
 }

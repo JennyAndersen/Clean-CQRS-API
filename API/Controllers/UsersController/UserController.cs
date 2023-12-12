@@ -1,5 +1,8 @@
-﻿using Application.Authentication.Commands.Users.Register;
+﻿using Application.Authentication.Commands.Users.DeleteUser;
+using Application.Authentication.Commands.Users.Register;
+using Application.Authentication.Commands.Users.UpdateUser;
 using Application.Authentication.Queries.Users;
+using Application.Authentication.Queries.Users.GetAll;
 using Application.Common;
 using Application.Dtos;
 using Domain.Models.UserModels;
@@ -17,6 +20,13 @@ namespace API.Controllers.UsersController
         public UserController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet]
+        [Route("getAllUsers")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            return Ok(await _mediator.Send(new GetAllUsersQuery()));
         }
 
         [HttpPost("login")]
@@ -56,6 +66,22 @@ namespace API.Controllers.UsersController
 
                 return BadRequest(new { Error = errorMessage });
             }
+        }
+
+        [HttpPut]
+        [Route("updateUser/{updatedUserId}")]
+        // [Authorize(Policy = "Admin")]
+        public async Task<IActionResult> UpdateUser([FromBody] UserRegistrationDto updatedUser, Guid updatedUserId)
+        {
+            return Ok(await _mediator.Send(new UpdateUserByIdCommand(updatedUser, updatedUserId)));
+        }
+
+        [HttpDelete]
+        [Route("deleteUser/{deletedUserId}")]
+        // [Authorize(Policy = "Admin")]
+        public async Task<IActionResult> DeleteUser(Guid deletedUserId)
+        {
+            return Ok(await _mediator.Send(new DeleteUserByIdCommand(deletedUserId)));
         }
     }
 }

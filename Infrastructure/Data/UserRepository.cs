@@ -1,5 +1,7 @@
 ﻿using Domain.Models;
+using Domain.Models.Animal;
 using Infrastructure.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
@@ -18,6 +20,23 @@ namespace Infrastructure.Data
             await _context.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(Guid userId)
+        {
+            var userToDelete = await _context.Users.FindAsync(userId) ?? throw new Exception("User not found");
+            _context.Users.Remove(userToDelete);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<User>> GetAllUsersAsync()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
+        public async Task<User> GetByIdAsync(Guid userId)
+        {
+            return await _context.Users.FindAsync(userId);
+        }
+
         public User GetUserByUsername(string username)
         {
             return _context.Users.FirstOrDefault(u => u.UserName == username);
@@ -27,6 +46,12 @@ namespace Infrastructure.Data
         {
             return _context.Users
             .FirstOrDefault(u => u.UserName == username && u.UserPasswordHash == hashedPassword);
+        }
+
+        public async Task UpdateAsync(User userToUpdate)
+        {
+            _context.Users.Update(userToUpdate);
+            await _context.SaveChangesAsync();
         }
     }
 }
