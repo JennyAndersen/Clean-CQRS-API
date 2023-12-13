@@ -1,5 +1,5 @@
-﻿using Domain.Models;
-using Domain.Models.Animal;
+﻿using Domain.Dtos;
+using Domain.Models;
 using Infrastructure.Data;
 using Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -14,21 +14,18 @@ namespace Infrastructure.Repositories
             _context = context;
         }
         //Read
-        public async Task<List<Animal>> GetAnimalsByUserIdAsync(Guid userId)
+        public async Task<List<GetAnimalUsersDto>> GetAllAnimalUsersAsync()
         {
             return await _context.AnimalUser
-        .Where(ua => ua.UserId == userId)
-        .Select(ua => ua.Animal)
-        .ToListAsync();
+                .Select(au => new GetAnimalUsersDto
+                {
+                    UserName = au.User.UserName,
+                    AnimalName = au.Animal.Name,
+                    HappyTogetherIndex = au.HappyTogetherIndex
+                })
+                .ToListAsync();
         }
 
-        public async Task<List<User>> GetUsersByAnimalIdAsync(Guid animalId)
-        {
-            return await _context.AnimalUser
-        .Where(ua => ua.AnimalId == animalId)
-        .Select(ua => ua.User)
-        .ToListAsync();
-        }
         //Create
         public async Task<bool> AddUserAnimalAsync(AnimalUser animalUser)
         {
@@ -36,8 +33,29 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
-        //Update 
-        //Delete
+
+        public async Task<AnimalUser> GetAnimalUserByIdAsync(Guid animalUserId)
+        {
+            return await _context.AnimalUser.FindAsync(animalUserId);
+        }
+
+        public async Task UpdateAnimalUserAsync(AnimalUser animalUser)
+        {
+            _context.AnimalUser.Update(animalUser);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<AnimalUser> GetByKeyAsync(Guid key)
+        {
+            return await _context.AnimalUser.FindAsync(key);
+        }
+
+        public async Task DeleteAsync(Guid key)
+        {
+            var animalUserToDelete = await _context.AnimalUser.FindAsync(key) ?? throw new Exception("User not found");
+            _context.AnimalUser.Remove(animalUserToDelete);
+            await _context.SaveChangesAsync();
+        }
 
     }
 }

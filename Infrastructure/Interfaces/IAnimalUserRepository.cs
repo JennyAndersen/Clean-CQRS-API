@@ -1,12 +1,16 @@
-﻿using Domain.Models;
-using Domain.Models.Animal;
+﻿using Domain.Dtos;
+using Domain.Models;
 
 namespace Infrastructure.Interfaces
 {
     public interface IAnimalUserRepository
     {
+        Task<List<GetAnimalUsersDto>> GetAllAnimalUsersAsync();
+
         Task<bool> AddUserAnimalAsync(AnimalUser animalUser);
-        Task<List<Animal>> GetAnimalsByUserIdAsync(Guid userId);
-        Task<List<User>> GetUsersByAnimalIdAsync(Guid animalId);
+        Task<AnimalUser> GetAnimalUserByIdAsync(Guid animalUserId);
+        Task UpdateAnimalUserAsync(AnimalUser animalUser);
+        Task<AnimalUser> GetByKeyAsync(Guid key);
+        Task DeleteAsync(Guid key);
     }
 }

@@ -28,7 +28,6 @@ namespace Infrastructure.Authentication
                 throw new Exception($"User with username '{username}' not found");
             }
 
-            // Verify the provided plaintext password against the stored hashed password
             if (!VerifyPassword(plainTextPassword, user.UserPasswordHash))
             {
                 throw new Exception("Invalid password");
