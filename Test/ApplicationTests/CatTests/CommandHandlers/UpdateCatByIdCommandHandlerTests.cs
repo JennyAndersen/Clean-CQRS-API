@@ -1,4 +1,10 @@
 ﻿using Application.Animals.Commands.Cats.UpdateCat;
+using Application.Dtos;
+using AutoFixture.NUnit3;
+using Domain.Interfaces;
+using Domain.Models.Animal;
+using Moq;
+using Test.TestHelpers;
 
 namespace Test.ApplicationTests.CatTests.CommandHandlers
 {
@@ -6,25 +12,23 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
     public class UpdateCatByIdCommandHandlerTests
     {
         private UpdateCatByIdCommandHandler _handler;
-        /*
+        private Mock<IAnimalRepository> _animalRepositoryMock;
+
         [SetUp]
         public void Setup()
         {
-            _mockDatabase = new MockDatabase();
-            _handler = new UpdateCatByIdCommandHandler(_mockDatabase);
+            _animalRepositoryMock = new Mock<IAnimalRepository>();
+            _handler = new UpdateCatByIdCommandHandler(_animalRepositoryMock.Object);
         }
 
         [Test]
-        public async Task WHEN_Handle_THEN_UpdatesCatInDatabase()
+        [CustomAutoData]
+        public async Task WHEN_Handle_THEN_UpdatesCat([Frozen] Cat initialCat, CatDto updatedCat)
         {
             // Arrange
-            var initialCat = new Cat { AnimalId = Guid.NewGuid(), Name = "InitialCatName", LikesToPlay = true };
-            MockDatabase.Cats.Add(initialCat);
+            _animalRepositoryMock.Setup(x => x.GetByIdAsync(initialCat.AnimalId)).ReturnsAsync(initialCat);
 
-            var command = new UpdateCatByIdCommand(
-                updatedCat: new CatDto { Name = "UpdatedCatName", LikesToPlay = false },
-                id: initialCat.AnimalId
-            );
+            var command = new UpdateCatByIdCommand(updatedCat, initialCat.AnimalId);
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
@@ -32,8 +36,7 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
             // Assert
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Is.InstanceOf<Cat>());
-            Assert.That(result.Name, Is.EqualTo("UpdatedCatName"));
-        }*/
+        }
     }
 }
 

@@ -1,4 +1,10 @@
 ﻿using Application.Animals.Queries.Birds.GetById;
+using AutoFixture.NUnit3;
+using Domain.Interfaces;
+using Domain.Models.Animal;
+using Moq;
+using SendGrid.Helpers.Errors.Model;
+using Test.TestHelpers;
 
 namespace Test.ApplicationTests.BirdTests.QueryHandlers
 {
@@ -6,28 +12,30 @@ namespace Test.ApplicationTests.BirdTests.QueryHandlers
     public class GetBirdByIdQueryHandlerTests
     {
         private GetBirdByIdQueryHandler _handler;
-        /*
+        private Mock<IAnimalRepository> _animalRepositoryMock;
+
         [SetUp]
         public void SetUp()
         {
-            _mockDatabase = new MockDatabase();
-            _handler = new GetBirdByIdQueryHandler(_mockDatabase);
+            _animalRepositoryMock = new Mock<IAnimalRepository>();
+            _handler = new GetBirdByIdQueryHandler(_animalRepositoryMock.Object);
         }
 
         [Test]
-        public async Task WHEN_Handle_THEN_ValidId_ReturnsCorrectBird()
+        [CustomAutoData]
+        public async Task WHEN_Handle_THEN_ValidId_ReturnsCorrectBird([Frozen] Bird bird)
         {
             // Arrange
-            var birdId = new Guid("59d8fc74-3c94-4ed8-9a38-36b0b6b1074a");
+            _animalRepositoryMock.Setup(x => x.GetByIdAsync(bird.AnimalId)).ReturnsAsync(bird);
 
-            var query = new GetBirdByIdQuery(birdId);
+            var query = new GetBirdByIdQuery(bird.AnimalId);
 
             // Act
             var result = await _handler.Handle(query, CancellationToken.None);
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.AnimalId, Is.EqualTo(birdId));
+            Assert.That(result.AnimalId, Is.EqualTo(bird.AnimalId));
         }
 
         [Test]
@@ -40,6 +48,6 @@ namespace Test.ApplicationTests.BirdTests.QueryHandlers
             // Act & Assert
             var exception = Assert.ThrowsAsync<NotFoundException>(async () => await _handler.Handle(query, CancellationToken.None));
             Assert.That(exception.Message, Is.EqualTo("Bird not found."));
-        }*/
+        }
     }
 }

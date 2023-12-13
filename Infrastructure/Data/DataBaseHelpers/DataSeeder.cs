@@ -24,7 +24,6 @@ namespace Infrastructure.Data.DataBaseHelpers
 
                     if (i % 3 == 0)
                     {
-                        // Add Cat CatBreed and CatWeight
                         animal = new Cat
                         {
                             Name = CatNames[i % CatNames.Count],
@@ -35,7 +34,6 @@ namespace Infrastructure.Data.DataBaseHelpers
                     }
                     else if (i % 3 == 1)
                     {
-                        // Add Dog CatBreed
                         animal = new Dog
                         {
                             Name = DogNames[i % DogNames.Count],

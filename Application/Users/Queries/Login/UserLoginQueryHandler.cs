@@ -1,13 +1,13 @@
-﻿using Infrastructure.Authentication;
+﻿using Infrastructure.Interfaces;
 using MediatR;
 
 namespace Application.Authentication.Queries.Login
 {
     public class UserLoginQueryHandler : IRequestHandler<UserLoginQuery, string>
     {
-        private readonly AuthServices _authServices;
+        private readonly IAuthServices _authServices;
 
-        public UserLoginQueryHandler(AuthServices services)
+        public UserLoginQueryHandler(IAuthServices services)
         {
             _authServices = services;
         }

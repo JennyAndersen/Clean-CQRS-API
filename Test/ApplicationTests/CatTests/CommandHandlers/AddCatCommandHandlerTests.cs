@@ -1,4 +1,11 @@
 ﻿using Application.Animals.Commands.Cats.AddCat;
+using Application.Dtos;
+using AutoFixture.NUnit3;
+using Domain.Interfaces;
+using Domain.Models.Animal;
+using FluentAssertions;
+using Moq;
+using Test.TestHelpers;
 
 namespace Test.ApplicationTests.CatTests.CommandHandlers
 {
@@ -6,31 +13,32 @@ namespace Test.ApplicationTests.CatTests.CommandHandlers
     public class AddCatCommandHandlerTests
     {
         private AddCatCommandHandler _handler;
-        /*
+
         [SetUp]
         public void Setup()
         {
-            _handler = new AddCatCommandHandler(new MockDatabase());
+            var mockAnimalRepository = new Mock<IAnimalRepository>();
+            _handler = new AddCatCommandHandler(mockAnimalRepository.Object);
         }
 
         [Test]
-        public async Task WHEN_Handle_THEN_AddsCatToDatabase()
+        [CustomAutoData]
+        public async Task WHEN_Handle_THEN_AddsCatToDatabase([Frozen] CatDto newCatDto)
         {
             // Arrange
-            var newCat = new CatDto { Name = "NewCatName" };
-            var command = new AddCatCommand(newCat);
+            var command = new AddCatCommand(newCatDto);
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result, Is.InstanceOf<Cat>());
             Assert.Multiple(() =>
             {
+                Assert.That(result, Is.Not.Null);
+                Assert.That(result, Is.InstanceOf<Cat>());
                 Assert.That(result.AnimalId, Is.Not.EqualTo(Guid.Empty));
-                Assert.That(result.Name, Is.EqualTo("NewCatName"));
             });
-        }*/
+            result.Name.Should().Be(command.NewCat.Name);
+        }
     }
 }

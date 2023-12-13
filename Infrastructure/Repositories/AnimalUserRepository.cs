@@ -26,7 +26,6 @@ namespace Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        //Create
         public async Task<bool> AddUserAnimalAsync(AnimalUser animalUser)
         {
             await _context.AnimalUser.AddAsync(animalUser);
@@ -56,6 +55,5 @@ namespace Infrastructure.Repositories
             _context.AnimalUser.Remove(animalUserToDelete);
             await _context.SaveChangesAsync();
         }
-
     }
 }

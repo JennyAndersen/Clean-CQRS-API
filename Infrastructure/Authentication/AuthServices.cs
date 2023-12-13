@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Infrastructure.Authentication
 {
-    public class AuthServices
+    public class AuthServices : IAuthServices
     {
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;

@@ -62,7 +62,7 @@ namespace Infrastructure.Repositories
         .ThenByDescending(b => b.AnimalId)
         .ToListAsync();
         }
-        //skulle kunna skapa en generisk metod för både cat/dog
+
         public async Task<List<Dog>> GetDogsByWeightBreedAsync(string? breed, int? weight)
         {
             var query = _context.Animals.OfType<Dog>();
