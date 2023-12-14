@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AnimalUsers\Queries\GetAnimalsByAnimalId\**" />
+    <EmbeddedResource Remove="AnimalUsers\Queries\GetAnimalsByAnimalId\**" />
+    <None Remove="AnimalUsers\Queries\GetAnimalsByAnimalId\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.14" />

@@ -9,6 +9,6 @@ namespace Domain.Models
         public required string UserName { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Password is required")]
         public required string UserPasswordHash { get; set; }
-        public ICollection<AnimalUser> AnimalUsers { get; set; }
+        public ICollection<AnimalUser>? AnimalUsers { get; set; }
     }
 }

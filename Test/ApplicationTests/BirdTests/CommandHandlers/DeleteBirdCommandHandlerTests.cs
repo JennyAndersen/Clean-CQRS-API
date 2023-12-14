@@ -1,39 +1,38 @@
 ﻿using Application.Animals.Commands.Birds.DeleteBird;
-using Infrastructure.Data;
+using AutoFixture.NUnit3;
+using Domain.Interfaces;
+using Domain.Models.Animal;
 using Moq;
+using Test.TestHelpers;
 
 namespace Test.ApplicationTests.BirdTests.CommandHandlers
 {
     [TestFixture]
     public class DeleteBirdByIdCommandHandlerTests
     {
+        private Mock<IAnimalRepository> _animalRepositoryMock;
         private DeleteBirdByIdCommandHandler _handler;
-        private Mock<AnimalDbContext> _dataDbContextMock;
-        /*
+
         [SetUp]
         public void Setup()
         {
-            _dataDbContextMock = new Mock<AnimalDbContext>();
-            _handler = new DeleteBirdByIdCommandHandler(_dataDbContextMock.Object);
+            _animalRepositoryMock = new Mock<IAnimalRepository>();
+            _handler = new DeleteBirdByIdCommandHandler(_animalRepositoryMock.Object);
         }
 
-        [Fact]
-        public void WHEN_Handle_THEN_DeletesBirdInDatabase()
+        [Test]
+        [CustomAutoData]
+        public async Task WHEN_Handle_THEN_DeleteBird_return_true([Frozen] Bird initialBird)
         {
             // Arrange
-            var initialBird = new Bird { Id = Guid.NewGuid(), Name = "InitialBirdName" };
-            _dataDbContextMock.Setup(x => x.Birds.FindAsync(initialBird.Id)).ReturnsAsync(initialBird);
-
-            var command = new DeleteBirdByIdCommand(
-                deletedBirdId: initialBird.Id
-            );
+            _animalRepositoryMock.Setup(x => x.GetByIdAsync(initialBird.AnimalId)).ReturnsAsync(initialBird);
 
             // Act
-            var result = _handler.Handle(command, CancellationToken.None).GetAwaiter().GetResult();
+            var command = new DeleteBirdByIdCommand(initialBird.AnimalId);
+            var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
             Assert.That(result, Is.True);
-            _dataDbContextMock.Verify(x => x.SaveChangesAsync(CancellationToken.None), Times.Once);
-        }*/
+        }
     }
 }

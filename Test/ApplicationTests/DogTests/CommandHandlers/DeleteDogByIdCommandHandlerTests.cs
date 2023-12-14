@@ -1,36 +1,38 @@
 ﻿using Application.Animals.Commands.Dogs.DeleteDog;
+using AutoFixture.NUnit3;
+using Domain.Interfaces;
+using Domain.Models.Animal;
+using Moq;
+using Test.TestHelpers;
 
 namespace Test.ApplicationTests.DogTests.CommandHandlers
 {
     [TestFixture]
     public class DeleteDogByIdCommandHandlerTests
     {
+        private Mock<IAnimalRepository> _animalRepositoryMock;
         private DeleteDogByIdCommandHandler _handler;
-        /*
+
         [SetUp]
         public void Setup()
         {
-            _mockDatabase = new MockDatabase();
-            _handler = new DeleteDogByIdCommandHandler(_mockDatabase);
+            _animalRepositoryMock = new Mock<IAnimalRepository>();
+            _handler = new DeleteDogByIdCommandHandler(_animalRepositoryMock.Object);
         }
 
         [Test]
-        public async Task WHEN_Handle_THEN_DeletesDogInDatabase()
+        [CustomAutoData]
+        public async Task WHEN_Handle_THEN_DeleteDog_return_true([Frozen] Dog initialDog)
         {
             // Arrange
-            var initialDog = new Dog { Id = Guid.NewGuid(), Name = "InitialDogName" };
-            MockDatabase.Dogs.Add(initialDog);
-
-            var command = new DeleteDogByIdCommand(
-                deletedDog: new DogDto { Name = "InitialDogName" },
-                deletedDogId: initialDog.Id
-            );
+            _animalRepositoryMock.Setup(x => x.GetByIdAsync(initialDog.AnimalId)).ReturnsAsync(initialDog);
 
             // Act
+            var command = new DeleteDogByIdCommand(initialDog.AnimalId);
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
             Assert.That(result, Is.True);
-        }*/
+        }
     }
 }

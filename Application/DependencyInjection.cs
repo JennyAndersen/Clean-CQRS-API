@@ -13,7 +13,7 @@ namespace Application
             var assembly = typeof(DependencyInjection).Assembly;
             services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(assembly));
 
-            services.AddValidatorsFromAssemblyContaining<AddBirdCommandValidator>();
+            services.AddValidatorsFromAssemblyContaining<AddBirdValidator>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
             return services;

@@ -51,6 +51,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("AnimalId")
                         .HasColumnType("char(36)");
 
+                    b.Property<int>("HappyTogetherIndex")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 

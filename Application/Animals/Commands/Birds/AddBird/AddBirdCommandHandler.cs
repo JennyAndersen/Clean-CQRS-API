@@ -24,7 +24,6 @@ namespace Application.Animals.Commands.Birds.AddBird
             };
 
             await _animalRepository.AddAsync(birdToCreate);
-
             return birdToCreate;
         }
     }
