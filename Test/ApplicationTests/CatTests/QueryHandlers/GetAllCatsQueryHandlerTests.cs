@@ -1,4 +1,9 @@
 ﻿using Application.Animals.Queries.Cats.GetAll;
+using AutoFixture.NUnit3;
+using Domain.Interfaces;
+using Domain.Models.Animal;
+using Moq;
+using Test.TestHelpers;
 
 namespace Test.ApplicationTests.CatTests.QueryHandlers
 {
@@ -6,18 +11,22 @@ namespace Test.ApplicationTests.CatTests.QueryHandlers
     public class GetAllDogsTests
     {
         private GetAllCatsQueryHandler _handler;
-        /*
+        private Mock<IAnimalRepository> _animalRepositoryMock;
+
         [SetUp]
         public void SetUp()
         {
-            _mockDatabase = new MockDatabase();
-            _handler = new GetAllCatsQueryHandler(_mockDatabase);
+            _animalRepositoryMock = new Mock<IAnimalRepository>();
+            _handler = new GetAllCatsQueryHandler(_animalRepositoryMock.Object);
         }
 
         [Test]
-        public async Task WHEN_Handle_GetAlLCats_THEN_ReturnsCorrect()
+        [CustomAutoData]
+        public async Task WHEN_Handle_THEN_GetAlLCats_ReturnsCorrect([Frozen] List<Cat> cats)
         {
             // Arrange
+            _animalRepositoryMock.Setup(x => x.GetAllCatsAsync()).ReturnsAsync(cats);
+
             var query = new GetAllCatsQuery();
 
             // Act
@@ -26,8 +35,7 @@ namespace Test.ApplicationTests.CatTests.QueryHandlers
             // Assert
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Is.InstanceOf<List<Cat>>());
-            Assert.That(result.Count, Is.GreaterThan(0));
+            Assert.That(result, Is.Not.Empty);
         }
-        */
     }
 }

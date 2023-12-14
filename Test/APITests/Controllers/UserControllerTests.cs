@@ -1,13 +1,9 @@
-﻿using API.Controllers.UsersController;
-using MediatR;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Moq;
-
-namespace Test.APITests.Controllers
+﻿namespace Test.APITests.Controllers
 {
     [TestFixture]
     public class UserControllerTests
     {
+        /*
         private WebApplicationFactory<UserController> _factory;
         private HttpClient _client;
         private Mock<IMediator> _mediatorMock;
@@ -29,7 +25,7 @@ namespace Test.APITests.Controllers
             _factory.Dispose();
             _client.Dispose();
         }
-        /*
+        
         [Test]
         public async Task WHEN_RegisterUser_THEN_Success()
         {
@@ -42,7 +38,7 @@ namespace Test.APITests.Controllers
             _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new User
                 {
-                    Id = Guid.NewGuid(),
+                    UserId = Guid.NewGuid(),
                     UserName = newUser.Username,
                     UserPasswordHash = newUser.Password,
                 });
@@ -70,7 +66,7 @@ namespace Test.APITests.Controllers
             _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new User
                 {
-                    Id = Guid.NewGuid(),
+                    UserId = Guid.NewGuid(),
                     UserName = registrationDto.Username,
                     UserPasswordHash = registrationDto.Password,
                 });
@@ -94,7 +90,6 @@ namespace Test.APITests.Controllers
 
             //Assert 
             Assert.That(loginResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        }
-        */
+        } */
     }
 }

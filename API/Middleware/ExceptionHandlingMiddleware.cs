@@ -10,7 +10,10 @@ namespace API.Middleware
     {
         private readonly ILogger<ExceptionHandlingMiddleware> _logger;
 
-        public ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger) => _logger = logger;
+        public ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger)
+        {
+            _logger = logger;
+        }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
@@ -39,7 +42,6 @@ namespace API.Middleware
             };
 
             httpContext.Response.ContentType = "application/json";
-
             httpContext.Response.StatusCode = statusCode;
 
             await httpContext.Response.WriteAsync(JsonSerializer.Serialize(response));

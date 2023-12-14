@@ -14,6 +14,9 @@ namespace Test.TestHelpers
         private static IFixture CreateFixture()
         {
             var fixture = new Fixture();
+            fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
+           .ForEach(b => fixture.Behaviors.Remove(b));
+            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
             fixture.Customize(new AutoMoqCustomization { ConfigureMembers = true, GenerateDelegates = true });
 

@@ -3,8 +3,10 @@ using Application.Animals.Commands.Cats.DeleteCat;
 using Application.Animals.Commands.Cats.UpdateCat;
 using Application.Animals.Queries.Cats.GetAll;
 using Application.Animals.Queries.Cats.GetById;
+using Application.Animals.Queries.Cats.GetByWeightBreed;
 using Application.Dtos;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.CatsController
@@ -21,16 +23,27 @@ namespace API.Controllers.CatsController
 
         [HttpGet]
         [Route("getAllCats")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> GetAllCats()
         {
-            return Ok(await _mediator.Send(new GetAllCatsQuery()));
+            var cats = await _mediator.Send(new GetAllCatsQuery());
+            return cats == null ? NotFound("No cats found.") : Ok(cats);
+        }
+
+        [HttpGet]
+        [Route("getCatsByWeightBreed/{weight?}/{breed?}")]
+        public async Task<IActionResult> GetCatsByWeightBreed(int? weight, String? breed)
+        {
+            var cats = await _mediator.Send(new GetCatsByWeightBreedQuery { Weight = weight, Breed = breed });
+            return cats == null ? NotFound($"No cats found with weight '{weight}' and breed '{breed}'.") : Ok(cats);
         }
 
         [HttpGet]
         [Route("getCatById/{catId}")]
         public async Task<IActionResult> GetCatById(Guid catId)
         {
-            return Ok(await _mediator.Send(new GetCatByIdQuery(catId)));
+            var cat = await _mediator.Send(new GetCatByIdQuery(catId));
+            return cat == null ? NotFound($"No cat found with ID '{catId}'.") : Ok(cat);
         }
 
         [HttpPost]
@@ -38,7 +51,8 @@ namespace API.Controllers.CatsController
         // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> AddCat([FromBody] CatDto newCat)
         {
-            return Ok(await _mediator.Send(new AddCatCommand(newCat)));
+            var result = await _mediator.Send(new AddCatCommand(newCat));
+            return result == null ? BadRequest("Could not add the cat.") : Ok(newCat);
         }
 
 
@@ -47,7 +61,8 @@ namespace API.Controllers.CatsController
         // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateCat([FromBody] CatDto updatedCat, Guid updatedCatId)
         {
-            return Ok(await _mediator.Send(new UpdateCatByIdCommand(updatedCat, updatedCatId)));
+            var result = await _mediator.Send(new UpdateCatByIdCommand(updatedCat, updatedCatId));
+            return result == null ? NotFound($"No cat found with ID '{updatedCatId}' for updating.") : Ok(updatedCat);
         }
 
         [HttpDelete]
@@ -55,7 +70,8 @@ namespace API.Controllers.CatsController
         // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteCat(Guid deletedCatId)
         {
-            return Ok(await _mediator.Send(new DeleteCatByIdCommand(deletedCatId)));
+            var result = await _mediator.Send(new DeleteCatByIdCommand(deletedCatId));
+            return result == false ? NotFound($"No cat found with ID '{deletedCatId}' for deletion.") : Ok($"Cat with ID '{deletedCatId}' has been deleted.");
         }
     }
 }

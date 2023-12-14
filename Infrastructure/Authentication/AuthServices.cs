@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Infrastructure.Authentication
 {
-    public class AuthServices
+    public class AuthServices : IAuthServices
     {
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
@@ -19,19 +19,35 @@ namespace Infrastructure.Authentication
             _userRepository = userRepository;
         }
 
-        public User AuthenticateUser(string username, string password)
+        public User AuthenticateUser(string username, string plainTextPassword)
         {
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-
-            var user = _userRepository.GetUserByUsernameAndPassword(username, hashedPassword);
+            var user = _userRepository.GetUserByUsername(username);
 
             if (user == null)
             {
-                throw new Exception("User not found");
+                throw new Exception($"User with username '{username}' not found");
+            }
+
+            if (!VerifyPassword(plainTextPassword, user.UserPasswordHash))
+            {
+                throw new Exception("Invalid password");
             }
 
             return user;
         }
+
+        private static bool VerifyPassword(string plainTextPassword, string hashedPassword)
+        {
+            var isPasswordValid = BCrypt.Net.BCrypt.Verify(plainTextPassword, hashedPassword);
+
+            if (!isPasswordValid)
+            {
+                throw new Exception("Password verification failed");
+            }
+
+            return true;
+        }
+
 
         public string GenerateJwtToken(User user)
         {
