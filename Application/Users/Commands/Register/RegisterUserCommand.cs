@@ -1,5 +1,6 @@
 ﻿using Application.Common;
 using Application.Dtos;
+using Application.Validators;
 using Domain.Models;
 using MediatR;
 
