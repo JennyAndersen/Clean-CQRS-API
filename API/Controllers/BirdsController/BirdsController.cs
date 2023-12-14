@@ -24,21 +24,24 @@ namespace API.Controllers.CatsController
         [Route("getAllBirds")]
         public async Task<IActionResult> GetAllBirds()
         {
-            return Ok(await _mediator.Send(new GetAllBirdsQuery()));
+            var birds = await _mediator.Send(new GetAllBirdsQuery());
+            return birds == null ? NotFound("No birds found.") : Ok(birds);
         }
 
         [HttpGet]
         [Route("getBirdById/{birdId}")]
         public async Task<IActionResult> GetBirdById(Guid birdId)
         {
-            return Ok(await _mediator.Send(new GetBirdByIdQuery(birdId)));
+            var bird = await _mediator.Send(new GetBirdByIdQuery(birdId));
+            return bird == null ? NotFound($"No bird found with ID '{birdId}'.") : Ok(bird);
         }
 
         [HttpGet]
         [Route("getBirdByColor/{color}")]
         public async Task<IActionResult> GetBirdsByColor(String color)
         {
-            return Ok(await _mediator.Send(new GetBirdsByColorQuery { Color = color }));
+            var birds = await _mediator.Send(new GetBirdsByColorQuery { Color = color });
+            return (birds == null || !birds.Any()) ? NotFound($"No birds found with color '{color}'.") : Ok(birds);
         }
 
         [HttpPost]
@@ -46,15 +49,8 @@ namespace API.Controllers.CatsController
         //[Authorize(Policy = "Admin")]
         public async Task<IActionResult> AddBird([FromBody] BirdDto newBird)
         {
-            try
-            {
-                var result = await _mediator.Send(new AddBirdCommand(newBird));
-                return result == null ? BadRequest("Could not add the bird.") : (IActionResult)Ok(newBird);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "An error occurred while adding the bird.");
-            }
+            var result = await _mediator.Send(new AddBirdCommand(newBird));
+            return result == null ? BadRequest("Could not add the bird.") : Ok(newBird);
         }
 
         [HttpPut]
@@ -62,7 +58,8 @@ namespace API.Controllers.CatsController
         // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateBird([FromBody] BirdDto updatedBird, Guid updatedBirdId)
         {
-            return Ok(await _mediator.Send(new UpdateBirdByIdCommand(updatedBird, updatedBirdId)));
+            var result = await _mediator.Send(new UpdateBirdByIdCommand(updatedBird, updatedBirdId));
+            return result == null ? NotFound($"No bird found with ID '{updatedBirdId}' for updating.") : Ok(updatedBird);
         }
 
         [HttpDelete]
@@ -70,7 +67,8 @@ namespace API.Controllers.CatsController
         // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteBird(Guid deletedBirdId)
         {
-            return Ok(await _mediator.Send(new DeleteBirdByIdCommand(deletedBirdId)));
+            var result = await _mediator.Send(new DeleteBirdByIdCommand(deletedBirdId));
+            return result == false ? NotFound($"No bird found with ID '{deletedBirdId}' for deletion.") : Ok($"Bird with ID '{deletedBirdId}' has been deleted.");
         }
     }
 }

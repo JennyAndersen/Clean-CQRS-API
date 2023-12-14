@@ -1,4 +1,5 @@
 ﻿using Domain.Interfaces;
+using Infrastructure.Authentication;
 using Infrastructure.Data;
 using Infrastructure.Data.DataBaseHelpers;
 using Infrastructure.Interfaces;
@@ -14,6 +15,7 @@ namespace Infrastructure
             services.AddTransient<IAnimalRepository, AnimalRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAnimalUserRepository, AnimalUserRepository>();
+            services.AddTransient<IAuthServices, AuthServices>();
 
             using (var scope = services.BuildServiceProvider().CreateScope())
             {

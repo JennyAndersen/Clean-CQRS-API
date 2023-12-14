@@ -23,28 +23,33 @@ namespace API.Controllers.AnimalUserController
         [Route("getAllAnimalUsers")]
         public async Task<IActionResult> GetAllAnimalUsers()
         {
-            return Ok(await _mediator.Send(new GetAllAnimalUsersQuery()));
+            var animalUsers = await _mediator.Send(new GetAllAnimalUsersQuery());
+            return animalUsers == null ? NotFound("No animalUsers found.") : Ok(animalUsers);
         }
 
         [HttpPost]
         [Route("addNewAnimalUser")]
         public async Task<IActionResult> AddAnimalUser([FromBody] AnimalUserDto newAnimalUser)
         {
-            return Ok(await _mediator.Send(new AddAnimalUserCommand(newAnimalUser)));
+            var result = await _mediator.Send(new AddAnimalUserCommand(newAnimalUser));
+            return result == false ? BadRequest("Could not add the animaluser.") : Ok(newAnimalUser);
         }
 
         [HttpPost]
         [Route("updateAnimalUser")]
         public async Task<IActionResult> UpdateAnimalUser([FromBody] UpdateAnimalUserByUserIdCommand command)
         {
-            return Ok(await _mediator.Send(command));
+            var result = await _mediator.Send(command);
+            return command == null ? BadRequest("Invalid update animal user command data.") : Ok(result);
         }
 
         [HttpDelete]
         [Route("deleteAnimalUser/{deletedAnimalUserKey}")]
         public async Task<IActionResult> DeleteAnimalUser(Guid deletedAnimalUserKey)
         {
-            return Ok(await _mediator.Send(new DeleteAnimalUserByKeyCommand(deletedAnimalUserKey)));
+            var result = await _mediator.Send(new DeleteAnimalUserByKeyCommand(deletedAnimalUserKey));
+
+            return result == false ? BadRequest("Invalid delete animal user command data.") : Ok(result);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Application.Animals.Queries.Birds.GetById
         public async Task<Bird> Handle(GetBirdByIdQuery request, CancellationToken cancellationToken)
         {
             Bird wantedBird = await _animalRepository.GetByIdAsync(request.AnimalId) as Bird
-                         ?? throw new NotFoundException("Bird not found.");
+                         ?? throw new NotFoundException($"No bird found with ID '{request.AnimalId}'.");
 
             return wantedBird;
         }
