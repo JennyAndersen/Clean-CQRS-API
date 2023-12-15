@@ -1,7 +1,7 @@
 ﻿using Application.Exceptions;
+using Domain.Exceptions;
 using System.Text.Json;
 using ApplicationException = Domain.Exceptions.ApplicationException;
-using BadRequestException = Domain.Exceptions.BadRequestException;
 using NotFoundException = Domain.Exceptions.NotFoundException;
 
 namespace API.Middleware

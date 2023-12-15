@@ -5,5 +5,6 @@
         public T? Result { get; set; }
         public required bool IsSuccess { get; set; }
         public string? ErrorMessage { get; set; }
+        public string? Message { get; set; }
     }
 }

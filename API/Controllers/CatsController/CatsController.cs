@@ -26,24 +26,45 @@ namespace API.Controllers.CatsController
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> GetAllCats()
         {
-            var cats = await _mediator.Send(new GetAllCatsQuery());
-            return cats == null ? NotFound("No cats found.") : Ok(cats);
+            try
+            {
+                var cats = await _mediator.Send(new GetAllCatsQuery());
+                return cats == null ? NotFound("No cats found.") : Ok(cats);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
 
         [HttpGet]
         [Route("getCatsByWeightBreed/{weight?}/{breed?}")]
         public async Task<IActionResult> GetCatsByWeightBreed(int? weight, String? breed)
         {
-            var cats = await _mediator.Send(new GetCatsByWeightBreedQuery { Weight = weight, Breed = breed });
-            return cats == null ? NotFound($"No cats found with weight '{weight}' and breed '{breed}'.") : Ok(cats);
+            try
+            {
+                var cats = await _mediator.Send(new GetCatsByWeightBreedQuery { Weight = weight, Breed = breed });
+                return cats == null ? NotFound($"No cats found with weight '{weight}' and breed '{breed}'.") : Ok(cats);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
 
         [HttpGet]
         [Route("getCatById/{catId}")]
         public async Task<IActionResult> GetCatById(Guid catId)
         {
-            var cat = await _mediator.Send(new GetCatByIdQuery(catId));
-            return cat == null ? NotFound($"No cat found with ID '{catId}'.") : Ok(cat);
+            try
+            {
+                var cat = await _mediator.Send(new GetCatByIdQuery(catId));
+                return cat == null ? NotFound($"No cat found with ID '{catId}'.") : Ok(cat);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
 
         [HttpPost]
@@ -51,8 +72,15 @@ namespace API.Controllers.CatsController
         // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> AddCat([FromBody] CatDto newCat)
         {
-            var result = await _mediator.Send(new AddCatCommand(newCat));
-            return result == null ? BadRequest("Could not add the cat.") : Ok(newCat);
+            try
+            {
+                var result = await _mediator.Send(new AddCatCommand(newCat));
+                return result == null ? BadRequest("Could not add the cat.") : Ok(newCat);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
 
 
@@ -61,8 +89,15 @@ namespace API.Controllers.CatsController
         // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateCat([FromBody] CatDto updatedCat, Guid updatedCatId)
         {
-            var result = await _mediator.Send(new UpdateCatByIdCommand(updatedCat, updatedCatId));
-            return result == null ? NotFound($"No cat found with ID '{updatedCatId}' for updating.") : Ok(updatedCat);
+            try
+            {
+                var result = await _mediator.Send(new UpdateCatByIdCommand(updatedCat, updatedCatId));
+                return result == null ? NotFound($"No cat found with ID '{updatedCatId}' for updating.") : Ok(updatedCat);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
 
         [HttpDelete]
@@ -70,8 +105,15 @@ namespace API.Controllers.CatsController
         // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteCat(Guid deletedCatId)
         {
-            var result = await _mediator.Send(new DeleteCatByIdCommand(deletedCatId));
-            return result == false ? NotFound($"No cat found with ID '{deletedCatId}' for deletion.") : Ok($"Cat with ID '{deletedCatId}' has been deleted.");
+            try
+            {
+                var result = await _mediator.Send(new DeleteCatByIdCommand(deletedCatId));
+                return result == false ? NotFound($"No cat found with ID '{deletedCatId}' for deletion.") : Ok($"Cat with ID '{deletedCatId}' has been deleted.");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Dtos;
+using Application.Exceptions;
 using Application.Validators;
 using Domain.Models;
 using MediatR;
@@ -32,7 +33,7 @@ namespace Application.Authentication.Commands.UpdateUser
 
             if (validationErrors.Count > 0)
             {
-                throw new Common.BadRequestException("Validation failed", validationErrors);
+                throw new BadRequestException("Validation failed", validationErrors);
             }
         }
     }

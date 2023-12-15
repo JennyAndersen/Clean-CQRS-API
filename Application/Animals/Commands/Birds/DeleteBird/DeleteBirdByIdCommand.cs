@@ -1,10 +1,11 @@
-﻿using Application.Validators;
+﻿using Application.Dtos.MediatR;
+using Application.Validators;
 using FluentValidation;
 using MediatR;
 
 namespace Application.Animals.Commands.Birds.DeleteBird
 {
-    public class DeleteBirdByIdCommand : IRequest<bool>, IValidate
+    public class DeleteBirdByIdCommand : IRequest<OperationResult<bool>>, IValidate
     {
         public DeleteBirdByIdCommand(Guid deletedBirdId)
         {

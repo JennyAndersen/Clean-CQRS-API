@@ -1,4 +1,5 @@
-﻿using Application.Validators;
+﻿using Application.Exceptions;
+using Application.Validators;
 using MediatR;
 
 namespace Application.Authentication.Queries.Login
@@ -24,7 +25,7 @@ namespace Application.Authentication.Queries.Login
 
             if (validationErrors.Count > 0)
             {
-                throw new Common.BadRequestException("Validation failed", validationErrors);
+                throw new BadRequestException("Validation failed", validationErrors);
             }
         }
     }

@@ -6,9 +6,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
 
 builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
@@ -79,6 +84,8 @@ builder.Services.AddApplication().AddInfrastructure();
 builder.Services.AddScoped<AuthServices>();
 
 var app = builder.Build();
+
+// app.UseSerilogRequestLogging();
 
 if (app.Environment.IsDevelopment())
 {
