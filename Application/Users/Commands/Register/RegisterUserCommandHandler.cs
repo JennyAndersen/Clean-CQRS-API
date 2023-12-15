@@ -15,7 +15,6 @@ namespace Application.Authentication.Commands.Register
 
         public async Task<User> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            request.Validate();
 
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.NewUser.Password);
 

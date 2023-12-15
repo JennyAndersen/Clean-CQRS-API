@@ -1,4 +1,4 @@
-﻿namespace Application.Common
+﻿namespace Application.Exceptions
 {
     public class BadRequestException : Exception
     {

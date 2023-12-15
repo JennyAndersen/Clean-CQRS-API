@@ -1,5 +1,4 @@
-﻿using Application.Animals.Commands.Birds.AddBird;
-using Application.Behaviors;
+﻿using Application.Behaviors;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +12,11 @@ namespace Application
             var assembly = typeof(DependencyInjection).Assembly;
             services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(assembly));
 
-            services.AddValidatorsFromAssemblyContaining<AddBirdValidator>();
+            AssemblyScanner.FindValidatorsInAssembly(assembly)
+            .Select(result => new ServiceDescriptor(result.InterfaceType, result.ValidatorType, ServiceLifetime.Transient))
+            .ToList()
+            .ForEach(descriptor => services.Add(descriptor));
+
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
             return services;
