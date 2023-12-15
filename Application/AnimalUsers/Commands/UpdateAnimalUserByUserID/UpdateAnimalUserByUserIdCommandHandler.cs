@@ -19,7 +19,7 @@ namespace Application.AnimalUsers.Commands.UpdateAnimalUserByUserID
 
             if (animalUser == null)
             {
-                return false;
+                throw new DirectoryNotFoundException();
             }
 
             animalUser.UserId = request.NewUserId;

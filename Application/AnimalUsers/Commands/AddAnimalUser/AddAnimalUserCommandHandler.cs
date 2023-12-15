@@ -15,11 +15,11 @@ namespace Application.AnimalUsers.Commands.AddAnimalUser
 
         public async Task<bool> Handle(AddAnimalUserCommand request, CancellationToken cancellationToken)
         {
-            var userAnimal = new AnimalUser
+            AnimalUser userAnimal = new()
             {
-                UserId = request.UserId,
-                AnimalId = request.AnimalId,
-                HappyTogetherIndex = request.HappyTogetherIndex,
+                UserId = request.NewAnimalUser.UserId,
+                AnimalId = request.NewAnimalUser.AnimalId,
+                HappyTogetherIndex = request.NewAnimalUser.HappyTogetherIndex,
             };
 
             return await _animalUserRepository.AddUserAnimalAsync(userAnimal);

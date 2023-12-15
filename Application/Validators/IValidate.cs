@@ -1,4 +1,4 @@
-﻿namespace Application.Common
+﻿namespace Application.Validators
 {
     public interface IValidate
     {

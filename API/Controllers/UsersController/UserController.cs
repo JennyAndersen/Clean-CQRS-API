@@ -25,22 +25,43 @@ namespace API.Controllers.UsersController
         [Route("getAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
-            var users = await _mediator.Send(new GetAllUsersQuery());
-            return users == null ? NotFound("No users found.") : Ok(users);
+            try
+            {
+                var users = await _mediator.Send(new GetAllUsersQuery());
+                return users == null ? NotFound("No users found.") : Ok(users);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest model)
         {
-            var token = await _mediator.Send(new UserLoginQuery { Username = model.Username, Password = model.Password });
-            return model == null ? BadRequest("Invalid login request data.") : Ok(new { Token = token });
+            try
+            {
+                var token = await _mediator.Send(new UserLoginQuery { Username = model.Username, Password = model.Password });
+                return model == null ? BadRequest("Invalid login request data.") : Ok(new { Token = token });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationDto newUser)
         {
-            var result = await _mediator.Send(new RegisterUserCommand(newUser));
-            return newUser == null ? BadRequest("Invalid user registration data.") : Ok(result);
+            try
+            {
+                var result = await _mediator.Send(new RegisterUserCommand(newUser));
+                return newUser == null ? BadRequest("Invalid user registration data.") : Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
 
         [HttpPut]
@@ -48,8 +69,15 @@ namespace API.Controllers.UsersController
         // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateUser([FromBody] UserRegistrationDto updatedUser, Guid updatedUserId)
         {
-            var result = await _mediator.Send(new UpdateUserByIdCommand(updatedUser, updatedUserId));
-            return result == null ? NotFound($"No user found with ID '{updatedUserId}' for updating.") : Ok(updatedUser);
+            try
+            {
+                var result = await _mediator.Send(new UpdateUserByIdCommand(updatedUser, updatedUserId));
+                return result == null ? NotFound($"No user found with ID '{updatedUserId}' for updating.") : Ok(updatedUser);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
 
         [HttpDelete]
@@ -57,8 +85,15 @@ namespace API.Controllers.UsersController
         // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteUser(Guid deletedUserId)
         {
-            var result = await _mediator.Send(new DeleteUserByIdCommand(deletedUserId));
-            return result == false ? NotFound($"No user found with ID '{deletedUserId}' for deletion.") : Ok($"User with ID '{deletedUserId}' has been deleted.");
+            try
+            {
+                var result = await _mediator.Send(new DeleteUserByIdCommand(deletedUserId));
+                return result == false ? NotFound($"No user found with ID '{deletedUserId}' for deletion.") : Ok($"User with ID '{deletedUserId}' has been deleted.");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
     }
 }

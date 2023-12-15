@@ -24,24 +24,45 @@ namespace API.Controllers.CatsController
         [Route("getAllBirds")]
         public async Task<IActionResult> GetAllBirds()
         {
-            var birds = await _mediator.Send(new GetAllBirdsQuery());
-            return birds == null ? NotFound("No birds found.") : Ok(birds);
+            try
+            {
+                var birds = await _mediator.Send(new GetAllBirdsQuery());
+                return birds == null ? NotFound("No birds found.") : Ok(birds);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
 
         [HttpGet]
         [Route("getBirdById/{birdId}")]
         public async Task<IActionResult> GetBirdById(Guid birdId)
         {
-            var bird = await _mediator.Send(new GetBirdByIdQuery(birdId));
-            return bird == null ? NotFound($"No bird found with ID '{birdId}'.") : Ok(bird);
+            try
+            {
+                var bird = await _mediator.Send(new GetBirdByIdQuery(birdId));
+                return bird == null ? NotFound($"No bird found with ID '{birdId}'.") : Ok(bird);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
 
         [HttpGet]
         [Route("getBirdByColor/{color}")]
         public async Task<IActionResult> GetBirdsByColor(String color)
         {
-            var birds = await _mediator.Send(new GetBirdsByColorQuery { Color = color });
-            return (birds == null || !birds.Any()) ? NotFound($"No birds found with color '{color}'.") : Ok(birds);
+            try
+            {
+                var birds = await _mediator.Send(new GetBirdsByColorQuery { Color = color });
+                return (birds == null || !birds.Any()) ? NotFound($"No birds found with color '{color}'.") : Ok(birds);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
 
         [HttpPost]
@@ -49,8 +70,15 @@ namespace API.Controllers.CatsController
         //[Authorize(Policy = "Admin")]
         public async Task<IActionResult> AddBird([FromBody] BirdDto newBird)
         {
-            var result = await _mediator.Send(new AddBirdCommand(newBird));
-            return result == null ? BadRequest("Could not add the bird.") : Ok(newBird);
+            try
+            {
+                var result = await _mediator.Send(new AddBirdCommand(newBird));
+                return result == null ? BadRequest("Could not add the bird.") : Ok(newBird);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
 
         [HttpPut]
@@ -58,8 +86,15 @@ namespace API.Controllers.CatsController
         // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateBird([FromBody] BirdDto updatedBird, Guid updatedBirdId)
         {
-            var result = await _mediator.Send(new UpdateBirdByIdCommand(updatedBird, updatedBirdId));
-            return result == null ? NotFound($"No bird found with ID '{updatedBirdId}' for updating.") : Ok(updatedBird);
+            try
+            {
+                var result = await _mediator.Send(new UpdateBirdByIdCommand(updatedBird, updatedBirdId));
+                return result == null ? NotFound($"No bird found with ID '{updatedBirdId}' for updating.") : Ok(updatedBird);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
 
         [HttpDelete]
@@ -67,8 +102,15 @@ namespace API.Controllers.CatsController
         // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteBird(Guid deletedBirdId)
         {
-            var result = await _mediator.Send(new DeleteBirdByIdCommand(deletedBirdId));
-            return result == false ? NotFound($"No bird found with ID '{deletedBirdId}' for deletion.") : Ok($"Bird with ID '{deletedBirdId}' has been deleted.");
+            try
+            {
+                var result = await _mediator.Send(new DeleteBirdByIdCommand(deletedBirdId));
+                return result != null ? Ok($"Bird with ID '{deletedBirdId}' has been deleted.") : NotFound($"No bird found with ID '{deletedBirdId}' for deletion.");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Servor Error");
+            }
         }
     }
 }
