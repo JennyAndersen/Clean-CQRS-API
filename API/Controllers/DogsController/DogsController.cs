@@ -6,6 +6,7 @@ using Application.Animals.Queries.Dogs.GetById;
 using Application.Animals.Queries.Dogs.GetByWeightBreed;
 using Application.Dtos;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.DogsController
@@ -67,6 +68,7 @@ namespace API.Controllers.DogsController
 
         [HttpPost]
         [Route("addNewDog")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> AddDog([FromBody] DogDto newDog)
         {
             try
@@ -82,6 +84,7 @@ namespace API.Controllers.DogsController
 
         [HttpPut]
         [Route("updateDog/{updatedDogId}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateDog([FromBody] DogDto updatedDog, Guid updatedDogId)
         {
             try
@@ -97,6 +100,7 @@ namespace API.Controllers.DogsController
 
         [HttpDelete]
         [Route("deleteDog/{deletedDogId}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteDog(Guid deletedDogId)
         {
             try

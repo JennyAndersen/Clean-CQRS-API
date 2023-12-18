@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using Infrastructure.Interfaces;
 using MediatR;
+using SendGrid.Helpers.Errors.Model;
 
 namespace Application.AnimalUsers.Commands.UpdateAnimalUserByUserID
 {
@@ -19,7 +20,7 @@ namespace Application.AnimalUsers.Commands.UpdateAnimalUserByUserID
 
             if (animalUser == null)
             {
-                throw new DirectoryNotFoundException();
+                throw new NotFoundException("AnimalUser not found");
             }
 
             animalUser.UserId = request.NewUserId;

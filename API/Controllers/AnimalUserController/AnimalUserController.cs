@@ -4,6 +4,7 @@ using Application.AnimalUsers.Commands.UpdateAnimalUserByUserID;
 using Application.AnimalUsers.Queries.GetAllAnimalUsers;
 using Application.Dtos;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.AnimalUserController
@@ -36,12 +37,13 @@ namespace API.Controllers.AnimalUserController
 
         [HttpPost]
         [Route("addNewAnimalUser")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> AddAnimalUser([FromBody] AnimalUserDto newAnimalUser)
         {
             try
             {
                 var result = await _mediator.Send(new AddAnimalUserCommand(newAnimalUser));
-                return result == false ? BadRequest("Could not add the animaluser.") : Ok(newAnimalUser);
+                return result == false ? BadRequest("Could not add the animaluser.") : Ok(result);
             }
             catch (Exception)
             {
@@ -51,6 +53,7 @@ namespace API.Controllers.AnimalUserController
 
         [HttpPost]
         [Route("updateAnimalUser")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateAnimalUser([FromBody] UpdateAnimalUserByUserIdCommand command)
         {
             try
@@ -66,6 +69,7 @@ namespace API.Controllers.AnimalUserController
 
         [HttpDelete]
         [Route("deleteAnimalUser/{deletedAnimalUserKey}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteAnimalUser(Guid deletedAnimalUserKey)
         {
             try
