@@ -1,4 +1,5 @@
-﻿using API.Controllers.UsersController;
+﻿using API;
+using API.Controllers.UsersController;
 using Application.Authentication.Commands.Register;
 using Application.Dtos;
 using Domain.Models;
@@ -6,11 +7,17 @@ using Domain.Models.UserModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Moq;
 using Newtonsoft.Json;
+using NUnit.Framework;
+using System;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Test.APITests.Controllers
 {
@@ -38,7 +45,7 @@ namespace Test.APITests.Controllers
             _factory.Dispose();
             _client.Dispose();
         }
-
+        
         [Test]
         public async Task WHEN_RegisterUser_THEN_Success()
         {
@@ -62,7 +69,8 @@ namespace Test.APITests.Controllers
             // Assert
             Assert.That(result, Is.InstanceOf<OkObjectResult>());
         }
-
+        
+        //HÅLLER PÅ ATT BRYTA NER UTAN SKAPADE EN POC BARA 
         [Test]
         public async Task CanRegisterAndLoginUser()
         {
@@ -102,6 +110,6 @@ namespace Test.APITests.Controllers
 
             //Assert 
             Assert.That(loginResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        }
+        } 
     }
 }
