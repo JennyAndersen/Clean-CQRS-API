@@ -5,20 +5,8 @@ using AutoFixture.NUnit3;
 using Domain.Models;
 using Domain.Models.UserModels;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Moq;
-using Newtonsoft.Json;
-using NUnit.Framework;
-using System;
-using System.Net;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Test.TestHelpers;
 
 namespace Test.APITests.Controllers
@@ -77,7 +65,7 @@ namespace Test.APITests.Controllers
             // Act
             var registrationResult = await _controller.Register(registrationDto);
             var loginResult = await _controller.Login(loginRequest);
-            
+
             // Assert
             Assert.Multiple(() =>
             {
