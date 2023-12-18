@@ -1,7 +1,6 @@
 ﻿using API.Controllers.UsersController;
 using Application.Authentication.Commands.Register;
 using Application.Dtos;
-using AutoFixture.NUnit3;
 using Domain.Models;
 using Domain.Models.UserModels;
 using MediatR;
@@ -12,7 +11,6 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
-using Test.TestHelpers;
 
 namespace Test.APITests.Controllers
 {
@@ -42,9 +40,14 @@ namespace Test.APITests.Controllers
         }
 
         [Test]
-        [CustomAutoData]
-        public async Task WHEN_RegisterUser_THEN_Success([Frozen] UserRegistrationDto newUser)
+        public async Task WHEN_RegisterUser_THEN_Success()
         {
+            // Arrange
+            var newUser = new UserRegistrationDto
+            {
+                Username = "testuser1",
+                Password = "testpassword1"
+            };
             _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new User
                 {
