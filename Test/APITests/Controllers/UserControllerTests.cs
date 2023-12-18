@@ -1,53 +1,51 @@
 ﻿using API.Controllers.UsersController;
 using Application.Authentication.Commands.Register;
 using Application.Dtos;
+using AutoFixture.NUnit3;
 using Domain.Models;
 using Domain.Models.UserModels;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Moq;
 using Newtonsoft.Json;
+using NUnit.Framework;
+using System;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Test.TestHelpers;
 
 namespace Test.APITests.Controllers
 {
     [TestFixture]
     public class UserControllerTests
     {
-        private WebApplicationFactory<UserController> _factory;
-        private HttpClient _client;
         private Mock<IMediator> _mediatorMock;
         private UserController _controller;
-
 
         [SetUp]
         public void Setup()
         {
-            _factory = new WebApplicationFactory<UserController>();
-            _client = _factory.CreateClient();
             _mediatorMock = new Mock<IMediator>();
-            _controller = new UserController(_mediatorMock.Object);
+            _controller = CreateControllerInstance();
         }
 
-        [TearDown]
-        public void Teardown()
+        private UserController CreateControllerInstance()
         {
-            _factory.Dispose();
-            _client.Dispose();
+            return new UserController(_mediatorMock.Object);
         }
 
         [Test]
-        public async Task WHEN_RegisterUser_THEN_Success()
+        [CustomAutoData]
+        public async Task WHEN_RegisterUser_THEN_Success([Frozen] UserRegistrationDto newUser)
         {
             // Arrange
-            var newUser = new UserRegistrationDto
-            {
-                Username = "testuser1",
-                Password = "testpassword1"
-            };
             _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new User
                 {
@@ -63,19 +61,11 @@ namespace Test.APITests.Controllers
             Assert.That(result, Is.InstanceOf<OkObjectResult>());
         }
 
-        //HÅLLER PÅ ATT BRYTA NER UTAN SKAPADE EN POC BARA 
         [Test]
-        public async Task CanRegisterAndLoginUser()
+        [CustomAutoData]
+        public async Task CanRegisterAndLoginUser([Frozen] UserRegistrationDto registrationDto, [Frozen] LoginRequest loginRequest)
         {
             // Arrange
-            var client = _factory.CreateClient();
-
-            var registrationDto = new UserRegistrationDto
-            {
-                Username = "testuser",
-                Password = "testpassword"
-            };
-
             _mediatorMock.Setup(m => m.Send(It.IsAny<RegisterUserCommand>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new User
                 {
@@ -84,25 +74,16 @@ namespace Test.APITests.Controllers
                     UserPasswordHash = registrationDto.Password,
                 });
 
-            var registrationContent = new StringContent(JsonConvert.SerializeObject(registrationDto), Encoding.UTF8, "application/json");
-            var registrationResponse = await client.PostAsync("/api/User/register", registrationContent);
-            registrationResponse.EnsureSuccessStatusCode();
-
-            var loginDto = new LoginRequest
+            // Act
+            var registrationResult = await _controller.Register(registrationDto);
+            var loginResult = await _controller.Login(loginRequest);
+            
+            // Assert
+            Assert.Multiple(() =>
             {
-                Username = "testuser",
-                Password = "testpassword"
-            };
-
-            var loginContent = new StringContent(JsonConvert.SerializeObject(loginDto), Encoding.UTF8, "application/json");
-            var loginResponse = await client.PostAsync("/api/User/login", loginContent);
-            loginResponse.EnsureSuccessStatusCode();
-
-            var token = await loginResponse.Content.ReadAsStringAsync();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-            //Assert 
-            Assert.That(loginResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+                Assert.That(registrationResult, Is.InstanceOf<OkObjectResult>());
+                Assert.That(loginResult, Is.InstanceOf<OkObjectResult>());
+            });
         }
     }
 }
