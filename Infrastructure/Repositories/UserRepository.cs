@@ -13,7 +13,7 @@ namespace Infrastructure.Repositories
         public UserRepository(AnimalDbContext context)
         {
             _context = context;
-            _logger = Log.ForContext<AnimalRepository>();
+            _logger = Log.ForContext<UserRepository>();
         }
 
         public async Task AddUserAsync(User newUser)

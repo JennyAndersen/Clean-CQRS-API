@@ -23,7 +23,7 @@ namespace Test.ApplicationTests.BirdTests.CommandHandlers
 
         [Test]
         [CustomAutoData]
-        public async Task WHEN_Handle_THEN_AddsBirdToDatabase([Frozen] BirdDto newBird)
+        public async Task WHEN_Handle_THEN_AddsBird([Frozen] BirdDto newBird)
         {
             // Arrange
             var command = new AddBirdCommand(newBird);
