@@ -15,7 +15,7 @@ namespace Infrastructure.Repositories
         public AnimalUserRepository(AnimalDbContext context)
         {
             _context = context;
-            _logger = Log.ForContext<AnimalRepository>();
+            _logger = Log.ForContext<AnimalUserRepository>();
         }
 
         // Read
@@ -57,7 +57,7 @@ namespace Infrastructure.Repositories
             catch (Exception ex)
             {
                 _logger.Error(ex, "An error occurred while adding user animal.");
-                throw;
+                return false;
             }
         }
 

@@ -1,9 +1,15 @@
-﻿namespace Test.ApplicationTests.BirdTests.CommandHandlers
+﻿using Application.Animals.Commands.Birds.DeleteBird;
+using AutoFixture.NUnit3;
+using Domain.Interfaces;
+using Domain.Models.Animal;
+using Moq;
+using Test.TestHelpers;
+
+namespace Test.ApplicationTests.BirdTests.CommandHandlers
 {
     [TestFixture]
     public class DeleteBirdByIdCommandHandlerTests
     {
-        /*
         private Mock<IAnimalRepository> _animalRepositoryMock;
         private DeleteBirdByIdCommandHandler _handler;
 
@@ -26,8 +32,7 @@
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            Assert.That(result, Is.True);
+            Assert.That(result.IsSuccess, Is.True);
         }
-        */
     }
 }
